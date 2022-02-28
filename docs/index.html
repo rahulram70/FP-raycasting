@@ -3,13 +3,52 @@
 <head>
 <title>CSE442 | Final Project</title>
 <link rel="stylesheet" href="styles.css">
-<style media="all">
+<!-- P5 lib -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
+    <script src="./data/p5.func.js"></script>
+<!-- Theory Sketch classes -->
+    <script src="./theory_classes/Boundary.js"></script>
+    <script src="./theory_classes/particle.js"></script>
+    <script src="./theory_classes/ray.js"></script>
+<!-- Theory Sketches -->
+    <script src="./theory_sketches/theory_1.js"></script>
+    <script src="./theory_sketches/theory_2.js"></script>
+    <!-- <script src="theory_3.js"></script> -->
+    <!-- <script src="theory_4.js"></script> -->
+<!-- <style media="all">
 * { padding: 0; margin: 0; }
-</style>
+</style> -->
 </head>
 <body>
     <div id="fullPage">
-        <div class="section s1">
+        <div class="section">
+            <div class="parent">
+                <div class="Header">
+                    <p id = "theory_1-interact-1">
+                        Interactive text 1: click me
+                    </p>
+                    <p id = "theory_1-interact-2">
+                        Interactive text 2: click me
+                    </p>
+                </div>
+                <div class="caster" id="theory_1">
+                </div>
+            </div>
+            <!-- <section class="title"> -->
+
+        </div>
+        <div class="section">
+            <div class="parent">
+                <div class="Header">
+                    <p id = "theory_2_interact_1">
+                        Interactive text 1: click me
+                    </p>
+                </div>
+                <div class="caster" id="theory_2">
+                </div>
+            </div>
+        </div>
+        <!-- <div class="section s1">
           <section class="title">
             <a>Raycasting</a>
             </section>
@@ -43,7 +82,7 @@
 
         <div class="section s5">
             <h1>Page 5</h1>
-        </div>
+        </div> -->
 
         <script src="fullpage.min.js" ></script>
         <script>

@@ -3,7 +3,7 @@
     margin: 0;
 }
 
-.s1 {
+/* .s1 {
     background-color: #006eff;
     background-size: cover;
 }
@@ -26,7 +26,7 @@
 .s5 {
     background-color: #f7fc00;
     background-size: cover;
-}
+} */
 h1 {
     font-family: 'Montserrat';
     font-size: 36;
@@ -106,3 +106,27 @@ hr {
     text-align: right;
     font-size: 12px;
 }
+
+.parent {
+    left: 0;
+    width: 50vw;
+    display: flex;
+}
+
+.Header {
+    left: 0;
+    width: 50vw;
+    /* background-color: #111; */
+  }
+  
+  /* Control the right side */
+  .caster {
+    width: 50%;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    right: 0;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+  }
