@@ -1,0 +1,108 @@
+.body {
+    padding: 0; 
+    margin: 0;
+}
+
+.s1 {
+    background-color: #006eff;
+    background-size: cover;
+}
+
+.s2 {
+    background-color: #00ccff;
+    background-size: cover;
+}
+
+.s3 {
+    background-color: #00ff00;
+    background-size: cover;
+}
+
+.s4 {
+    background-color: #f700eb;
+    background-size: cover;
+}
+
+.s5 {
+    background-color: #f7fc00;
+    background-size: cover;
+}
+h1 {
+    font-family: 'Montserrat';
+    font-size: 36;
+    text-align: center;
+    color: black;
+}
+h2 { 
+    font-size: 18pt; 
+    margin: 30px 0 15px 0; 
+    letter-spacing: 0.01em; 
+    line-height: 20px;
+}
+h3 { 
+    font-size: 20pt; 
+    color: black;
+    text-align: center;
+}
+h4 { 
+    font-size: 24pt; 
+    color: black; 
+    font-family: monospace;
+}
+h5 { 
+    font-size: 16pt; 
+    color: black; 
+    line-height: 1.8;
+    width: 60vw;
+}
+
+#home > p { 
+    margin: 10px 0 10px 0; 
+    font-size: 16pt;
+    width: 60vw;
+}
+
+div#writeup { 
+    /* margin: 10px 0 10px 0;  */
+    font-size: 14pt;
+    width: 60vw;
+    margin: auto;
+}
+
+div#home {
+    margin-left: 10vw;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    width: 75%;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1em;
+}
+
+
+
+.content {
+    margin: 0px 100px;
+    padding: 0px 50px;
+    background-color: rgba(255,255,255,)
+}
+
+
+.title, .title h1, .title a {
+    color: #ffffff;
+    text-align: center;
+    font-size: 40pt;
+    font-family: Montserrat;
+}
+
+.footer {
+    border-top: 1px solid #ccc;
+    margin-top: 30px;
+    padding-top: 4px;
+    text-align: right;
+    font-size: 12px;
+}
