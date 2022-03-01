@@ -1,7 +1,8 @@
 class Ray {
-    constructor(pos, angle) {
+    constructor(pos, angle, sketch) {
         this.pos = pos;
         this.dir = p5.Vector.fromAngle(angle);
+        this.sketch = sketch
     }
 
     setAngle(angle) {
@@ -11,11 +12,11 @@ class Ray {
     render(opacity) {
         // fill(255,0,0,127);
         // stroke(100)        
-        push();
-        stroke(opacity);
-        translate(this.pos.x, this.pos.y);
-        line(0,0, -this.dir.x * 5, -this.dir.y * 5);
-        pop();
+        this.sketch.push();
+        this.sketch.stroke(opacity);
+        this.sketch.translate(this.pos.x, this.pos.y);
+        this.sketch.line(0,0, -this.dir.x * 5, -this.dir.y * 5);
+        this.sketch.pop();
     }
 
     cast(wall) {
@@ -38,7 +39,7 @@ class Ray {
         const u = -((x1 - x2) * (y1 - y3) - (y1 - y2) * (x1 - x3)) / den;
 
         if (t > 0 && t < 1 && u < 0) {
-            const pt = createVector();
+            const pt = this.sketch.createVector();
             pt.x = x1 + t * (x2 - x1);
             pt.y = y1 + t * (y2 - y1);
             return pt;

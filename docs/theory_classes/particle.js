@@ -1,12 +1,13 @@
 class Particle {
-    constructor(x,y, fov = 60, step = 1) {
-        this.pos = createVector(x,y);
+    constructor(x,y, fov = 60, step = 1, sketch) {
+        this.pos = sketch.createVector(x,y);
         this.rays = [];
-        this.heading = radians(90);
+        this.heading = sketch.radians(90);
         this.fov = fov
         this.step = step
+        this.sketch = sketch
         for (var angle = Math.ceil(-this.fov / 2) + 90; angle < Math.ceil(this.fov / 2) + 90; angle += step) {
-            this.rays.push(new Ray(this.pos, radians(angle)));
+            this.rays.push(new Ray(this.pos, this.sketch.radians(angle), this.sketch));
         }
     }
 
@@ -15,7 +16,7 @@ class Particle {
         this.rays = [];
         this.step = step
         for (let a = -this.fov / 2; a < this.fov / 2; a += this.step) {
-          this.rays.push(new Ray(this.pos, radians(a) + this.heading));
+          this.rays.push(new Ray(this.pos, this.sketch.radians(a) + this.heading, this.sketch));
         }
       }
 
@@ -34,7 +35,7 @@ class Particle {
         this.heading += angle;
         let index = 0;
         for (let a = -this.fov / 2; a < this.fov / 2; a += this.step) {
-          this.rays[index].setAngle(radians(a) + this.heading);
+          this.rays[index].setAngle(this.sketch.radians(a) + this.heading);
           index++;
         }
     }
@@ -57,21 +58,21 @@ class Particle {
                 }
             }
             if (closest) {
-                stroke(50)
-                strokeWeight(1)
-                line(this.pos.x, this.pos.y, closest.x, closest.y)
+                this.sketch.stroke(50)
+                this.sketch.strokeWeight(1)
+                this.sketch.line(this.pos.x, this.pos.y, closest.x, closest.y)
             }
         }
     }
 
     render(opacity = 0) {
-        push();
-        stroke(opacity);
-        ellipse(this.pos.x, this.pos.y, 6);
+        this.sketch.push();
+        this.sketch.stroke(opacity);
+        this.sketch.ellipse(this.pos.x, this.pos.y, 6);
         // for (var ray of this.rays) {
         //     ray.render(opacity);
         // }
-        pop();
+        this.sketch.pop();
     }
 
 }
