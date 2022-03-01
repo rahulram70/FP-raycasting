@@ -2,8 +2,8 @@ const TILE_SIZE = 48;
 const MAP_NUM_ROWS = 11;
 const MAP_NUM_COLS = 15;
 
-const WINDOW_WIDTH = MAP_NUM_COLS * TILE_SIZE
-const WINDOW_HEIGHT = MAP_NUM_ROWS * TILE_SIZE
+const WINDOW_WIDTH = MAP_NUM_COLS * TILE_SIZE;
+const WINDOW_HEIGHT = MAP_NUM_ROWS * TILE_SIZE;
 
 
 console.log(WINDOW_WIDTH);
@@ -44,7 +44,7 @@ class Map {
         let tileY = i * TILE_SIZE;
         let tileColor = this.grid[i][j] == 1 ? "#222" : "#fff";
         fill(tileColor);
-        stroke("#222")
+        stroke("#222");
         rect(tileX, tileY, TILE_SIZE, TILE_SIZE);
       }
     }
@@ -98,7 +98,7 @@ class Player {
   }
 }
 
-class Ray {
+class RayLine {
   constructor(rayAngle) {
     this.rayAngle = normalizeAngle(rayAngle); // the angle will be normalized
     this.wallHitX = 0;
@@ -268,9 +268,9 @@ function keyPressed() {
   } else if (keyCode == DOWN_ARROW) {
     player.walkDirection = -1;
   } else if (keyCode == RIGHT_ARROW) {
-    player.turnDirection = 1
+    player.turnDirection = 1;
   } else if (keyCode == LEFT_ARROW) {
-    player.turnDirection = -1
+    player.turnDirection = -1;
   }
 }
 
@@ -280,9 +280,9 @@ function keyReleased() {
   } else if (keyCode == DOWN_ARROW) {
     player.walkDirection = 0;
   } else if (keyCode == RIGHT_ARROW) {
-    player.turnDirection = 0
+    player.turnDirection = 0;
   } else if (keyCode == LEFT_ARROW) {
-    player.turnDirection = 0
+    player.turnDirection = 0;
   }
 }
 
@@ -309,9 +309,9 @@ function castAllRays() {
     // loop all columns casting the rays
     for (var i = 0; i < NUM_RAYS; i++) {
         var rayAngle = (player.rotationAngle - FOV/2.0) + (i/NUM_RAYS) * FOV; // TODO: REVIEW AND TRY TO EXPLAIN THIS LINE OF CODE
-        var ray = new Ray(rayAngle);
-        ray.cast();
-        rays.push(ray);
+        var rayLine = new RayLine(rayAngle);
+        rayLine.cast();
+        rays.push(rayLine);
 
         // rayAngle += FOV / NUM_RAYS;
 
@@ -343,8 +343,8 @@ function draw() {
   grid.render();
   castAllRays();
 
-  for (ray of rays) {
-    ray.render();
+  for (rayLine of rays) {
+    rayLine.render();
   }
   player.render();
 
