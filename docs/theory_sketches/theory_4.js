@@ -23,10 +23,9 @@ const theory_4 = ( sketch ) => {
         walls.push(new Boundary(sketch.width,0,sketch.width,sketch.height, sketch));
         walls.push(new Boundary(sketch.width,sketch.height,0,sketch.height, sketch));
         walls.push(new Boundary(0,sketch.height,0,0, sketch));
+        walls.push(new Boundary(100,100,100,200, sketch));
         walls.push(new Boundary(300,100,400,200, sketch));
-        walls.push(new Boundary(300,100,400,200, sketch));
-        walls.push(new Boundary(300,100,400,200, sketch));
-        walls.push(new Boundary(300,100,400,200, sketch));
+        walls.push(new Boundary(100,400,200,400, sketch));
 
         player = new Particle(sketch.width/2, sketch.height/2, 360, 1, sketch)
     }
