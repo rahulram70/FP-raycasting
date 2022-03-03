@@ -325,10 +325,13 @@ const raycast_no_walls = ( sketch ) => {
     FOV = angle * (Math.PI/180);
   }
 
+  let slider2;
   sketch.setup = () => {
     var myCanvas = sketch.createCanvas(WINDOW_WIDTH*2, WINDOW_HEIGHT);
+    slider2 = sketch.createSlider(1, NUM_RAYS, NUM_RAYS);
+    slider2.parent("#slider2");
     myCanvas.parent("gameWindow")
-    // bg = loadImage('image.jpg');
+    //bg = sketch.loadImage('image2.jpg');
     sketch.mouse = sketch.mouseX;
 
   }
@@ -342,6 +345,7 @@ const raycast_no_walls = ( sketch ) => {
 
   sketch.draw = () => {
     update();
+    //sketch.image(bg,WINDOW_WIDTH,0, sketch.width, sketch.height);
     grid.render();
     castAllRays();
 
@@ -350,8 +354,8 @@ const raycast_no_walls = ( sketch ) => {
     }
     player.render();
 
-
-    for (var i = 0; i < NUM_RAYS; i++) {
+    //console.log("num rays: " + NUM_RAYS);
+    for (var i = 0; i < slider2.value(); i++) {
       var lineHeight = 32*(WINDOW_HEIGHT) / rays[i].distance;
 
       var drawStart = -lineHeight / 2 + (WINDOW_HEIGHT + 100) / 2;
