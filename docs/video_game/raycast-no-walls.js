@@ -91,12 +91,12 @@ const raycast_no_walls = ( sketch ) => {
       sketch.stroke("red");
 
       // a line for showing the direction of the player
-      sketch.line(
+      /*sketch.line(
         this.x,
         this.y,
         this.x + Math.cos(this.rotationAngle) * 30,
         this.y + Math.sin(this.rotationAngle) * 30
-      );
+      );*/
     }
   }
 
@@ -301,7 +301,7 @@ const raycast_no_walls = ( sketch ) => {
     return Math.sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
   }
 
-  function castAllRays() {
+  function castAllRays(sliderRays) {
       var columnId = 0;
 
       // start first ray subtracting half of the FOV
@@ -309,7 +309,7 @@ const raycast_no_walls = ( sketch ) => {
       rays = [];
 
       // loop all columns casting the rays
-      for (var i = 0; i < NUM_RAYS; i++) {
+      for (var i = 0; i < sliderRays; i++) {
           var rayAngle = (player.rotationAngle - FOV/2.0) + (i/NUM_RAYS) * FOV; // TODO: REVIEW AND TRY TO EXPLAIN THIS LINE OF CODE
           var rayLine = new RayLine(rayAngle);
           rayLine.cast();
@@ -347,7 +347,7 @@ const raycast_no_walls = ( sketch ) => {
     update();
     //sketch.image(bg,WINDOW_WIDTH,0, sketch.width, sketch.height);
     grid.render();
-    castAllRays();
+    castAllRays(slider2.value());
 
     for (rayLine of rays) {
       rayLine.render();
@@ -379,6 +379,39 @@ const raycast_no_walls = ( sketch ) => {
       sketch.rect((i*4) + WINDOW_WIDTH, (drawEnd), 0, WINDOW_HEIGHT);
       sketch.strokeWeight(2);
     }
+    var unusedRays = NUM_RAYS - slider2.value();
+    var startVal = WINDOW_WIDTH + slider2.value()*4 - 2;
+    //sketch.rect(slider2.value() * 4 + WINDOW_WIDTH, WINDOW_HEIGHT, unusedRays * WINDOW_WIDTH / NUM_RAYS, WINDOW_HEIGHT);
+    console.log(WINDOW_HEIGHT);
+    sketch.noStroke();
+    sketch.fill(0, 0, 0);
+    sketch.rect(startVal, 0, unusedRays*4, WINDOW_HEIGHT);
+    sketch.describe('white rect with black outline in mid-right of canvas');
+
+    /*for (var i = slider2.value(); i < NUM_RAYS; i++) {
+      var lineHeight = 32*(WINDOW_HEIGHT) / rays[i].distance;
+
+      var drawStart = -lineHeight / 2 + (WINDOW_HEIGHT + 100) / 2;
+      if (drawStart < 0)
+        drawStart = 0;
+      var drawEnd   = lineHeight / 2 + WINDOW_HEIGHT / 2;
+      if (drawEnd >= WINDOW_HEIGHT)
+        drawEnd = WINDOW_HEIGHT - 1;
+
+
+
+      // where 3d stuff is being rendered
+      sketch.noStroke();
+      sketch.stroke("white");
+      sketch.strokeWeight(4);
+      sketch.fill(255, 0, 0);
+      sketch.rect((i*4) + WINDOW_WIDTH, (drawStart-TILE_SIZE), 0, (drawEnd-drawStart)+TILE_SIZE);
+      sketch.stroke(0);
+      sketch.rect((i*4) + WINDOW_WIDTH, 0, 0, (drawStart));
+      // sketch.stroke(255);
+      sketch.rect((i*4) + WINDOW_WIDTH, (drawEnd), 0, WINDOW_HEIGHT);
+      sketch.strokeWeight(2);
+    }*/
   }
 
   window.addEventListener("keydown", function(e) {
