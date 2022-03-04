@@ -56,6 +56,10 @@ h5 {
     width: 60vw;
 }
 
+span {
+    background: black !important;
+  }
+
 #home > p { 
     margin: 10px 0 10px 0; 
     font-size: 16pt;
@@ -114,6 +118,7 @@ hr {
 }
 
 .Header {
+    margin-bottom: 700px;
     left: 0;
     width: 50vw;
     /* background-color: #111; */

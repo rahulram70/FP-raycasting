@@ -3,6 +3,7 @@
 <head>
 <title>CSE442 | Final Project</title>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="fullpage.min.css">
 <!-- P5 lib -->
     <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
     <script src="./data/p5.func.js"></script>
@@ -169,7 +170,8 @@
         <script>
         new fullpage('#fullPage', {
             navigation: true,
-            navigationTooltips: [],
+            navigationTooltips: ['Section1', 'Section2', 'Section3', 'Section4', 'Section5'],
+            navigationPosition: 'left',
             showActiveTooltip: true,
             controlArrows: false,
             slidesNavigation: true,
