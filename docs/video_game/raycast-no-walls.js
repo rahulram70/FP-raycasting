@@ -384,7 +384,7 @@ const raycast_no_walls = ( sketch ) => {
     //sketch.rect(slider2.value() * 4 + WINDOW_WIDTH, WINDOW_HEIGHT, unusedRays * WINDOW_WIDTH / NUM_RAYS, WINDOW_HEIGHT);
     console.log(WINDOW_HEIGHT);
     sketch.noStroke();
-    sketch.fill(0, 0, 0);
+    sketch.fill(255, 255, 255);
     sketch.rect(startVal, 0, unusedRays*4, WINDOW_HEIGHT);
     sketch.describe('white rect with black outline in mid-right of canvas');
 
