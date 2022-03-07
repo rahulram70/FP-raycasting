@@ -56,10 +56,6 @@ h5 {
     width: 60vw;
 }
 
-span {
-    background: black !important;
-  }
-
 #home > p { 
     margin: 10px 0 10px 0; 
     font-size: 16pt;
