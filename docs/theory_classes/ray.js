@@ -1,12 +1,17 @@
 class Ray {
     constructor(pos, angle, sketch) {
         this.pos = pos;
+        this.angle = angle
         this.dir = p5.Vector.fromAngle(angle);
-        this.sketch = sketch
+        this.sketch = sketch;
+        this.len;
+        this.dest_pos;
+        this.color;
     }
 
     setAngle(angle) {
         this.dir = p5.Vector.fromAngle(angle)
+        this.angle = angle
     }
 
     render(opacity) {
@@ -42,6 +47,7 @@ class Ray {
             const pt = this.sketch.createVector();
             pt.x = x1 + t * (x2 - x1);
             pt.y = y1 + t * (y2 - y1);
+            this.color = wall.color
             return pt;
         } else {
             return;

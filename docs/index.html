@@ -8,6 +8,7 @@
     <script src="./data/p5.func.js"></script>
 <!-- Theory Sketch classes -->
     <script src="./theory_classes/Boundary.js"></script>
+    <script src="./theory_classes/Boundary_colored.js"></script>
     <script src="./theory_classes/particle.js"></script>
     <script src="./theory_classes/ray.js"></script>
 <!-- Theory Sketches -->
@@ -15,7 +16,10 @@
     <script src="./theory_sketches/theory_2.js"></script>
     <script src="./theory_sketches/theory_3.js"></script>
     <script src="./theory_sketches/theory_4.js"></script>
-    <script src="./video_game/raycast-no-walls.js"></script>
+    <script src="./theory_sketches/theory_5.js"></script>
+    <script src="./theory_sketches/theory_6.js"></script>
+    <script src="./theory_sketches/theory_7.js"></script>
+    <!-- <script src="./video_game/raycast-no-walls.js"></script> -->
 <!-- <style media="all">
 * { padding: 0; margin: 0; }
 </style> -->
@@ -26,10 +30,16 @@
             <div class="parent">
                 <div class="Header">
                     <p id = "theory_1-interact-1">
-                        Click me to create the walls of our world
+                        The first thing our game needs is a world! <br> 
+                        Right now we just have a blank canvas, so click on me to create our world. <br>
+                        For now, it's pretty basic. We'll be making our world a grid, and if a grid cell is filled then there will exist a wall there, and otherwise its free space. <br>
+                        Currently, we just have a border around the edge of our world, but we'll add more soon enough!
                     </p>
                     <p id = "theory_1-interact-2">
-                        Then me to create the player/particle
+                        Though, a world is hardly any fun without anyway to explore it. <br>
+                        So now let's make a player to represent us. <br>
+                        That's us! We're right now we're just a little dot in the center of our world. <br>
+                        Blind and motionless...
                     </p>
                 </div>
                 <div class="caster" id="theory_1">
@@ -40,10 +50,14 @@
             <div class="parent">
                 <div class="Header">
                     <p id = "theory_2_interact_1">
-                        Click me to cast our first ray out!
+                        In this world, we will use our distance from the walls as our only sense. <br>
+                        To do this, let's cast a ray out from ourself and stop it once it hits a wall. <br>
                     </p>
                     <p>
-                        Then when the ray is made, use the left and right arrow key to look around
+                        Of course, this wouldn't be very useful if we couldn't move or look around. <br>
+                        Try and move and look around with the arrow keys on your keyboard! <br>
+                        Notice how the ray's length gets updated as we move closer and further from the wall. <br>
+                        For now let's keep track of this length, it will come in handly later.
                     </p>
                 </div>
                 <div class="caster" id="theory_2">
@@ -54,13 +68,17 @@
             <div class="parent">
                 <div class="Header">
                     <p>
-                        Now lets cast more rays out! The particle will follow your mouse, try moving it around
+                        But how much can we do with just one ray? Currently, we only know how far a wall is directly in front of us is. <br>
+                        Let's cast out more rays in more directions! Now we can get more information about the area surrounding us. <br>
+                        It's also just fun to look at, try moving your mouse around the screen. and see how the rays react. <br>
                     </p>
                     <p id = "theory_3_interact_1">
-                        Click me to add some more walls! Look at how the rays react
+                        Our world is pretty boring as it stands. Let's add some more walls. <br>
+                        Now try moving the player around. <br>
+                        Notice how the rays hitting the newly made walls don't cast past the first intersection. <br>
                     </p>
                     <p id = "theory_3_interact_2">
-                        Click me to add more rays.
+                        Let's add even more rays! The more information the better. <br>
                     </p>
                 </div>
                 <div class="caster" id="theory_3">
@@ -71,11 +89,94 @@
             <div class="parent">
                 <div class="Header">
                     <p>
-                        Try messing with the fov! And look around with the arrow keys again
+                        Though, we are trying to build up a mock first person render of the world we're occupying. <br>
+                        We don't normally see all of our surroundings at one time, we see a small subsection in front of us. <br>
+                        This is called our field of view. Currently, the field of view is set to 360 degrees. <br>
+                        In other words, we are gathering information from rays being cast all around our player. <br>
+
+                        Try messing with the field of view with the slider below. Then try looking around with the arrow keys. <br>
+                        Before, there was no need to look around because we could see everything around us, but with a smaller fov
+                        we can see how our view of the world changes.
                     </p>
                     <div id="slider"></div>
                 </div>
                 <div class="caster" id="theory_4">
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="parent">
+                <div class="Header">
+                    <p>
+                        Now that all of our pieces are in place, let's start creating our first person view! <br>
+                        For this section, we will be sticking with a fixed field of view of 90, and casting 180 rays in this view.
+                    </p>
+                    <p id = "theory_5_interact_1">
+                        Let's first consider the very first ray cast out, the ray pointing furthest to the left. <br>
+                        We will take this rays distance from the player, and draw it below in our first person view, which we will put below. <br>
+                        We will use red to represent the color of the wall, and darker colors to represent the floor and ceiling.
+                    </p>
+                    <p id = "theory_5_interact_3">
+                        Now, let's cast the ray out again, this time drawing how our player will see what this ray is casting to. <br> 
+                        Notice how as the ray casts further out, the wall appears to get smaller. This is simulating the wall appearing further away! 
+                    </p>
+                    <p id = "theory_5_interact_4">
+                        However, this is just one of the 180 different rays being cast in this small field of view. <br>
+                        Our view would be huge if we considered all of these rays as this size! <br>
+                        Let's scale down this ray's contribution to our view to its correct size.
+                    </p>
+                    <p id = "theory_5_interact_5">
+                        Then, we're drawing the leftmost ray aren't we? It shouldn't appear in the very middle of our view! <br>
+                        Let's move it where it should be.
+                    </p>
+                    <p id = "theory_5_interact_6">
+                        Now, let's repeat these steps again for ALL of the rays in our field of view. <br>
+                        Of course, we'll be skipping to the final render size and position. <br>
+                        The wall on our left will be red, the world border will be green, and the wall right next to the world border will be blue.
+                    </p>
+                    <p id = "theory_5_interact_7">
+                        Our view looks a little skewed doesn't it? <br>
+                        Look at the red wall in particular. We are standing, looking straight on towards the wall but it the parts of the wall on the left most part of our screen look smaller? <br>
+                        
+                        This is called the fisheye effect. This is because the distance we are using to calculate the size of the wall on our first person render is the true distance of the ray being cast <br>
+                        But look! The rays at an angle further away from where we are looking will be longer than ones at a smaller angle when looking at a wall perpendicular to us. <br>
+                        
+                        Let's introduce the camera plane. The camera plane is a plane perpendicular to where we are looking and represents the screen that our first person view is being displayed on. <br>
+                        EXPLKAIN THIS BETTER <br>
+                        Instead, we will use this distance, the perpendicular distance from the camera plane, instead of the true distance of the ray.
+                    </p>
+                    <p id = "theory_5_interact_8">
+                        Look at how our view updates when we use this perpendicular distance instead of the true ray length. <br>
+
+                        Try toggling back and forth to really see the difference between our adjusted view and the fisheye
+                    </p>
+                </div>
+                <div class="caster" id="theory_5">
+                </div>
+            </div>
+        </div>
+        <div class="section">    
+            <div class="parent">
+                <div class="Header">
+                    <p id = "theory_6_interact_1">
+                        ADD TEXT EXPLAINING HOW CHANGE IN NUMBER OF RAYS CHANGES RESOLUTION
+                    </p>
+                    <div id="theory_6_slider"></div>
+                </div>
+                <div class="caster" id="theory_6">
+                </div>
+            </div>
+        </div>
+        <div class="section">    
+            <div class="parent">
+                <div class="Header">
+                    <p id = "theory_7_interact_1">
+                        ADD TEXT EXPLAINING CHANGE OF FOV MAKES ZOOM IN / OUT EFFECT
+                    </p>
+                    <div id="theory_7_slider"></div>
+                </div>
+                <div class="caster" id="theory_7">
                 </div>
             </div>
         </div>

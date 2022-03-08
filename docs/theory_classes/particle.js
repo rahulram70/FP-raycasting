@@ -1,12 +1,12 @@
 class Particle {
-    constructor(x,y, fov = 60, step = 1, sketch) {
+    constructor(x,y, fov = 60, step, sketch) {
         this.pos = sketch.createVector(x,y);
         this.rays = [];
         this.heading = sketch.radians(90);
         this.fov = fov
         this.step = step
         this.sketch = sketch
-        for (var angle = Math.ceil(-this.fov / 2) + 90; angle < Math.ceil(this.fov / 2) + 90; angle += step) {
+        for (var angle = Math.ceil(-this.fov / 2) + 90; angle < Math.ceil(this.fov / 2) + 90; angle += this.step) {
             this.rays.push(new Ray(this.pos, this.sketch.radians(angle), this.sketch));
         }
     }
@@ -44,23 +44,27 @@ class Particle {
 
     look(walls) {
         for (var i = 0; i < this.rays.length; i++) {
-            const ray = this.rays[i];
+            var ray = this.rays[i];
             var closest = null;
-            var record = Infinity;
+            var euclidean_dist = Infinity;
             for (var wall of walls) {
                 const pt = ray.cast(wall)
                 if (pt) {
                     const d = p5.Vector.dist(this.pos, pt);
-                    if (d < record) {
-                        record = d;
+                    if (d < euclidean_dist) {
+                        euclidean_dist = d;
                         closest = pt
                     }
                 }
             }
             if (closest) {
-                this.sketch.stroke(50)
+                this.sketch.push()
+                this.sketch.stroke(225,0,0, )
                 this.sketch.strokeWeight(1)
                 this.sketch.line(this.pos.x, this.pos.y, closest.x, closest.y)
+                this.sketch.pop()
+                ray.dest_pos = closest;
+                ray.len = p5.Vector.dist(this.pos, closest);
             }
         }
     }
