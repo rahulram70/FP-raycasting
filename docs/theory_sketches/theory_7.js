@@ -19,10 +19,6 @@ const theory_7 = ( sketch ) => {
     function render_3d(num_rays) {
         for (var i = 0; i < num_rays; i++) {
             dist = player.rays[i].len * Math.cos(player.rays[i].angle - player.heading)
-            if (i == 0) {
-                console.log(dist)
-                console.log(Math.cos(player.rays[i].angle - player.heading))
-            }
             var lineHeight = .5*CANVAS_HEIGHT - (.5*CANVAS_HEIGHT - 48*.5*CANVAS_HEIGHT/dist) ;
                 var drawStart = -lineHeight / 2 + (.5*CANVAS_HEIGHT) / 2;
                 if (drawStart < 0)
