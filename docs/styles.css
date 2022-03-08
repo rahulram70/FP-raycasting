@@ -114,6 +114,7 @@ hr {
 }
 
 .Header {
+    margin-bottom: 700px;
     left: 0;
     width: 50vw;
     /* background-color: #111; */

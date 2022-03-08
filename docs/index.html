@@ -3,6 +3,7 @@
 <head>
 <title>CSE442 | Final Project</title>
 <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="fullpage.min.css">
 <!-- P5 lib -->
     <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
     <script src="./data/p5.func.js"></script>
@@ -190,6 +191,7 @@
                         Use the arrow keys to move the dot and rays
                     </p>
                     <a href="https://rahulram70.github.io/a4-raycasters/" target="_blank">2D Raycaster Grid</a>
+                    <div id="slider2"></div>
                 </div>
                 <div class="caster" id="gameWindow">
                 </div>
@@ -269,7 +271,8 @@
         <script>
         new fullpage('#fullPage', {
             navigation: true,
-            navigationTooltips: [],
+            navigationTooltips: ['Section1', 'Section2', 'Section3', 'Section4', 'Section5'],
+            navigationPosition: 'right',
             showActiveTooltip: true,
             controlArrows: false,
             slidesNavigation: true,
@@ -277,7 +280,7 @@
             autoScrolling: true,
             scrollingSpeed: 1000,
             easing: 'easeInOutCubic',
-            keyboardScrolling: true,
+            keyboardScrolling: false,
             animateAnchor: true,
             recordHistory: true
         })
