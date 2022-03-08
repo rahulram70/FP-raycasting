@@ -68,12 +68,12 @@ const raycast_no_walls = ( sketch ) => {
     update() {
       this.rotationAngle += this.turnDirection * this.rotationSpeed;
 
-      //if (!grid.hasWallAt(this.x, this.y)) {
+      if (!isColliding()) {
         // only do that if the player is not colliding
         let moveStep = this.walkDirection * this.moveSpeed;
         this.x += Math.cos(this.rotationAngle) * moveStep;
         this.y += Math.sin(this.rotationAngle) * moveStep;
-      //}
+      }
 
       // reseting angle
       if (this.rotationAngle < 0)
@@ -325,6 +325,22 @@ const raycast_no_walls = ( sketch ) => {
     FOV = angle * (Math.PI/180);
   }
 
+  function isColliding() {
+    var posX = player.x;
+    var posY = player.y;
+
+    //if (!grid.hasWallAt(this.x, this.y)) {
+    // only do that if the player is not colliding
+    let moveStep = player.walkDirection * player.moveSpeed;
+    posX += Math.cos(player.rotationAngle) * moveStep;
+    posY += Math.sin(player.rotationAngle) * moveStep;
+    //}
+    //console.log(posX);
+    //console.log(posY);
+    return grid.hasWallAt(posX, posY);
+  }
+
+
   let slider2;
   sketch.setup = () => {
     var myCanvas = sketch.createCanvas(WINDOW_WIDTH*2, WINDOW_HEIGHT);
@@ -384,7 +400,7 @@ const raycast_no_walls = ( sketch ) => {
     //sketch.rect(slider2.value() * 4 + WINDOW_WIDTH, WINDOW_HEIGHT, unusedRays * WINDOW_WIDTH / NUM_RAYS, WINDOW_HEIGHT);
     console.log(WINDOW_HEIGHT);
     sketch.noStroke();
-    sketch.fill(255, 255, 255);
+    sketch.fill(211, 211, 211);
     sketch.rect(startVal, 0, unusedRays*4, WINDOW_HEIGHT);
     sketch.describe('white rect with black outline in mid-right of canvas');
 
