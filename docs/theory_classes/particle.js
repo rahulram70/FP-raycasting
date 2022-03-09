@@ -72,10 +72,13 @@ class Particle {
     render(opacity = 0) {
         this.sketch.push();
         this.sketch.stroke(opacity);
+        this.sketch.fill(255-opacity,0,0)
         this.sketch.ellipse(this.pos.x, this.pos.y, 6);
-        // for (var ray of this.rays) {
-        //     ray.render(opacity);
-        // }
+        this.sketch.pop();
+        this.sketch.push();
+        let heading_vector = p5.Vector.fromAngle(this.heading, 20)
+        this.sketch.stroke(opacity);
+        this.sketch.line(this.pos.x, this.pos.y, this.pos.x-heading_vector.x, this.pos.y-heading_vector.y);
         this.sketch.pop();
     }
 

@@ -12,10 +12,49 @@ const theory_2 = ( sketch ) => {
     var theory_2_canvas; 
     var e = new p5.Ease()
 
+    var curr_screen_2 = 0
+    var text_div_2
+    var next_button_2;
+    var prev_button_2;
+    var text_fade_2 = 0;
+    
+    const section_2_text = 
+        [
+            `<p>
+                In this world, we will use our distance from our surroundings to construct our first person view. <br>
+            </p>`,
+
+            `<p>
+                To do this, let's cast a ray out from ourself and stop it once it hits a wall. <br>
+            </p>`,
+
+            `<p>
+                Of course, this wouldn't be very useful if we couldn't move or look around. <br>
+                Try and move and look around with the arrow keys on your keyboard! <br>
+            </p>
+            <p>
+                For now let's keep track of this length, it will come in handly later.
+            </p>`,
+        ]
+
+    function updateDisplayText(text_div_2, curr_screen) {
+        text_fade_2 = 0;
+        drawPlayer = false;
+
+        if (curr_screen >= 1) {
+            drawRay = true
+        } else {
+            drawRay = false
+            lineLen = 0;
+            done = false;
+        }
+
+        text_div_2.html(section_2_text[curr_screen])
+    }
+
     sketch.setup = () => {
         theory_2_canvas = sketch.createCanvas(TILE_SIZE * MAP_NUM_COLS, TILE_SIZE*MAP_NUM_ROWS);
         theory_2_canvas.parent("theory_2");
-        sketch.select("#theory_2_interact_1").mouseClicked(function() {drawRay = true})
         
         walls.push(new Boundary(TILE_SIZE,TILE_SIZE,sketch.width - TILE_SIZE,TILE_SIZE, sketch));
         walls.push(new Boundary(sketch.width - TILE_SIZE, TILE_SIZE, sketch.width - TILE_SIZE, sketch.height - TILE_SIZE, sketch));
@@ -23,6 +62,51 @@ const theory_2 = ( sketch ) => {
         walls.push(new Boundary(TILE_SIZE,sketch.height - TILE_SIZE, TILE_SIZE, TILE_SIZE, sketch));
 
         player = new Particle(sketch.width/2, sketch.height/2, 1, 1, sketch)
+
+        text_div_2 = sketch.createDiv(section_2_text[0])
+            .attribute('class', 'section_text')
+            .center('horizontal')
+            .position(0, sketch.height/3)
+            .style('opacity', text_fade_2)
+            // .attribute('width', 22)
+            .hide()
+
+        next_button_2 = sketch.createButton("Next")
+            .attribute('class', 'button_next')
+            .center('horizontal')
+            .style('border', '2px solid #5cb85c')
+            .size(50, 20)
+            .mousePressed(() => {
+                if (curr_screen_2 < section_2_text.length - 1) {
+                    curr_screen_2++;
+                    updateDisplayText(text_div_2, curr_screen_2);
+                } else if (curr_screen_2 == section_2_text.length - 1) {
+                    fullpage_api.moveTo('page3', 0);
+                }
+            })
+            .position(TILE_SIZE*MAP_NUM_COLS/2 + 100, 750)
+            .hide()
+
+        prev_button_2 = sketch.createButton("Back")
+            .attribute('class', 'button_prev')
+            .center('horizontal')
+            .style('border', '2px solid #5bc0de')
+            .size(50, 20)
+            .mousePressed(() => {
+                if (curr_screen_2 > 0) {
+                    curr_screen_2--;
+                    updateDisplayText(text_div_2, curr_screen_2);
+                } else if (curr_screen_2 === 0) {
+                    fullpage_api.moveTo('page1', 0);
+                }
+            })
+            .position(TILE_SIZE*MAP_NUM_COLS/2, 750)
+            .hide()
+
+        
+        text_div_2.parent('#theory_2_text')
+        next_button_2.parent('theory_2')
+        prev_button_2.parent('theory_2')
     }
 
     function draw_details() {
@@ -52,6 +136,16 @@ const theory_2 = ( sketch ) => {
 
     sketch.draw = () => {
         draw_details()
+        text_div_2.show()
+        next_button_2.show()
+        prev_button_2.show()
+
+        text_div_2.style('opacity', text_fade_2)
+
+        if (text_fade_2 < 1) {
+            text_fade_2 += .07;
+        }
+
 
         if (done) {
             if (sketch.keyIsDown(sketch.LEFT_ARROW)) {
@@ -75,8 +169,8 @@ const theory_2 = ( sketch ) => {
         }
         if (drawRay && !done) {
             sketch.push()
-            sketch.stroke(50)
-            sketch.line(player.pos.x, player.pos.y, player.pos.x, player.pos.y - (sketch.windowHeight/2) * e.cubicInOut(lineLen))
+            sketch.stroke('red')
+            sketch.line(player.pos.x, player.pos.y, player.pos.x, player.pos.y - (sketch.height/2 - TILE_SIZE) * e.cubicInOut(lineLen))
             sketch.pop()
             lineLen += .01
             if (lineLen > 1) {

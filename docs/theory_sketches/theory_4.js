@@ -9,12 +9,29 @@ const theory_4 = ( sketch ) => {
     var theory_4_canvas; 
     var walls = [];
 
+    var text_div_4
+    var next_button_4;
+    var prev_button_4;
+    
+    const section_4_text = 
+        [
+            `<p>Though, we are trying to build up a mock first person render of the world we're occupying. <br>
+            We don't normally see all of our surroundings at one time, we see a small subsection in front of us. <br>
+            This is called our field of view. Currently, the field of view is set to 360 degrees. <br>
+            In other words, we are gathering information from rays being cast all around our player. <br>
+
+            Try messing with the field of view with the slider below. Then try looking around with the arrow keys. <br>
+            Before, there was no need to look around because we could see everything around us, but with a smaller fov
+            we can see how our view of the world changes.</p>`
+        ]
+
+
+
     sketch.setup = () => {
         theory_4_canvas = sketch.createCanvas(TILE_SIZE * MAP_NUM_COLS, TILE_SIZE*MAP_NUM_ROWS);
         theory_4_canvas.parent("theory_4");
 
         slider = sketch.createSlider(1, 360, 360)
-        slider.parent("#slider")
 
         // World Boundaries
         walls.push(new Boundary(TILE_SIZE,TILE_SIZE,sketch.width - TILE_SIZE,TILE_SIZE, sketch));
@@ -45,7 +62,47 @@ const theory_4 = ( sketch ) => {
         walls.push(new Boundary(3*TILE_SIZE,9*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, sketch))    
 
         player = new Particle(sketch.width/2 + 3, sketch.height/2 - 3, 360, 1, sketch)
+    
+        text_div_4 = sketch.createDiv(section_4_text[0])
+            .attribute('class', 'section_text')
+            .attribute('id', "xd")
+            .center('horizontal')
+            .position(0, sketch.height/3)
+            // .style('opacity', 1)
+            // .attribute('width', 22)
+            .hide()
+
+        next_button_4 = sketch.createButton("Next")
+            .attribute('class', 'button_next')
+            .center('horizontal')
+            .style('border', '2px solid #5cb85c')
+            .size(50, 20)
+            .mousePressed(() => {
+                    fullpage_api.moveTo('page5', 0);
+            })
+            .position(TILE_SIZE*MAP_NUM_COLS/2 + 100, 750)
+            .hide()
+
+        prev_button_4 = sketch.createButton("Back")
+            .attribute('class', 'button_prev')
+            .center('horizontal')
+            .style('border', '2px solid #5bc0de')
+            .size(50, 20)
+            .mousePressed(() => {
+                fullpage_api.moveTo('page3', 0);
+            })
+            .position(TILE_SIZE*MAP_NUM_COLS/2, 750)
+            .hide()
+
+        
+        text_div_4.parent('#theory_4_text')
+        next_button_4.parent('theory_4')
+        prev_button_4.parent('theory_4')
+        slider.parent("#xd")
+
+
     }
+
 
     function draw_details() {
         sketch.background(255);
@@ -92,6 +149,9 @@ const theory_4 = ( sketch ) => {
 
     sketch.draw = () => {
         draw_details()
+        text_div_4.show()
+        next_button_4.show()
+        prev_button_4.show()
 
         if (sketch.keyIsDown(sketch.LEFT_ARROW)) {
             player.rotate(-.03)

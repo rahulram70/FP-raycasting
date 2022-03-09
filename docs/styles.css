@@ -107,27 +107,66 @@ hr {
     font-size: 12px;
 }
 
-.parent {
+/* .parent {
     left: 0;
     width: 45vw;
-    display: flex;
-}
+    display: absolute;
+} */
 
-.Header {
-    margin-bottom: 1000px;
+/* .Header { */
+    /* margin-bottom: 700px; */
     /* left: 0; */
-    width: 45vw;
+    /* width: 45vw; */
     /* background-color: #111; */
-  }
+  /* } */
   
   /* Control the right side */
   .caster {
     width: 45%;
+    /* margin-top: 10vh; */
     height: 100vh;
     margin: 0;
     display: flex;
     right: 10vw;
-    position: fixed;
+    top: 0;
+    position: absolute;
     justify-content: center;
     align-items: center;
+  }
+
+  .disp_text_holder {
+      width: 45vw;
+  }
+
+  .section_text {
+    margin-left: 5vw;
+    width: 40vw;
+    position: absolute;
+    font-size: 1.4em;
+    color:black;
+    /* top: 222vh; */
+  }
+  
+  .button_next {
+    transition-duration: 0.4s;
+    left: 50vw;
+    top: 5;
+  }
+  
+
+  .button_next:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+  }
+
+  .button_prev {
+    transition-duration: 0.4s;
+    left: 50vw;
+    top: 5;
+  }
+  
+
+  .button_prev:hover {
+    background-color: #5bc0de;
+    color: white;
   }

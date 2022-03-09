@@ -12,9 +12,21 @@ const theory_6 = ( sketch ) => {
     var player;
     var theory_6_canvas; 
     var walls = [];
-    var slider;
+    var slider1;
+    var slider2;
 
     var dist
+
+    var text_div_6;
+    var next_button_6;
+    var prev_button_6;
+    
+    const section_3_text = 
+        [
+            `<p>
+                ADD TEXT EXPLAINING HOW CHANGE IN NUMBER OF RAYS CHANGES RESOLUTION
+            </p>`,
+        ]
 
     function render_3d(num_rays) {
         for (var i = 0; i < num_rays; i++) {
@@ -49,13 +61,22 @@ const theory_6 = ( sketch ) => {
         theory_6_canvas = sketch.createCanvas(TILE_SIZE * MAP_NUM_COLS, 1.5*TILE_SIZE*MAP_NUM_ROWS);
         theory_6_canvas.parent("theory_6");
 
-        var slider_min = .05
-        var slider_max = 10
-        var slider_start = .5
-        var slider_step = .25
+        var slider1_min = .05
+        var slider1_max = 10
+        var slider1_start = .5
+        var slider1_step = .25
 
-        slider = sketch.createSlider(slider_min, slider_max, slider_start, slider_step)
-        slider.parent("#theory_6_slider")
+        slider1 = sketch.createSlider(slider1_min, slider1_max, slider1_start, slider1_step)
+        slider1.parent("#theory_6_slider1")
+
+        var slider2_min = 10
+        var slider2_max = 150
+        var slider2_start = 90
+        var slider2_step = 1
+
+        slider2 = sketch.createSlider(slider2_min, slider2_max, slider2_start, slider2_step)
+        slider2.parent("#theory_6_slider2")
+
 
         // World Boundaries
         walls.push(new Boundary_Color(TILE_SIZE,TILE_SIZE,sketch.width - TILE_SIZE,TILE_SIZE, 'rgb(0,255,0)', sketch));
@@ -66,7 +87,7 @@ const theory_6 = ( sketch ) => {
         // Walls added last section, colored now
         walls.push(new Boundary_Color(4*TILE_SIZE,3*TILE_SIZE,7*TILE_SIZE,3*TILE_SIZE, 'rgb(255,0,0)', sketch))
         walls.push(new Boundary_Color(4*TILE_SIZE,4*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE, 'rgb(255,0,0)', sketch))
-        walls.push(new Boundary_Color(4*TILE_SIZE,3*TILE_SIZE,4*TILE_SIZE,4*TILE_SIZE, 'rgb(100,0,0)', sketch))
+        walls.push(new Boundary_Color(4*TILE_SIZE,3*TILE_SIZE,4*TILE_SIZE,4*TILE_SIZE, 'rgb(255,0,0)', sketch))
         walls.push(new Boundary_Color(7*TILE_SIZE,3*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE, 'rgb(100,0,0)', sketch))    
         walls.push(new Boundary_Color(8*TILE_SIZE,1*TILE_SIZE,9*TILE_SIZE,1*TILE_SIZE, 'rgb(0,0,255)', sketch))
         walls.push(new Boundary_Color(8*TILE_SIZE,2*TILE_SIZE,9*TILE_SIZE,2*TILE_SIZE, 'rgb(0,0,255)', sketch))
@@ -78,6 +99,45 @@ const theory_6 = ( sketch ) => {
         walls.push(new Boundary_Color(3*TILE_SIZE,9*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, 'rgb(0,150,0)', sketch))    
 
         player = new Particle(CANVAS_WIDTH/2, CANVAS_HEIGHT/2, FOV, .5, sketch)
+
+    text_div_6 = sketch.createDiv(section_3_text[0])
+        .attribute('class', 'section_text')
+        .center('horizontal')
+        .attribute('id', "text_div_6")
+        .position(0, sketch.height/3)
+        // .attribute('width', 22)
+        .hide()
+
+    next_button_6 = sketch.createButton("Next")
+        .attribute('class', 'button_next')
+        .center('horizontal')
+        .style('border', '2px solid #5cb85c')
+        .size(50, 20)
+        .mousePressed(() => {
+            fullpage_api.moveTo('page7', 0);
+        })
+        .position(TILE_SIZE*MAP_NUM_COLS/2 + 100, 880)
+        .hide()
+
+    prev_button_6 = sketch.createButton("Back")
+        .attribute('class', 'button_prev')
+        .center('horizontal')
+        .style('border', '2px solid #5bc0de')
+        .size(50, 20)
+        .mousePressed(() => {
+            fullpage_api.moveTo('page5', 0);
+        })
+        .position(TILE_SIZE*MAP_NUM_COLS/2, 880)
+        .hide()
+
+        
+        text_div_6.parent('#theory_6_text')
+        next_button_6.parent('theory_6')
+        prev_button_6.parent('theory_6')
+        slider1.parent("#text_div_6")
+        slider2.parent("#text_div_6")
+
+
     }
 
     function draw_details() {
@@ -129,13 +189,17 @@ const theory_6 = ( sketch ) => {
     sketch.draw = () => {
         draw_details()
 
-        // if (sketch.keyIsDown(sketch.LEFT_ARROW)) {
-        //     player.rotate(-.03)
-        // }
+        text_div_6.show()
+        next_button_6.show()
+        prev_button_6.show()
+
+        if (sketch.keyIsDown(sketch.LEFT_ARROW)) {
+            player.rotate(-.03)
+        }
         
-        // if (sketch.keyIsDown(sketch.RIGHT_ARROW)) {
-        //     player.rotate(.03)
-        // }
+        if (sketch.keyIsDown(sketch.RIGHT_ARROW)) {
+            player.rotate(.03)
+        }
 
         // if (sketch.keyIsDown(sketch.UP_ARROW)) {
         //     player.move(-2)
@@ -144,12 +208,11 @@ const theory_6 = ( sketch ) => {
         for (var wall of walls) {
             wall.render();
         }
-        player.updateFOV(90, slider.value())
+        player.updateFOV(slider2.value(), slider1.value())
 
-        sketch.line(CANVAS_WIDTH/2 - 75, CANVAS_HEIGHT/2, CANVAS_WIDTH/2 + 75, CANVAS_HEIGHT/2)
         // player.rotate(.01)
         player.look(walls)
-        render_3d(FOV / slider.value())
+        render_3d(Math.floor(slider2.value() / slider1.value()))
         player.render(0)
         
 

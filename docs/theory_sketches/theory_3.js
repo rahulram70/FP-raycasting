@@ -9,6 +9,46 @@ const theory_3 = ( sketch ) => {
     var theory_3_canvas; 
     var blocks_drawn;
 
+    var curr_screen_3 = 0;
+    var text_div_3;
+    var next_button_3;
+    var prev_button_3;
+    var text_fade_3 = 0;
+    
+    const section_3_text = 
+        [
+            `<p>
+                But how much can we do with just one ray? Currently, we only know how far a wall is directly in front of us is. <br>
+                Let's cast out more rays in more directions! Now we can get more information about the area surrounding us. <br>
+                It's also just fun to look at, try moving your mouse around the screen. and see how the rays react. <br>            
+            </p>`,
+
+            `<p>
+                Our world is pretty boring as it stands. Let's add some more walls. <br>
+                Now try moving the player around. <br>
+                Notice how the rays hitting the newly made walls don't cast past the first intersection. <br>            
+            </p>`,
+
+            `<p>
+                Let's add even more rays! The more information the better. <br>
+            </p>`,
+        ]
+
+    function updateDisplayText(text_div_3, curr_screen) {
+        text_fade_3 = 0;
+        drawPlayer = false;
+
+        if (curr_screen >= 1) {
+            drawRay = true
+        } else {
+            drawRay = false
+            lineLen = 0;
+            done = false;
+        }
+
+        text_div_3.html(section_3_text[curr_screen])
+    }
+
     sketch.setup = () => {
         var block_1 = [
             new Boundary(4*TILE_SIZE,3*TILE_SIZE,7*TILE_SIZE,3*TILE_SIZE, sketch),
@@ -38,47 +78,17 @@ const theory_3 = ( sketch ) => {
             new Boundary(3*TILE_SIZE,7*TILE_SIZE,3*TILE_SIZE,9*TILE_SIZE, sketch),
             new Boundary(3*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,7*TILE_SIZE, sketch),
             new Boundary(4*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, sketch),
-            new Boundary(3*TILE_SIZE,9*TILE_SIZE,3*TILE_SIZE,9*TILE_SIZE, sketch)
+            new Boundary(3*TILE_SIZE,9*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, sketch)
         ]
 
         blocks_drawn = 0
 
         theory_3_canvas = sketch.createCanvas(TILE_SIZE * MAP_NUM_COLS, TILE_SIZE*MAP_NUM_ROWS);
         theory_3_canvas.parent("theory_3");
-        sketch.select('#theory_3_interact_1').mouseClicked(function() { 
-            switch (blocks_drawn) {
-                case 0:
-                    for (var wall of block_1){
-                        walls.push(wall)
-                    }   
-                    break;
-                case 1:
-                    for (var wall of block_2){
-                        walls.push(wall)
-                    }   
-                    break;
-                case 2:
-                    for (var wall of block_3){
-                        walls.push(wall)
-                    }
-                    break;   
-                case 3:
-                    for (var wall of block_4){
-                        walls.push(wall)
-                    }
-                    break;
-                case 4:
-                    for (var wall of block_5){
-                        walls.push(wall)
-                    }
-                    break;    
-            }
-            blocks_drawn++
-        })
 
-        sketch.select('#theory_3_interact_2').mouseClicked(function() { 
-            player.updateFOV(360, 1)   
-        })
+        // sketch.select('#theory_3_interact_2').mouseClicked(function() { 
+        //     player.updateFOV(360, 1)   
+        // })
         
 
         walls.push(new Boundary(TILE_SIZE,TILE_SIZE,sketch.width - TILE_SIZE,TILE_SIZE, sketch));
@@ -88,6 +98,104 @@ const theory_3 = ( sketch ) => {
 
         player = new Particle(sketch.width/2, sketch.height/2, 360, 10, sketch)
 
+        
+        text_div_3 = sketch.createDiv(section_3_text[0])
+            .attribute('class', 'section_text')
+            .center('horizontal')
+            .position(0, sketch.height/3)
+            .style('opacity', text_fade_3)
+            // .attribute('width', 22)
+            .hide()
+
+        next_button_3 = sketch.createButton("Next")
+            .attribute('class', 'button_next')
+            .center('horizontal')
+            .style('border', '2px solid #5cb85c')
+            .size(50, 20)
+            .mousePressed(() => {
+
+                if (curr_screen_3 === 1) {
+                    if(blocks_drawn === 5) {
+                        curr_screen_3++;
+                        updateDisplayText(text_div_3, curr_screen_3);
+                    } else {
+                        switch (blocks_drawn) {
+                            case 0:
+                                for (var wall of block_1){
+                                    walls.push(wall)
+                                }   
+                                break;
+                            case 1:
+                                for (var wall of block_2){
+                                    walls.push(wall)
+                                }   
+                                break;
+                            case 2:
+                                for (var wall of block_3){
+                                    walls.push(wall)
+                                }
+                                break;   
+                            case 3:
+                                for (var wall of block_4){
+                                    walls.push(wall)
+                                }
+                                break;
+                            case 4:
+                                for (var wall of block_5){
+                                    walls.push(wall)
+                                }
+                                break;    
+                        }
+                        blocks_drawn++
+                    }
+                } else if (curr_screen_3 < section_3_text.length - 1) {
+                    curr_screen_3++;
+                    updateDisplayText(text_div_3, curr_screen_3);
+                } else if (curr_screen_3 == section_3_text.length - 1) {
+                    fullpage_api.moveTo('page4', 0);
+                }
+                if (curr_screen_3 == 2) {
+                    player.updateFOV(360, 1)   
+                }
+            })
+            .position(TILE_SIZE*MAP_NUM_COLS/2 + 100, 750)
+            .hide()
+
+        prev_button_3 = sketch.createButton("Back")
+            .attribute('class', 'button_prev')
+            .center('horizontal')
+            .style('border', '2px solid #5bc0de')
+            .size(50, 20)
+            .mousePressed(() => {
+                console.log(walls)
+                if (curr_screen_3 === 1) {
+                    if (blocks_drawn > 0) {
+                        blocks_drawn--;
+                        walls.pop()
+                        walls.pop()
+                        walls.pop()
+                        walls.pop()
+                    } else {
+                        curr_screen_3--;
+                        updateDisplayText(text_div_3, curr_screen_3);
+                    }
+                } else if (curr_screen_3 > 0) {
+                    curr_screen_3--;
+                    updateDisplayText(text_div_3, curr_screen_3);
+                } else if (curr_screen_3 === 0) {
+                    fullpage_api.moveTo('page2', 0);
+                }
+                if (curr_screen_3 < 2) {
+                    player.updateFOV(360, 10)   
+                }
+            })
+            .position(TILE_SIZE*MAP_NUM_COLS/2, 750)
+            .hide()
+
+        
+        text_div_3.parent('#theory_3_text')
+        next_button_3.parent('theory_3')
+        prev_button_3.parent('theory_3')
     }
 
     function draw_details() {
@@ -116,6 +224,17 @@ const theory_3 = ( sketch ) => {
 
     sketch.draw = () => {
         draw_details()
+
+        text_div_3.show()
+        next_button_3.show()
+        prev_button_3.show()
+
+        text_div_3.style('opacity', text_fade_3)
+
+        if (text_fade_3 < 1) {
+            text_fade_3 += .07;
+        }
+
 
         if (blocks_drawn > 0) {
             sketch.push()
