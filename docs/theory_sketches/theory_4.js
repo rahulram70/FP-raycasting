@@ -65,7 +65,7 @@ const theory_4 = ( sketch ) => {
     
         text_div_4 = sketch.createDiv(section_4_text[0])
             .attribute('class', 'section_text')
-            .attribute('id', "xd")
+            .attribute('id', "text_div_4")
             .center('horizontal')
             .position(0, sketch.height/3)
             // .style('opacity', 1)
@@ -98,7 +98,7 @@ const theory_4 = ( sketch ) => {
         text_div_4.parent('#theory_4_text')
         next_button_4.parent('theory_4')
         prev_button_4.parent('theory_4')
-        slider.parent("#xd")
+        slider.parent("#text_div_4")
 
 
     }
