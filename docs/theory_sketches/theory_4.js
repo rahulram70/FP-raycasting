@@ -9,20 +9,33 @@ const theory_4 = ( sketch ) => {
     var theory_4_canvas; 
     var walls = [];
 
-    var text_div_4
+    var text_div_4;
+    var fov_div;
     var next_button_4;
     var prev_button_4;
     
     const section_4_text = 
         [
-            `<p>Though, we are trying to build up a mock first person render of the world we're occupying. <br>
-            We don't normally see all of our surroundings at one time, we see a small subsection in front of us. <br>
-            This is called our field of view. Currently, the field of view is set to 360 degrees. <br>
-            In other words, we are gathering information from rays being cast all around our player. <br>
-
-            Try messing with the field of view with the slider below. Then try looking around with the arrow keys. <br>
-            Before, there was no need to look around because we could see everything around us, but with a smaller fov
-            we can see how our view of the world changes.</p>`
+            `<p>
+            Though, we are trying to build up a mock first person render of the world we're occupying. <br>
+            </p>
+            <p>
+                The rays we cast, we will eventually render into our first person view, but normally we don't 
+                see all of our surroundings at one time, we see a small subsection in front of us.
+                We have to rotate our eyes or head to see things outside of our view.
+            </p>
+            <p>
+                The subsection of our surroundings we can see we will call our field of view or FOV, and we will measure this
+                in terms of the degree around our current direction we can see.
+            </p>
+            <p>
+                Currently, our field of view is 360 degrees
+            </p>
+            <p>
+                Try messing with the field of view with the slider below. Then try looking around with the arrow keys. <br>
+                Before, there was no need to look around because we could see everything around us, but with a smaller fov
+                we can see how our view of the world changes.
+            </p>`
         ]
 
 
@@ -32,6 +45,9 @@ const theory_4 = ( sketch ) => {
         theory_4_canvas.parent("theory_4");
 
         slider = sketch.createSlider(1, 360, 360)
+        slider.addClass("fov_slider")
+        slider.attribute("list", "ticks")
+
 
         // World Boundaries
         walls.push(new Boundary(TILE_SIZE,TILE_SIZE,sketch.width - TILE_SIZE,TILE_SIZE, sketch));
@@ -72,6 +88,12 @@ const theory_4 = ( sketch ) => {
             // .attribute('width', 22)
             .hide()
 
+        fov_div = sketch.createDiv("Current FOV: " + slider.value())
+            .attribute('class', 'section_text')
+            .center('horizontal')
+            .position(30, sketch.height-25)
+            .hide()
+
         next_button_4 = sketch.createButton("Next")
             .attribute('class', 'button_next')
             .center('horizontal')
@@ -98,8 +120,8 @@ const theory_4 = ( sketch ) => {
         text_div_4.parent('#theory_4_text')
         next_button_4.parent('theory_4')
         prev_button_4.parent('theory_4')
+        fov_div.parent("#text_div_4")
         slider.parent("#text_div_4")
-
 
     }
 
@@ -150,8 +172,11 @@ const theory_4 = ( sketch ) => {
     sketch.draw = () => {
         draw_details()
         text_div_4.show()
+        fov_div.show()
         next_button_4.show()
         prev_button_4.show()
+
+        fov_div.html("Current FOV: " + slider.value())
 
         if (sketch.keyIsDown(sketch.LEFT_ARROW)) {
             player.rotate(-.03)

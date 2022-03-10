@@ -26,14 +26,20 @@ const theory_2 = ( sketch ) => {
 
             `<p>
                 To do this, let's cast a ray out from ourself and stop it once it hits a wall. <br>
-            </p>`,
+            </p>
+            <p>
+                For now let's keep track of this length, it will come in handly later.
+            </p>`
+            ,
 
             `<p>
                 Of course, this wouldn't be very useful if we couldn't move or look around. <br>
                 Try and move and look around with the arrow keys on your keyboard! <br>
+
             </p>
             <p>
-                For now let's keep track of this length, it will come in handly later.
+                We already have some sort of game made by casting rays! Though it's not very fun...
+                And we don't have a first person view! This will come soon enough, let's continue. 
             </p>`,
         ]
 

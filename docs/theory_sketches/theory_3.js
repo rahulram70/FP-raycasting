@@ -18,19 +18,33 @@ const theory_3 = ( sketch ) => {
     const section_3_text = 
         [
             `<p>
-                But how much can we do with just one ray? Currently, we only know how far a wall is directly in front of us is. <br>
-                Let's cast out more rays in more directions! Now we can get more information about the area surrounding us. <br>
+                How much can we do with just one ray? Currently, we only know how far a wall is directly in front of us is. <br>
+            </p>
+            <p>
+                Let's cast out more rays in more directions! Now we can get more information about the entire area surrounding us. <br>
+            </p>
+            <p>
                 It's also just fun to look at, try moving your mouse around the screen. and see how the rays react. <br>            
             </p>`,
 
             `<p>
-                Our world is pretty boring as it stands. Let's add some more walls. <br>
+                Our world is pretty boring as it stands. Click next to add some more walls. <br>
+            </p>
+            <p>
                 Now try moving the player around. <br>
                 Notice how the rays hitting the newly made walls don't cast past the first intersection. <br>            
+            </p>
+            <p>
+                And like before, you can also rotate where the player is looking with the arrow keys,
+                though since we're casting rays in all directions, this might not be very useful...
             </p>`,
 
             `<p>
-                Let's add even more rays! The more information the better. <br>
+                Let's add even more rays!
+            <p>
+            </p>
+                We're recording the information for every ray we cast, so if we cast more, we'll be
+                keeping track of more granular data. 
             </p>`,
         ]
 
@@ -275,23 +289,76 @@ const theory_3 = ( sketch ) => {
             player.rotate(.03)
         }
 
-        // if (keyIsDown(UP_ARROW)) {
-        //     player.move(-1)
-        // }
 
-        // sketch.background(255);
         for (var wall of walls) {
             wall.render();
         }
 
         player.updatePos(sketch.mouseX, sketch.mouseY)
 
-        // player.rotate(.01)
         player.look(walls)
 
 
-        // console.log(mouseX)
         player.render(0)
+        sketch.push()
+        sketch.noStroke()
+        sketch.fill(255)
+        sketch.rect(0,0, TILE_SIZE*MAP_NUM_COLS, TILE_SIZE)
+        sketch.fill(0,200)
+        sketch.rect(0,0, TILE_SIZE*MAP_NUM_COLS, TILE_SIZE)
+        sketch.fill(255)
+        sketch.rect(0,0, TILE_SIZE, TILE_SIZE*MAP_NUM_ROWS)
+        sketch.fill(0,200)
+        sketch.rect(0,0, TILE_SIZE, TILE_SIZE*MAP_NUM_ROWS)
+        sketch.fill(255)
+        sketch.rect(TILE_SIZE*(MAP_NUM_COLS-1),0, TILE_SIZE, TILE_SIZE*MAP_NUM_ROWS)
+        sketch.fill(0,200)
+        sketch.rect(TILE_SIZE*(MAP_NUM_COLS-1),0, TILE_SIZE, TILE_SIZE*MAP_NUM_ROWS)
+        sketch.fill(255)
+        sketch.rect(0,TILE_SIZE * (MAP_NUM_ROWS-1), TILE_SIZE*MAP_NUM_COLS, TILE_SIZE)
+        sketch.fill(0,200)
+        sketch.rect(0,TILE_SIZE * (MAP_NUM_ROWS-1), TILE_SIZE*MAP_NUM_COLS, TILE_SIZE)
+        sketch.pop()
+        if (blocks_drawn > 0) {
+            sketch.push()
+            sketch.fill(255)
+            sketch.rect(4*TILE_SIZE,3*TILE_SIZE,3*TILE_SIZE, TILE_SIZE)
+            sketch.fill(0,200)
+            sketch.rect(4*TILE_SIZE,3*TILE_SIZE,3*TILE_SIZE, TILE_SIZE)
+            sketch.pop()
+        }
+        if (blocks_drawn > 1) {
+            sketch.push()
+            sketch.fill(255)
+            sketch.rect(10*TILE_SIZE,8*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+            sketch.fill(0,200)
+            sketch.rect(10*TILE_SIZE,8*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+            sketch.pop()
+        }
+        if (blocks_drawn > 2) {
+            sketch.push()
+            sketch.fill(255)
+            sketch.rect(11*TILE_SIZE,7*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+            sketch.fill(0,200)
+            sketch.rect(11*TILE_SIZE,7*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+            sketch.pop()
+        }
+        if (blocks_drawn > 3) {
+            sketch.push()
+            sketch.fill(255)
+            sketch.rect(12*TILE_SIZE,6*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+            sketch.fill(0,200)
+            sketch.rect(12*TILE_SIZE,6*TILE_SIZE, TILE_SIZE, TILE_SIZE)
+            sketch.pop()
+        }
+        if (blocks_drawn > 4) {
+            sketch.push()
+            sketch.fill(255)
+            sketch.rect(3*TILE_SIZE,7*TILE_SIZE, TILE_SIZE, 2*TILE_SIZE)
+            sketch.fill(0,200)
+            sketch.rect(3*TILE_SIZE,7*TILE_SIZE, TILE_SIZE, 2*TILE_SIZE)
+            sketch.pop()
+        }
     }
 
     // function windowResized() {

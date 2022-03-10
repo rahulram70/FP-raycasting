@@ -30,49 +30,79 @@ const theory_5 = ( sketch ) => {
             </p>`,
 
             `<p>
-                Let's first consider the very first ray cast out, the ray pointing furthest to the left. <br>
-                We will take this rays distance from the player, and draw it below in our first person view, which we will put below. <br>
+                Let's first consider the very first ray cast out, the ray pointing furthest to the left. It is highlighted on the view on the right<br>
+            </p>
+            <p>
+                We will take this rays distance from the player, and draw it below in our first person view, which we will place directly below the map. <br>
+            </p>
+            <p>
+                In the next slide, we will re-highlight this ray and draw in our first person view what that ray will contribute to our entire view.
                 We will use red to represent the color of the wall, and darker colors to represent the floor and ceiling.
             </p>`,
 
-            `<p>
-                Now, let's cast the ray out again, this time actually drawing how our player will see what this ray is casting to. <br> 
-                Notice how as the ray casts further out, the wall appears to get smaller. This is simulating the wall appearing further away! 
+            `<p> 
+                Notice how as the ray casts further out, the wall appears to get smaller. This is simulating the wall appearing further away!
+            </p>
+            <p>
+                And note that the view drawn below is expanded to show more detail.
             </p>`,
 
             `<p>
-                However, this is just one of the 180 different rays being cast in this small field of view. <br>
-                Our view would be huge if we considered all of these rays as this size! <br>
-                Let's scale down this ray's contribution to our view to its correct size.
+                However, this is just one of the 180 different rays being cast in this field of view.
+            </p>
+            <p>
+                Our first person view would be huge if we drew all of these rays as this size! <br>
+                Click next to scale down this ray's contribution to our view to its correct size.
             </p>`,
 
             `<p>
-                Then, we're drawing the leftmost ray aren't we? It shouldn't appear in the very middle of our view! <br>
-                Let's move it where it should be.
+                Then, we're drawing the leftmost ray aren't we? It shouldn't appear in the very middle of our view!
+            </p>
+            <p>
+                Move to the next step to watch the ray move it where it should be.
             </p>`,
 
             `<p>
                 Now, let's repeat these steps again for ALL of the rays in our field of view. <br>
-                Of course, we'll be skipping to the final render size and position. <br>
+            </p>
+            <p>
+                Of course, we'll be skipping to the final render size and position. We don't want to play these animations for all 180 rays (that would take a while) <br>
+
+            </p>
+            <p>
                 The wall on our left will be red, the world border will be green, and the wall right next to the world border will be blue.
             </p>`,
 
             `<p>
-                Our view looks a little skewed doesn't it? <br>
-                Look at the red wall in particular. We are standing, looking straight on towards the wall but it the parts of the wall on the left most part of our screen look smaller? <br>
-                
-                This is called the fisheye effect. This is because the distance we are using to calculate the size of the wall on our first person render is the true distance of the ray being cast <br>
-                But look! The rays at an angle further away from where we are looking will be longer than ones at a smaller angle when looking at a wall perpendicular to us. <br>
-                
-                Let's introduce the camera plane. The camera plane is a plane perpendicular to where we are looking and represents the screen that our first person view is being displayed on. <br>
-                EXPLKAIN THIS BETTER <br>
-                Instead, we will use this distance, the perpendicular distance from the camera plane, instead of the true distance of the ray.
+                The top view is looping over all of the rays being cast from left to right and the bottom view is adding each ray that's been cast to our first person rendering
+            </p>
+            <p>
+                Though you might notice as it runs, our view looks a little odd doesn't it?
+            </p>
+            <p>
+                Look at the red wall in particular. We can see in our top down view, we are standing, looking straight on towards the wall but it looks like the parts of the wall on the left most part of our screen look smaller? <br>
+            </p>
+            <p>
+                This is called the fisheye effect. Because the distance we are using to calculate the size of the wall on our first person render 
+                is the true distance of the ray being cast, rays at an angle futher from the middle of the screen will be longer, which will in turn
+                make the rendering of said rays look smaller!
+            </p>
+            <p>
+                In the next section, we will introduce something called the camera plane which will help us fix this problem.
             </p>`,
 
             `<p>
+                Let's introduce the camera plane. The camera plane is a plane perpendicular to the direction where we are looking and represents 
+                the screen that our first person view will being displayed on. You can see the camera plane as the black line perpendicular
+                to the direction our player is looking in the top down view.
+            </p>
+            <p>
+                In the last section we used the distance from the player to the ray's end point to draw our 3D rendering. But if we want to remove
+                the fisheye effect, we need to use the distance from the ray's end point and the camera plane!
+            </p>
+            <p>
+                Try toggling back and forth to really see the difference between our adjusted view and the fisheye with the toggle button! <br> 
                 Look at how our view updates when we use this perpendicular distance instead of the true ray length. <br>
-
-                Try toggling back and forth to really see the difference between our adjusted view and the fisheye
             </p>`
         ]
 
@@ -103,7 +133,7 @@ const theory_5 = ( sketch ) => {
                 
             sketch.pop()
     
-            lineLen += .01
+            lineLen += .005
         } else {
             sketch.push()
             sketch.stroke('green')
@@ -607,7 +637,7 @@ const theory_5 = ( sketch ) => {
         text_div_5 = sketch.createDiv(section_5_text[0])
             .attribute('class', 'section_text')
             .center('horizontal')
-            .position(0, sketch.height/3)
+            .position(0, sketch.height/4)
             .style('opacity', text_fade_5)
             // .attribute('width', 22)
             .hide()

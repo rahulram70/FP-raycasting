@@ -23,18 +23,29 @@ const theory_1 = ( sketch ) => {
     const section_1_text = 
         [
             `<p>The first thing our game needs is a world! <br> 
-            Right now we just have a blank canvas, so click on me to create our world. <br>
+            Right now we just have a blank canvas, so click on next to create our world. <br>
             </p>`,
 
             `<p>For now, it's pretty basic. We'll be making our world a grid, and if a grid cell is filled then there will exist a wall there, and otherwise its free space. <br>
+            </p>
+            <p>
+            
             Currently, we just have a border around the edge of our world, but we'll add more soon enough!</p>`,
 
             `<p>Though, a world is hardly any fun without anyway to explore it. <br>
             So now let's make a player to represent us. </p>`,
 
             `<p>That's us! We're right now we're just a little dot in the center of our world. <br>
+            </p>
+            <p>
             Then, notice the little line sticking out from us, that will represent where our player is looking, right now we're looking towards the top of the screen<br>
-            Blind and motionless...</p>`
+            </p>
+            <p>
+            Though as it stands, we're blind and motionless...</p>
+            
+            <p>
+            Hit next to move to the next steps!
+            </p>`
         ]
 
     function updateDisplayText(text_div_1, curr_screen_1) {

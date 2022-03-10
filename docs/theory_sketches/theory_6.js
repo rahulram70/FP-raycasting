@@ -20,11 +20,30 @@ const theory_6 = ( sketch ) => {
     var text_div_6;
     var next_button_6;
     var prev_button_6;
+    var fov_div_6;
+    var density_div_6;
     
-    const section_3_text = 
+    
+    const section_6_text = 
         [
             `<p>
-                ADD TEXT EXPLAINING HOW CHANGE IN NUMBER OF RAYS CHANGES RESOLUTION
+               Now that we have our 3D render created, it becomes very easy to tweak some settings about our raycasting!
+               Let's look at what happens when we change our FOV and ray density.
+            </p>
+            <p>
+                When we change the FOV and keep the screen width fixed, a smaller FOV can make the screen
+                look more zoomed in and a larger FOV will make it seem zoomed out.
+            </p>
+            <p>
+                Then the ray density determines how many rays will be cast. A smaller ray density can create a nice
+                retro effect and boost performance, while a larger density makes the view look much smoother.
+            </p>
+            <p>
+                Try messing with the FOV and density of the rays with the sliders below and see how
+                the 3D render gets changed!
+            </p>
+            <p>
+                Then you can use the arrow keys and look around the world we have built!
             </p>`,
         ]
 
@@ -61,13 +80,16 @@ const theory_6 = ( sketch ) => {
         theory_6_canvas = sketch.createCanvas(TILE_SIZE * MAP_NUM_COLS, 1.5*TILE_SIZE*MAP_NUM_ROWS);
         theory_6_canvas.parent("theory_6");
 
-        var slider1_min = .05
+        var slider1_min = .25
         var slider1_max = 10
         var slider1_start = .5
         var slider1_step = .25
 
         slider1 = sketch.createSlider(slider1_min, slider1_max, slider1_start, slider1_step)
         slider1.parent("#theory_6_slider1")
+
+        slider1.addClass("fov_slider")
+        slider1.attribute("list", "ticks1")
 
         var slider2_min = 10
         var slider2_max = 150
@@ -76,6 +98,9 @@ const theory_6 = ( sketch ) => {
 
         slider2 = sketch.createSlider(slider2_min, slider2_max, slider2_start, slider2_step)
         slider2.parent("#theory_6_slider2")
+
+        slider2.addClass("fov_slider")
+        slider2.attribute("list", "ticks2")
 
 
         // World Boundaries
@@ -93,19 +118,46 @@ const theory_6 = ( sketch ) => {
         walls.push(new Boundary_Color(8*TILE_SIZE,2*TILE_SIZE,9*TILE_SIZE,2*TILE_SIZE, 'rgb(0,0,255)', sketch))
         walls.push(new Boundary_Color(8*TILE_SIZE,1*TILE_SIZE,8*TILE_SIZE,2*TILE_SIZE, 'rgb(0,0,100)', sketch))
         walls.push(new Boundary_Color(9*TILE_SIZE,1*TILE_SIZE,9*TILE_SIZE,2*TILE_SIZE, 'rgb(0,0,255)', sketch))    
-        walls.push(new Boundary_Color(3*TILE_SIZE,7*TILE_SIZE,3*TILE_SIZE,9*TILE_SIZE, 'rgb(0,150,0)', sketch))
-        walls.push(new Boundary_Color(3*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,7*TILE_SIZE, 'rgb(0,255,0)', sketch))
-        walls.push(new Boundary_Color(4*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, 'rgb(0,150,0)', sketch))
-        walls.push(new Boundary_Color(3*TILE_SIZE,9*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, 'rgb(0,150,0)', sketch))    
+        walls.push(new Boundary_Color(3*TILE_SIZE,7*TILE_SIZE,3*TILE_SIZE,9*TILE_SIZE, 'rgb(150,0,0)', sketch))
+        walls.push(new Boundary_Color(3*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,7*TILE_SIZE, 'rgb(255,0,0)', sketch))
+        walls.push(new Boundary_Color(4*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, 'rgb(150,0,0)', sketch))
+        walls.push(new Boundary_Color(3*TILE_SIZE,9*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, 'rgb(150,0,0)', sketch))    
+
+   
+        walls.push(new Boundary_Color(10*TILE_SIZE,8*TILE_SIZE,10*TILE_SIZE,9*TILE_SIZE, 'rgb(0,0,150)', sketch))
+        walls.push(new Boundary_Color(10*TILE_SIZE,8*TILE_SIZE,11*TILE_SIZE,8*TILE_SIZE, 'rgb(0,0,255)', sketch))
+        walls.push(new Boundary_Color(11*TILE_SIZE,8*TILE_SIZE,11*TILE_SIZE,9*TILE_SIZE, 'rgb(0,0,255)', sketch))
+        walls.push(new Boundary_Color(10*TILE_SIZE,9*TILE_SIZE,11*TILE_SIZE,9*TILE_SIZE, 'rgb(0,0,150)', sketch))    
+        walls.push(new Boundary_Color(11*TILE_SIZE,7*TILE_SIZE,11*TILE_SIZE,8*TILE_SIZE, 'rgb(0,0,150)', sketch))
+        walls.push(new Boundary_Color(11*TILE_SIZE,7*TILE_SIZE,12*TILE_SIZE,7*TILE_SIZE, 'rgb(0,0,255)', sketch))
+        // walls.push(new Boundary_Color(12*TILE_SIZE,7*TILE_SIZE,12*TILE_SIZE,8*TILE_SIZE, 'rgb(0,0,255)', sketch))
+        // walls.push(new Boundary_Color(11*TILE_SIZE,8*TILE_SIZE,12*TILE_SIZE,8*TILE_SIZE, 'rgb(0,0,255)', sketch))    
+        walls.push(new Boundary_Color(12*TILE_SIZE,6*TILE_SIZE,12*TILE_SIZE,7*TILE_SIZE, 'rgb(0,0,150)', sketch))
+        walls.push(new Boundary_Color(12*TILE_SIZE,6*TILE_SIZE,13*TILE_SIZE,6*TILE_SIZE, 'rgb(0,0,255)', sketch))
+        // walls.push(new Boundary_Color(13*TILE_SIZE,6*TILE_SIZE,13*TILE_SIZE,7*TILE_SIZE, 'rgb(0,0,255)', sketch))
+        // walls.push(new Boundary_Color(12*TILE_SIZE,7*TILE_SIZE,13*TILE_SIZE,7*TILE_SIZE, 'rgb(0,0,150)', sketch))    
+
 
         player = new Particle(CANVAS_WIDTH/2, CANVAS_HEIGHT/2, FOV, .5, sketch)
 
-    text_div_6 = sketch.createDiv(section_3_text[0])
+    text_div_6 = sketch.createDiv(section_6_text[0])
         .attribute('class', 'section_text')
         .center('horizontal')
         .attribute('id', "text_div_6")
-        .position(0, sketch.height/3)
+        .position(0, sketch.height/5)
         // .attribute('width', 22)
+        .hide()
+
+    fov_div_6 = sketch.createDiv("Current FOV: " + slider2.value())
+        .attribute('class', 'section_text')
+        .center('horizontal')
+        .position(30, sketch.height-245)
+        .hide()
+
+    density_div_6 = sketch.createDiv("Current Ray Density: " + slider1.value())
+        .attribute('class', 'section_text')
+        .center('horizontal')
+        .position(30, sketch.height-345)
         .hide()
 
     next_button_6 = sketch.createButton("Next")
@@ -136,6 +188,8 @@ const theory_6 = ( sketch ) => {
         prev_button_6.parent('theory_6')
         slider1.parent("#text_div_6")
         slider2.parent("#text_div_6")
+        density_div_6.parent("#text_div_6")
+        fov_div_6.parent("#text_div_6")
 
 
     }
@@ -192,6 +246,11 @@ const theory_6 = ( sketch ) => {
         text_div_6.show()
         next_button_6.show()
         prev_button_6.show()
+        fov_div_6.show()
+        density_div_6.show()
+
+        fov_div_6.html("Current FOV: " + slider2.value())
+        density_div_6.html("Current Ray Density: " + slider1.value())
 
         if (sketch.keyIsDown(sketch.LEFT_ARROW)) {
             player.rotate(-.03)
@@ -201,9 +260,9 @@ const theory_6 = ( sketch ) => {
             player.rotate(.03)
         }
 
-        // if (sketch.keyIsDown(sketch.UP_ARROW)) {
-        //     player.move(-2)
-        // }
+        if (sketch.keyIsDown(sketch.UP_ARROW)) {
+            player.move(-1.5)
+        }
 
         for (var wall of walls) {
             wall.render();
