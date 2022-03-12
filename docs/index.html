@@ -21,6 +21,7 @@
     <script src="./theory_sketches/theory_5.js"></script>
     <script src="./theory_sketches/theory_6.js"></script>
     <script src="./video_game/raycast-interactive-td.js"></script>
+    <script src="./video_game/sketch.js"></script>
     <!-- <script src="./theory_sketches/theory_7.js"></script> -->
     <!-- <script src="./video_game/raycast-no-walls.js"></script> -->
 <!-- <style media="all">
@@ -31,7 +32,7 @@
     <div id="fullPage">
         <div class="section">
             <h1>
-                Ray Casters for Video Games                
+                Ray Casters for Video Games
             </h1>
             <h2>
                 Creators: Andy Danforth, Andy Roland, Rahul Ram, Minh Hoang
@@ -42,13 +43,13 @@
                     tracing rays over every pixel, or increment of an image rather than elements of a scene to render a 3D scene from a 2D image.
                 </p>
                 <p>
-                    The general idea is to cast many rays out from the "eye" of the scene and find exactly where each ray first intersects with 
-                    an object. Then, using some information like the rays length before intersection, and color of what the ray hit, etc, a 3D view 
+                    The general idea is to cast many rays out from the "eye" of the scene and find exactly where each ray first intersects with
+                    an object. Then, using some information like the rays length before intersection, and color of what the ray hit, etc, a 3D view
                     can be constructed from nothing but a individual rays!
                 </p>
                 <p>
                     Ray casting was a very early image rendering method, and was a very brute force way of rendering 3D scenes. Ray casting can be used to
-                    created very complex 3D renders and images in things like solid modeling, but for this project, we are going to be focusing on another 
+                    created very complex 3D renders and images in things like solid modeling, but for this project, we are going to be focusing on another
                     use of ray casting: the rendering of a 3D video game from a 2D playing field.
                 </p>
                 <img src = "./data/200.gif" width = "350"/>
@@ -58,10 +59,10 @@
                 </p>
 
                 <p>
-                    Throughout this project, we will build up and explain how an engine like this is made, until we finally end up with our own explorable 
+                    Throughout this project, we will build up and explain how an engine like this is made, until we finally end up with our own explorable
                     maze!
                 </p>
-                
+
                 <!-- <img id="doom" src = "./data/doom.gif" height = "200"/> -->
             </div>
         </div>
@@ -107,7 +108,7 @@
                 <div class="caster" id="theory_5"></div>
             </div>
         </div>
-        <div class="section">    
+        <div class="section">
             <div class="parent">
                 <div class="parent">
                     <div class="disp_text_holder" id = "theory_6_text"></div>
@@ -134,7 +135,7 @@
             <div class="parent">
                 <div class="Header">
                     <p>
-                        Go to the link below to interact with a 2D grid with raycasters. 
+                        Go to the link below to interact with a 2D grid with raycasters.
                     </p>
                     <p id = "keys">
                         Use the arrow keys to move the dot and rays
@@ -146,11 +147,26 @@
                 </div>
             </div>
         </div>
+        <div class="section">
+            <div class="parent">
+                <div class="Header">
+                    <p>
+                        game wip
+                    </p>
+                    <p id = "keys">
+                        this is maze game wip
+                    </p>
+                    <div id="slider2"></div>
+                </div>
+                <div class="caster" id="gameWindow">
+                </div>
+            </div>
+        </div>
         <!-- <div class="section">
             <div class="parent">
                 <div class="Header">
                     <p>
-                        Go to the link below to interact with a 3D world built with raycasters. 
+                        Go to the link below to interact with a 3D world built with raycasters.
                     </p>
                     <p id = "keys">
                         Use the arrow keys to move the around.
@@ -189,12 +205,12 @@
                 <strong>Minh Hoang, Andy Roland, Andy Danforth, Rahul Ram<br><br></strong>
             </h3>
         </div>
-    
+
         <div class="section s2">
           <h1>Page 2</h1>
           <em>[TODO: add your visualization here]</em>
         </div>
-        
+
         <div class="section s3">
             <h1>Page 3</h1>
             <h2>Design Decisions</h2>
@@ -207,8 +223,8 @@
             <h1>Page 4</h1>
             <h2>Development Process</h2>
             <em>[TODO: describe how the work was split among the team members.
-                Include a commentary on the development process, including answers to the following questions: 
-                Roughly how much time did you spend developing your application (in people-hours)? 
+                Include a commentary on the development process, including answers to the following questions:
+                Roughly how much time did you spend developing your application (in people-hours)?
                 What aspects took the most time?]</em>
         </div>
 
@@ -219,9 +235,9 @@
         <script src="fullpage.min.js" ></script>
         <script>
         new fullpage('#fullPage', {
-            anchors: ['page0', 'page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page7'],
+            anchors: ['page0', 'page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page7', 'page8'],
             navigation: true,
-            navigationTooltips: ['Title Page', 'Creating the World', 'Casting the First Ray', 'Casting More!', 'Field of View', 'Rendering of the Rays', 'Resolution Stuff', "FOV changes", "Final Game section 1"],
+            navigationTooltips: ['Title Page', 'Creating the World', 'Casting the First Ray', 'Casting More!', 'Field of View', 'Rendering of the Rays', 'Resolution Stuff', "FOV changes", "Final Game section 1", "wip game"],
             navigationPosition: 'right',
             showActiveTooltip: true,
             controlArrows: false,
@@ -236,4 +252,4 @@
         })
         </script>
   </body>
-</html> 
+</html>
