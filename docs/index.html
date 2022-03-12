@@ -14,6 +14,9 @@
     <script src="./theory_classes/particle.js"></script>
     <script src="./theory_classes/ray.js"></script>
 <!-- Theory Sketches -->
+<script>
+    var curPage = 0
+</script>
     <script src="./theory_sketches/theory_1.js"></script>
     <script src="./theory_sketches/theory_2.js"></script>
     <script src="./theory_sketches/theory_3.js"></script>
@@ -88,7 +91,7 @@
         <div class="section">
             <div class="parent">
                 <div class="disp_text_holder" id = "theory_4_text"></div>
-                <div id="slider"></div>
+                <!-- <div id="slider"></div> -->
                 <datalist id = "ticks">
                     <option>0</option>
                     <option>60</option>
@@ -232,7 +235,19 @@
             easing: 'easeInOutCubic',
             keyboardScrolling: false,
             animateAnchor: true,
-            recordHistory: true
+            recordHistory: true,
+            onLeave: function(origin, destination, direction){
+                var leavingSection = this;
+
+                //after leaving section 2
+                if(origin.index == 1){
+                    theory_1_page.noLoop()
+                }
+
+                if (destination.index == 1) {
+                    theory_1_page.loop()
+                }
+            }
         })
         </script>
   </body>

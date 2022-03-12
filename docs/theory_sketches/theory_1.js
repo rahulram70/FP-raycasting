@@ -1,8 +1,8 @@
 const theory_1 = ( sketch ) => {
 
-    const TILE_SIZE = 48;
     const MAP_NUM_ROWS = 11;
     const MAP_NUM_COLS = 15;
+    var TILE_SIZE = ($(window).width()/3)/MAP_NUM_COLS;
 
     var player;
     var wallFade;
@@ -70,13 +70,6 @@ const theory_1 = ( sketch ) => {
 
         wallFade = 255;
         playerFade = 255;
-        // sketch.select('#theory_1_text').mouseClicked(function() {drawWalls = true})
-        // sketch.select('#theory_1-interact-2').mouseClicked(function() {drawPlayer = true; drawWalls = true})
-
-        walls.push(new Boundary(0,0,sketch.width,0, sketch));
-        walls.push(new Boundary(sketch.width,0, sketch.width, sketch.height, sketch));
-        walls.push(new Boundary(sketch.width, sketch.height,0, sketch.height, sketch));
-        walls.push(new Boundary(0,sketch.height, 0, 0, sketch));
 
         player = new Particle(x=sketch.width/2, y=sketch.height/2, 360, 1, sketch)
 
@@ -112,6 +105,9 @@ const theory_1 = ( sketch ) => {
             .style('border', '2px solid #5bc0de')
             .size(50, 20)
             .mousePressed(() => {
+                if (curr_screen_1 == 0) {
+                    fullpage_api.moveTo('page0', 0);
+                }
                 if (curr_screen_1 > 0) {
                     curr_screen_1--;
                     updateDisplayText(text_div_1, curr_screen_1);
@@ -125,6 +121,7 @@ const theory_1 = ( sketch ) => {
         text_div_1.parent('#theory_1_text')
         next_button_1.parent('theory_1')
         prev_button_1.parent('theory_1')
+        sketch.noLoop()
 
     }
 
@@ -154,6 +151,11 @@ const theory_1 = ( sketch ) => {
     }
 
     sketch.draw = () => {
+        console.log("hi!")
+        TILE_SIZE = ($(window).width()/2.5)/MAP_NUM_COLS;
+        windowResized()
+
+
         text_div_1.show()
         next_button_1.show()
         prev_button_1.show()
@@ -199,6 +201,13 @@ const theory_1 = ( sketch ) => {
         // console.log("xd")
         // player.look(walls)
     }
+
+    function windowResized() {
+        sketch.resizeCanvas(TILE_SIZE*MAP_NUM_COLS, TILE_SIZE*MAP_NUM_ROWS);
+        player.updatePos(x=sketch.width/2, y=sketch.height/2)
+        next_button_1.position(TILE_SIZE*MAP_NUM_COLS/2 + 50, $(window).height()/2 + 50 + TILE_SIZE*MAP_NUM_ROWS/2)
+        prev_button_1.position(TILE_SIZE*MAP_NUM_COLS/2 - 50, $(window).height()/2 + 50 + TILE_SIZE*MAP_NUM_ROWS/2)
+    }
 }
 
-new p5(theory_1)
+var theory_1_page = new p5(theory_1)

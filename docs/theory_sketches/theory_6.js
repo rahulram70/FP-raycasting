@@ -1,11 +1,12 @@
 const theory_6 = ( sketch ) => {
 
-    const TILE_SIZE = 48;
+    // const TILE_SIZE = 48;
     const MAP_NUM_ROWS = 11;
     const MAP_NUM_COLS = 15;
+    var TILE_SIZE = ($(window).width()/2.7)/MAP_NUM_COLS;
 
-    const CANVAS_HEIGHT = TILE_SIZE * MAP_NUM_ROWS
-    const CANVAS_WIDTH = TILE_SIZE * MAP_NUM_COLS
+    var CANVAS_HEIGHT = TILE_SIZE * MAP_NUM_ROWS
+    var CANVAS_WIDTH = TILE_SIZE * MAP_NUM_COLS
 
     const FOV = 90
 
@@ -104,36 +105,35 @@ const theory_6 = ( sketch ) => {
 
 
         // World Boundaries
-        walls.push(new Boundary_Color(TILE_SIZE,TILE_SIZE,sketch.width - TILE_SIZE,TILE_SIZE, 'rgb(0,255,0)', sketch));
-        walls.push(new Boundary_Color(sketch.width - TILE_SIZE, TILE_SIZE, sketch.width - TILE_SIZE, CANVAS_HEIGHT - TILE_SIZE, 'rgb(0,150,0)',sketch));
-        walls.push(new Boundary_Color(sketch.width - TILE_SIZE, CANVAS_HEIGHT - TILE_SIZE, TILE_SIZE, CANVAS_HEIGHT - TILE_SIZE, 'rgb(0,255,0)', sketch));
-        walls.push(new Boundary_Color(TILE_SIZE, CANVAS_HEIGHT - TILE_SIZE, TILE_SIZE, TILE_SIZE, 'rgb(0,150,0)', sketch));
-
+        walls.push(new Boundary_Color(1,1,MAP_NUM_COLS-1,1, 'rgb(0,255,0)', TILE_SIZE, sketch));
+        walls.push(new Boundary_Color(MAP_NUM_COLS - 1, 1, MAP_NUM_COLS - 1, MAP_NUM_ROWS-1, 'rgb(0,150,0)',TILE_SIZE, sketch));
+        walls.push(new Boundary_Color(MAP_NUM_COLS - 1, MAP_NUM_ROWS-1, 1, MAP_NUM_ROWS-1, 'rgb(0,255,0)', TILE_SIZE, sketch));
+        walls.push(new Boundary_Color(1,MAP_NUM_ROWS-1, 1, 1, 'rgb(0,150,0)', TILE_SIZE, sketch));
         // Walls added last section, colored now
-        walls.push(new Boundary_Color(4*TILE_SIZE,3*TILE_SIZE,7*TILE_SIZE,3*TILE_SIZE, 'rgb(255,0,0)', sketch))
-        walls.push(new Boundary_Color(4*TILE_SIZE,4*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE, 'rgb(255,0,0)', sketch))
-        walls.push(new Boundary_Color(4*TILE_SIZE,3*TILE_SIZE,4*TILE_SIZE,4*TILE_SIZE, 'rgb(255,0,0)', sketch))
-        walls.push(new Boundary_Color(7*TILE_SIZE,3*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE, 'rgb(100,0,0)', sketch))    
-        walls.push(new Boundary_Color(8*TILE_SIZE,1*TILE_SIZE,9*TILE_SIZE,1*TILE_SIZE, 'rgb(0,0,255)', sketch))
-        walls.push(new Boundary_Color(8*TILE_SIZE,2*TILE_SIZE,9*TILE_SIZE,2*TILE_SIZE, 'rgb(0,0,255)', sketch))
-        walls.push(new Boundary_Color(8*TILE_SIZE,1*TILE_SIZE,8*TILE_SIZE,2*TILE_SIZE, 'rgb(0,0,100)', sketch))
-        walls.push(new Boundary_Color(9*TILE_SIZE,1*TILE_SIZE,9*TILE_SIZE,2*TILE_SIZE, 'rgb(0,0,255)', sketch))    
-        walls.push(new Boundary_Color(3*TILE_SIZE,7*TILE_SIZE,3*TILE_SIZE,9*TILE_SIZE, 'rgb(150,0,0)', sketch))
-        walls.push(new Boundary_Color(3*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,7*TILE_SIZE, 'rgb(255,0,0)', sketch))
-        walls.push(new Boundary_Color(4*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, 'rgb(150,0,0)', sketch))
-        walls.push(new Boundary_Color(3*TILE_SIZE,9*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, 'rgb(150,0,0)', sketch))    
+        walls.push(new Boundary_Color(4,3,7,3, 'rgb(255,0,0)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(4,4,7,4, 'rgb(255,0,0)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(4,3,4,4, 'rgb(255,0,0)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(7,3,7,4, 'rgb(100,0,0)', TILE_SIZE, sketch))    
+        walls.push(new Boundary_Color(8,1,9,1, 'rgb(0,0,255)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(8,2,9,2, 'rgb(0,0,255)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(8,1,8,2, 'rgb(0,0,100)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(9,1,9,2, 'rgb(0,0,255)', TILE_SIZE, sketch))    
+        walls.push(new Boundary_Color(3,7,3,9, 'rgb(150,0,0)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(3,7,4,7, 'rgb(255,0,0)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(4,7,4,9, 'rgb(150,0,0)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(3,9,4,9, 'rgb(150,0,0)', TILE_SIZE, sketch))    
 
    
-        walls.push(new Boundary_Color(10*TILE_SIZE,8*TILE_SIZE,10*TILE_SIZE,9*TILE_SIZE, 'rgb(0,0,150)', sketch))
-        walls.push(new Boundary_Color(10*TILE_SIZE,8*TILE_SIZE,11*TILE_SIZE,8*TILE_SIZE, 'rgb(0,0,255)', sketch))
-        walls.push(new Boundary_Color(11*TILE_SIZE,8*TILE_SIZE,11*TILE_SIZE,9*TILE_SIZE, 'rgb(0,0,255)', sketch))
-        walls.push(new Boundary_Color(10*TILE_SIZE,9*TILE_SIZE,11*TILE_SIZE,9*TILE_SIZE, 'rgb(0,0,150)', sketch))    
-        walls.push(new Boundary_Color(11*TILE_SIZE,7*TILE_SIZE,11*TILE_SIZE,8*TILE_SIZE, 'rgb(0,0,150)', sketch))
-        walls.push(new Boundary_Color(11*TILE_SIZE,7*TILE_SIZE,12*TILE_SIZE,7*TILE_SIZE, 'rgb(0,0,255)', sketch))
+        walls.push(new Boundary_Color(10,8,10,9, 'rgb(0,0,150)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(10,8,11,8, 'rgb(0,0,255)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(11,8,11,9, 'rgb(0,0,255)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(10,9,11,9, 'rgb(0,0,150)', TILE_SIZE, sketch))    
+        walls.push(new Boundary_Color(11,7,11,8, 'rgb(0,0,150)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(11,7,12,7, 'rgb(0,0,255)', TILE_SIZE, sketch))
         // walls.push(new Boundary_Color(12*TILE_SIZE,7*TILE_SIZE,12*TILE_SIZE,8*TILE_SIZE, 'rgb(0,0,255)', sketch))
         // walls.push(new Boundary_Color(11*TILE_SIZE,8*TILE_SIZE,12*TILE_SIZE,8*TILE_SIZE, 'rgb(0,0,255)', sketch))    
-        walls.push(new Boundary_Color(12*TILE_SIZE,6*TILE_SIZE,12*TILE_SIZE,7*TILE_SIZE, 'rgb(0,0,150)', sketch))
-        walls.push(new Boundary_Color(12*TILE_SIZE,6*TILE_SIZE,13*TILE_SIZE,6*TILE_SIZE, 'rgb(0,0,255)', sketch))
+        walls.push(new Boundary_Color(12,6,12,7, 'rgb(0,0,150)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(12,6,13,6, 'rgb(0,0,255)', TILE_SIZE, sketch))
         // walls.push(new Boundary_Color(13*TILE_SIZE,6*TILE_SIZE,13*TILE_SIZE,7*TILE_SIZE, 'rgb(0,0,255)', sketch))
         // walls.push(new Boundary_Color(12*TILE_SIZE,7*TILE_SIZE,13*TILE_SIZE,7*TILE_SIZE, 'rgb(0,0,150)', sketch))    
 
@@ -151,13 +151,13 @@ const theory_6 = ( sketch ) => {
     fov_div_6 = sketch.createDiv("Current FOV: " + slider2.value())
         .attribute('class', 'section_text')
         .center('horizontal')
-        .position(30, sketch.height-245)
+        .position(0,0, "relative")
         .hide()
 
     density_div_6 = sketch.createDiv("Current Ray Density: " + slider1.value())
         .attribute('class', 'section_text')
         .center('horizontal')
-        .position(30, sketch.height-345)
+        .position(0,0, "relative")
         .hide()
 
     next_button_6 = sketch.createButton("Next")
@@ -186,10 +186,10 @@ const theory_6 = ( sketch ) => {
         text_div_6.parent('#theory_6_text')
         next_button_6.parent('theory_6')
         prev_button_6.parent('theory_6')
-        slider1.parent("#text_div_6")
-        slider2.parent("#text_div_6")
         density_div_6.parent("#text_div_6")
+        slider1.parent("#text_div_6")
         fov_div_6.parent("#text_div_6")
+        slider2.parent("#text_div_6")
 
 
     }
@@ -241,6 +241,8 @@ const theory_6 = ( sketch ) => {
     }
 
     sketch.draw = () => {
+        TILE_SIZE = ($(window).width()/2.7)/MAP_NUM_COLS;
+        resize()
         draw_details()
 
         text_div_6.show()
@@ -278,9 +280,18 @@ const theory_6 = ( sketch ) => {
         // interact_2()
     }
 
-    // function windowResized() {
-    //     resizeCanvas(windowWidth/2, windowHeight/2);
-    // }
+    function resize() {
+        sketch.resizeCanvas(TILE_SIZE*MAP_NUM_COLS, 1.5*TILE_SIZE*MAP_NUM_ROWS);
+        player.updatePos(TILE_SIZE*MAP_NUM_COLS/2, TILE_SIZE*MAP_NUM_ROWS/2)
+        CANVAS_HEIGHT = TILE_SIZE * MAP_NUM_ROWS
+        CANVAS_WIDTH = TILE_SIZE * MAP_NUM_COLS
+        for (var wall of walls) {
+            wall.update_tile_size(TILE_SIZE)
+        }
+
+        next_button_6.position(TILE_SIZE*(MAP_NUM_COLS + 1)/2 + 50, $(window).height()/2  + 20 + 1.5*TILE_SIZE*MAP_NUM_ROWS/2)
+        prev_button_6.position(TILE_SIZE*(MAP_NUM_COLS + 1)/2 - 25, $(window).height()/2 + 20 + 1.5*TILE_SIZE*MAP_NUM_ROWS/2)
+    }
 }
 
 new p5(theory_6)

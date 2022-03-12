@@ -1,8 +1,9 @@
 const theory_4 = ( sketch ) => {
 
-    const TILE_SIZE = 48;
+    // const TILE_SIZE = 48;
     const MAP_NUM_ROWS = 11;
     const MAP_NUM_COLS = 15;
+    var TILE_SIZE = ($(window).width()/2.5)/MAP_NUM_COLS;
 
     var player;
     let slider;
@@ -50,40 +51,41 @@ const theory_4 = ( sketch ) => {
 
 
         // World Boundaries
-        walls.push(new Boundary(TILE_SIZE,TILE_SIZE,sketch.width - TILE_SIZE,TILE_SIZE, sketch));
-        walls.push(new Boundary(sketch.width - TILE_SIZE, TILE_SIZE, sketch.width - TILE_SIZE, sketch.height - TILE_SIZE, sketch));
-        walls.push(new Boundary(sketch.width - TILE_SIZE, sketch.height - TILE_SIZE, TILE_SIZE, sketch.height - TILE_SIZE, sketch));
-        walls.push(new Boundary(TILE_SIZE,sketch.height - TILE_SIZE, TILE_SIZE, TILE_SIZE, sketch));
+        walls.push(new Boundary(1,1,MAP_NUM_COLS-1,1, TILE_SIZE, sketch));
+        walls.push(new Boundary(MAP_NUM_COLS - 1, 1, MAP_NUM_COLS - 1, MAP_NUM_ROWS-1,TILE_SIZE, sketch));
+        walls.push(new Boundary(MAP_NUM_COLS - 1, MAP_NUM_ROWS-1, 1, MAP_NUM_ROWS-1, TILE_SIZE, sketch));
+        walls.push(new Boundary(1,MAP_NUM_ROWS-1, 1, 1, TILE_SIZE, sketch));
 
         // Walls added last section
-        walls.push(new Boundary(4*TILE_SIZE,3*TILE_SIZE,7*TILE_SIZE,3*TILE_SIZE, sketch))
-        walls.push(new Boundary(4*TILE_SIZE,4*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE, sketch))
-        walls.push(new Boundary(4*TILE_SIZE,3*TILE_SIZE,4*TILE_SIZE,4*TILE_SIZE, sketch))
-        walls.push(new Boundary(7*TILE_SIZE,3*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE, sketch))    
-        walls.push(new Boundary(10*TILE_SIZE,8*TILE_SIZE,10*TILE_SIZE,9*TILE_SIZE, sketch))
-        walls.push(new Boundary(10*TILE_SIZE,8*TILE_SIZE,11*TILE_SIZE,8*TILE_SIZE, sketch))
-        walls.push(new Boundary(11*TILE_SIZE,8*TILE_SIZE,11*TILE_SIZE,9*TILE_SIZE, sketch))
-        walls.push(new Boundary(10*TILE_SIZE,9*TILE_SIZE,11*TILE_SIZE,9*TILE_SIZE, sketch))    
-        walls.push(new Boundary(11*TILE_SIZE,7*TILE_SIZE,11*TILE_SIZE,8*TILE_SIZE, sketch))
-        walls.push(new Boundary(11*TILE_SIZE,7*TILE_SIZE,12*TILE_SIZE,7*TILE_SIZE, sketch))
-        walls.push(new Boundary(12*TILE_SIZE,7*TILE_SIZE,12*TILE_SIZE,8*TILE_SIZE, sketch))
-        walls.push(new Boundary(11*TILE_SIZE,8*TILE_SIZE,12*TILE_SIZE,8*TILE_SIZE, sketch))    
-        walls.push(new Boundary(12*TILE_SIZE,6*TILE_SIZE,12*TILE_SIZE,7*TILE_SIZE, sketch))
-        walls.push(new Boundary(12*TILE_SIZE,6*TILE_SIZE,13*TILE_SIZE,6*TILE_SIZE, sketch))
-        walls.push(new Boundary(13*TILE_SIZE,6*TILE_SIZE,13*TILE_SIZE,7*TILE_SIZE, sketch))
-        walls.push(new Boundary(12*TILE_SIZE,7*TILE_SIZE,13*TILE_SIZE,7*TILE_SIZE, sketch))    
-        walls.push(new Boundary(3*TILE_SIZE,7*TILE_SIZE,3*TILE_SIZE,9*TILE_SIZE, sketch))
-        walls.push(new Boundary(3*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,7*TILE_SIZE, sketch))
-        walls.push(new Boundary(4*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, sketch))
-        walls.push(new Boundary(3*TILE_SIZE,9*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, sketch))    
-
+        walls.push(new Boundary(4*1,3*1,7*1,3*1, TILE_SIZE, sketch))
+        walls.push(new Boundary(4*1,4*1,7*1,4*1, TILE_SIZE, sketch))
+        walls.push(new Boundary(4*1,3*1,4*1,4*1, TILE_SIZE, sketch))
+        walls.push(new Boundary(7*1,3*1,7*1,4*1, TILE_SIZE, sketch))
+        walls.push(new Boundary(10,8,10,9, TILE_SIZE,sketch))
+        walls.push(new Boundary(10,8,11,8, TILE_SIZE,sketch))
+        walls.push(new Boundary(11,8,11,9, TILE_SIZE,sketch))
+        walls.push(new Boundary(10,9,11,9, TILE_SIZE,sketch))
+        walls.push(new Boundary(11,7,11,8, TILE_SIZE,sketch))
+        walls.push(new Boundary(11,7,12,7, TILE_SIZE,sketch))
+        walls.push(new Boundary(12,7,12,8, TILE_SIZE,sketch))
+        walls.push(new Boundary(11,8,12,8, TILE_SIZE,sketch))
+        walls.push(new Boundary(12,6,12,7, TILE_SIZE,sketch))
+        walls.push(new Boundary(12,6,13,6, TILE_SIZE,sketch))
+        walls.push(new Boundary(13,6,13,7, TILE_SIZE,sketch))
+        walls.push(new Boundary(12,7,13,7, TILE_SIZE,sketch))
+        walls.push(new Boundary(3,7,3,9,TILE_SIZE, sketch))
+        walls.push(new Boundary(3,7,4,7,TILE_SIZE, sketch))
+        walls.push(new Boundary(4,7,4,9,TILE_SIZE, sketch))
+        walls.push(new Boundary(3,9,4,9,TILE_SIZE, sketch))
+    
         player = new Particle(sketch.width/2 + 3, sketch.height/2 - 3, 360, 1, sketch)
     
         text_div_4 = sketch.createDiv(section_4_text[0])
             .attribute('class', 'section_text')
             .attribute('id', "text_div_4")
             .center('horizontal')
-            .position(0, sketch.height/3)
+            // .position(0, sketch.height/3)
+            .position(0,0, "relative")
             // .style('opacity', 1)
             // .attribute('width', 22)
             .hide()
@@ -91,7 +93,8 @@ const theory_4 = ( sketch ) => {
         fov_div = sketch.createDiv("Current FOV: " + slider.value())
             .attribute('class', 'section_text')
             .center('horizontal')
-            .position(30, sketch.height-25)
+            // .position(30, sketch.height-25)
+            .position(0,0, "relative")
             .hide()
 
         next_button_4 = sketch.createButton("Next")
@@ -120,8 +123,8 @@ const theory_4 = ( sketch ) => {
         text_div_4.parent('#theory_4_text')
         next_button_4.parent('theory_4')
         prev_button_4.parent('theory_4')
-        fov_div.parent("#text_div_4")
-        slider.parent("#text_div_4")
+        fov_div.parent("#theory_4_text")
+        slider.parent("#theory_4_text")
 
     }
 
@@ -170,9 +173,14 @@ const theory_4 = ( sketch ) => {
     }
 
     sketch.draw = () => {
+        TILE_SIZE = ($(window).width()/2.5)/MAP_NUM_COLS;
+        resize()
+
         draw_details()
         text_div_4.show()
         fov_div.show()
+        // fov_div.position(30, sketch.height-25)
+
         next_button_4.show()
         prev_button_4.show()
 
@@ -205,9 +213,16 @@ const theory_4 = ( sketch ) => {
         player.render(0)
     }
 
-    // function windowResized() {
-    //     resizeCanvas(windowWidth/2, windowHeight/2);
-    // }
+    function resize() {
+        sketch.resizeCanvas(TILE_SIZE*MAP_NUM_COLS, TILE_SIZE*MAP_NUM_ROWS);
+        player.updatePos(x=sketch.width/2, y=sketch.height/2)
+        for (var wall of walls) {
+            wall.update_tile_size(TILE_SIZE)
+        }
+        next_button_4.position(TILE_SIZE*MAP_NUM_COLS/2 + 50, $(window).height()/2 + 50 + TILE_SIZE*MAP_NUM_ROWS/2)
+        prev_button_4.position(TILE_SIZE*MAP_NUM_COLS/2 - 50, $(window).height()/2 + 50 + TILE_SIZE*MAP_NUM_ROWS/2)
+
+    }
 }
 
 new p5(theory_4)

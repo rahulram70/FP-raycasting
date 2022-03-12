@@ -1,8 +1,9 @@
 const theory_2 = ( sketch ) => {
 
-    const TILE_SIZE = 48;
+    // const TILE_SIZE = 48;
     const MAP_NUM_ROWS = 11;
     const MAP_NUM_COLS = 15;
+    var TILE_SIZE = ($(window).width()/2.5)/MAP_NUM_COLS;
 
     var player;
     var walls = [];
@@ -62,10 +63,10 @@ const theory_2 = ( sketch ) => {
         theory_2_canvas = sketch.createCanvas(TILE_SIZE * MAP_NUM_COLS, TILE_SIZE*MAP_NUM_ROWS);
         theory_2_canvas.parent("theory_2");
         
-        walls.push(new Boundary(TILE_SIZE,TILE_SIZE,sketch.width - TILE_SIZE,TILE_SIZE, sketch));
-        walls.push(new Boundary(sketch.width - TILE_SIZE, TILE_SIZE, sketch.width - TILE_SIZE, sketch.height - TILE_SIZE, sketch));
-        walls.push(new Boundary(sketch.width - TILE_SIZE, sketch.height - TILE_SIZE, TILE_SIZE, sketch.height - TILE_SIZE, sketch));
-        walls.push(new Boundary(TILE_SIZE,sketch.height - TILE_SIZE, TILE_SIZE, TILE_SIZE, sketch));
+        walls.push(new Boundary(1,1,MAP_NUM_COLS-1,1, TILE_SIZE, sketch));
+        walls.push(new Boundary(MAP_NUM_COLS - 1, 1, MAP_NUM_COLS - 1, MAP_NUM_ROWS-1,TILE_SIZE, sketch));
+        walls.push(new Boundary(MAP_NUM_COLS - 1, MAP_NUM_ROWS-1, 1, MAP_NUM_ROWS-1, TILE_SIZE, sketch));
+        walls.push(new Boundary(1,MAP_NUM_ROWS-1, 1, 1, TILE_SIZE, sketch));
 
         player = new Particle(sketch.width/2, sketch.height/2, 1, 1, sketch)
 
@@ -141,6 +142,9 @@ const theory_2 = ( sketch ) => {
     }
 
     sketch.draw = () => {
+        // console.log("hi!")
+        TILE_SIZE = ($(window).width()/2.5)/MAP_NUM_COLS;
+        resize()
         draw_details()
         text_div_2.show()
         next_button_2.show()
@@ -194,10 +198,16 @@ const theory_2 = ( sketch ) => {
         player.render(0)
     }
 
+    function resize() {
+        sketch.resizeCanvas(TILE_SIZE*MAP_NUM_COLS, TILE_SIZE*MAP_NUM_ROWS);
+        player.updatePos(x=sketch.width/2, y=sketch.height/2)
+        for (var wall of walls) {
+            wall.update_tile_size(TILE_SIZE)
+        }
+        next_button_2.position(TILE_SIZE*MAP_NUM_COLS/2 + 50, $(window).height()/2 + 50 + TILE_SIZE*MAP_NUM_ROWS/2)
+        prev_button_2.position(TILE_SIZE*MAP_NUM_COLS/2 - 50, $(window).height()/2 + 50 + TILE_SIZE*MAP_NUM_ROWS/2)
+    }
 
-// function windowResized() {
-//     resizeCanvas(windowWidth/2, windowHeight/2);
-// }
 }
 
-new p5(theory_2)
+var theory_2_page = new p5(theory_2)

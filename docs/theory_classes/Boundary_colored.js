@@ -1,6 +1,11 @@
 class Boundary_Color {
-    constructor(x1, y1, x2, y2, color, sketch) {
+    constructor(x1, y1, x2, y2, color, tile_size, sketch) {
+        this.tile_size = tile_size
         this.sketch = sketch
+        this.x1 = x1
+        this.x2 = x2
+        this.y1 = y1
+        this.y2 = y2
         this.a = this.sketch.createVector(x1,y1);
         this.b = this.sketch.createVector(x2,y2);
         this.color = color
@@ -12,5 +17,11 @@ class Boundary_Color {
         // this.sketch.stroke(this.color);
         this.sketch.line(this.a.x, this.a.y, this.b.x, this.b.y);
         this.sketch.pop();
+    }
+
+    update_tile_size(tile_size) {
+        this.tile_size = tile_size;
+        this.a = this.sketch.createVector(this.x1*tile_size,this.y1*tile_size);
+        this.b = this.sketch.createVector(this.x2*tile_size,this.y2*tile_size);
     }
 }

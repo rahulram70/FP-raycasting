@@ -1,14 +1,15 @@
 const theory_5 = ( sketch ) => {
 
-    const TILE_SIZE = 48;
+    // const TILE_SIZE = 48;
     const MAP_NUM_ROWS = 11;
     const MAP_NUM_COLS = 15;
+    var TILE_SIZE = ($(window).width()/2.7)/MAP_NUM_COLS;
 
     const FOV =  90
     var NUM_RAYS = FOV * 2;
 
-    const CANVAS_HEIGHT = TILE_SIZE * MAP_NUM_ROWS
-    const CANVAS_WIDTH = TILE_SIZE * MAP_NUM_COLS
+    var CANVAS_HEIGHT = TILE_SIZE * MAP_NUM_ROWS
+    var CANVAS_WIDTH = TILE_SIZE * MAP_NUM_COLS
 
     var player;
     var theory_5_canvas; 
@@ -212,25 +213,24 @@ const theory_5 = ( sketch ) => {
             sketch.pop()
         }
 
-        var interaction_height = .5*CANVAS_HEIGHT - e.cubicInOut(interaction_3_len)*(.5*CANVAS_HEIGHT - 48*.5*CANVAS_HEIGHT/dist) ;
-        var drawStart = -interaction_height / 2 + (.5*CANVAS_HEIGHT) / 2;
+        var interaction_height = .5*MAP_NUM_ROWS*TILE_SIZE - e.cubicInOut(interaction_3_len)*(.5*MAP_NUM_ROWS*TILE_SIZE - 48*.5*MAP_NUM_ROWS*TILE_SIZE/dist) ;
+        var drawStart = -interaction_height / 2 + (.5*MAP_NUM_ROWS*TILE_SIZE) / 2;
         if (drawStart < 0)
             drawStart = 0;
-        var drawEnd   = interaction_height / 2 + .5*CANVAS_HEIGHT / 2;
-        if (drawEnd >= .5*CANVAS_HEIGHT)
-            drawEnd = .5* CANVAS_HEIGHT - 1;
+        var drawEnd   = interaction_height / 2 + .5*MAP_NUM_ROWS*TILE_SIZE / 2;
+        if (drawEnd >= .5*MAP_NUM_ROWS*TILE_SIZE)
+            drawEnd = .5* MAP_NUM_ROWS*TILE_SIZE - 1;
 
 
         sketch.push()
         sketch.noStroke();
 
         sketch.fill(interaction_1_ray.color);
-        
-        sketch.rect(CANVAS_WIDTH/2-60, CANVAS_HEIGHT + drawStart, 120, CANVAS_HEIGHT + drawEnd - drawStart);
+        sketch.rect(MAP_NUM_COLS*TILE_SIZE/2-60, MAP_NUM_ROWS*TILE_SIZE + drawStart, 120, MAP_NUM_ROWS*TILE_SIZE + drawEnd - drawStart);
         sketch.fill(60, 0, 0);
-        sketch.rect(CANVAS_WIDTH/2-60, CANVAS_HEIGHT, 120, drawStart);
+        sketch.rect(MAP_NUM_COLS*TILE_SIZE/2-60, MAP_NUM_ROWS*TILE_SIZE, 120, drawStart);
         sketch.fill(0, 0, 23);
-        sketch.rect(CANVAS_WIDTH/2-60, CANVAS_HEIGHT + drawEnd, 120, .5*CANVAS_HEIGHT - drawEnd);
+        sketch.rect(MAP_NUM_COLS*TILE_SIZE/2-60, MAP_NUM_ROWS*TILE_SIZE + drawEnd, 120, .5*MAP_NUM_ROWS*TILE_SIZE - drawEnd);
 
         sketch.strokeWeight(2);
         sketch.pop()
@@ -265,23 +265,26 @@ const theory_5 = ( sketch ) => {
                 interaction_4_done = true
             }
 
-
-            sketch.push()
-            sketch.noStroke();
-            sketch.fill(interaction_1_ray.color);
-            sketch.rect(CANVAS_WIDTH/2-(60 - e.cubicInOut(interaction_4_width/120) * interaction_4_width/2), CANVAS_HEIGHT + drawStart, 120-e.cubicInOut(interaction_4_width/120) * interaction_4_width, CANVAS_HEIGHT + drawEnd - drawStart);
-            sketch.fill(60, 0, 0);
-            sketch.rect(CANVAS_WIDTH/2-(60 - e.cubicInOut(interaction_4_width/120) * interaction_4_width/2), CANVAS_HEIGHT, 120-e.cubicInOut(interaction_4_width/120) * interaction_4_width, drawStart);
-            sketch.fill(0, 0, 23);
-            sketch.rect(CANVAS_WIDTH/2-(60 - e.cubicInOut(interaction_4_width/120) * interaction_4_width/2), CANVAS_HEIGHT + drawEnd, 120-e.cubicInOut(interaction_4_width/120) * interaction_4_width, .5*CANVAS_HEIGHT - drawEnd);
-    
-            sketch.strokeWeight(2);
-            sketch.pop()
+            {
+                sketch.push()
+                sketch.noStroke();
+                sketch.fill(interaction_1_ray.color);
+                sketch.rect(CANVAS_WIDTH/2-(60 - e.cubicInOut(interaction_4_width/120) * interaction_4_width/2), CANVAS_HEIGHT + drawStart, 120-e.cubicInOut(interaction_4_width/120) * interaction_4_width, CANVAS_HEIGHT + drawEnd - drawStart);
+                sketch.fill(60, 0, 0);
+                sketch.rect(CANVAS_WIDTH/2-(60 - e.cubicInOut(interaction_4_width/120) * interaction_4_width/2), CANVAS_HEIGHT, 120-e.cubicInOut(interaction_4_width/120) * interaction_4_width, drawStart);
+                sketch.fill(0, 0, 23);
+                sketch.rect(CANVAS_WIDTH/2-(60 - e.cubicInOut(interaction_4_width/120) * interaction_4_width/2), CANVAS_HEIGHT + drawEnd, 120-e.cubicInOut(interaction_4_width/120) * interaction_4_width, .5*CANVAS_HEIGHT - drawEnd);
+                
+                sketch.strokeWeight(2);
+                sketch.pop()
+            }
 
             interaction_4_width += 2
         } 
+
         if (interaction_4_reset) {
             if (interaction_4_width > 0) {
+                {
                 sketch.push()
                 sketch.noStroke();
                 sketch.fill(interaction_1_ray.color);
@@ -293,25 +296,29 @@ const theory_5 = ( sketch ) => {
         
                 sketch.strokeWeight(2);
                 sketch.pop()
+                }
             } else {
-                interaction_4_reset = false
-                interaction_4_done = false;
+                interaction_3_start = true;
+                interaction_3_done = true;
+                interaction_4_width = 0
             }
 
             interaction_4_width -= 2
 
-        } if (interaction_4_done) {
-            sketch.push()
-            sketch.noStroke();
-            sketch.fill(interaction_1_ray.color);
-            sketch.rect(CANVAS_WIDTH/2-1, CANVAS_HEIGHT + drawStart, 2, CANVAS_HEIGHT + drawEnd - drawStart);
-            sketch.fill(60, 0, 0);
-            sketch.rect(CANVAS_WIDTH/2-1, CANVAS_HEIGHT, 2, drawStart);
-            sketch.fill(0, 0, 23);
-            sketch.rect(CANVAS_WIDTH/2-1, CANVAS_HEIGHT + drawEnd, 2, .5*CANVAS_HEIGHT - drawEnd);
-    
-            sketch.strokeWeight(2);
-            sketch.pop()
+        } else if (interaction_4_done) {
+            {
+                sketch.push()
+                sketch.noStroke();
+                sketch.fill(interaction_1_ray.color);
+                sketch.rect(CANVAS_WIDTH/2-1, CANVAS_HEIGHT + drawStart, 2, CANVAS_HEIGHT + drawEnd - drawStart);
+                sketch.fill(60, 0, 0);
+                sketch.rect(CANVAS_WIDTH/2-1, CANVAS_HEIGHT, 2, drawStart);
+                sketch.fill(0, 0, 23);
+                sketch.rect(CANVAS_WIDTH/2-1, CANVAS_HEIGHT + drawEnd, 2, .5*CANVAS_HEIGHT - drawEnd);
+                
+                sketch.strokeWeight(2);
+                sketch.pop()
+            }
         }
     }
 
@@ -347,7 +354,7 @@ const theory_5 = ( sketch ) => {
             sketch.push()
             sketch.noStroke();
             sketch.fill(interaction_1_ray.color);
-            console.log(e.cubicInOut(interaction_5_pos/(CANVAS_WIDTH/2)))
+
             sketch.rect(CANVAS_WIDTH/2 - CANVAS_WIDTH/2*e.cubicInOut(interaction_5_pos/(CANVAS_WIDTH/2))-1, CANVAS_HEIGHT + drawStart, 2, CANVAS_HEIGHT + drawEnd - drawStart);
             sketch.fill(60, 0, 0);
             sketch.rect(CANVAS_WIDTH/2 - CANVAS_WIDTH/2*e.cubicInOut(interaction_5_pos/(CANVAS_WIDTH/2))-1, CANVAS_HEIGHT, 2, drawStart);
@@ -378,7 +385,7 @@ const theory_5 = ( sketch ) => {
     var interaction_6_start = false;
     var interaction_6_done = false;
     function interact_6() {
-
+        var draw_x_step = CANVAS_WIDTH/NUM_RAYS
         // dist = player.rays[interaction_6_cur_ray].len * Math.cos(player.rays[interaction_6_cur_ray].angle - player.heading)
         dist = player.rays[interaction_6_cur_ray].len
 
@@ -409,19 +416,18 @@ const theory_5 = ( sketch ) => {
                     sketch.noStroke();
             
                     sketch.fill(player.rays[i].color);
-                    
-                    sketch.rect((i*4), CANVAS_HEIGHT + drawStart, 4, CANVAS_HEIGHT + drawEnd - drawStart);
+                    sketch.rect((i*draw_x_step), CANVAS_HEIGHT + drawStart, Math.ceil(draw_x_step) + 1, drawEnd - drawStart);
                     sketch.fill(60, 0, 0);
-                    sketch.rect((i*4), CANVAS_HEIGHT, 4, drawStart);
+                    sketch.rect((i*draw_x_step), CANVAS_HEIGHT, Math.ceil(draw_x_step) + 1, drawStart);
                     sketch.fill(0, 0, 23);
-                    sketch.rect((i*4), CANVAS_HEIGHT + drawEnd, 4, .5*CANVAS_HEIGHT - drawEnd);
+                    sketch.rect((i*draw_x_step), CANVAS_HEIGHT + drawEnd, Math.ceil(draw_x_step)+ 1, .5*CANVAS_HEIGHT - drawEnd);
             
                     sketch.strokeWeight(2);
                     sketch.pop()
     
             }
             if (interaction_6_len > 1 && interaction_6_cur_ray != NUM_RAYS-1) {
-                interaction_6_cur_ray += 1
+                interaction_6_cur_ray += 2
                 interaction_6_len = 0
             } else if (interaction_6_cur_ray == NUM_RAYS - 1) {
                 interaction_6_done = true
@@ -447,15 +453,15 @@ const theory_5 = ( sketch ) => {
         
                 sketch.push()
                 sketch.noStroke();
-        
+                
                 sketch.fill(player.rays[interaction_6_cur_ray].color);
                 
-                sketch.rect((interaction_6_cur_ray*4), CANVAS_HEIGHT + drawStart, 4, CANVAS_HEIGHT + drawEnd - drawStart);
+
+                sketch.rect((i*draw_x_step), CANVAS_HEIGHT + drawStart, Math.ceil(draw_x_step) + 1, drawEnd - drawStart);
                 sketch.fill(60, 0, 0);
-                sketch.rect((interaction_6_cur_ray*4), CANVAS_HEIGHT, 4, drawStart);
+                sketch.rect((i*draw_x_step), CANVAS_HEIGHT, Math.ceil(draw_x_step) + 1, drawStart);
                 sketch.fill(0, 0, 23);
-                sketch.rect((interaction_6_cur_ray*4), CANVAS_HEIGHT + drawEnd, 4, .5*CANVAS_HEIGHT - drawEnd);
-        
+                sketch.rect((i*draw_x_step), CANVAS_HEIGHT + drawEnd, Math.ceil(draw_x_step)+ 1, .5*CANVAS_HEIGHT - drawEnd);
                 sketch.strokeWeight(2);
                 sketch.pop()
 
@@ -463,15 +469,6 @@ const theory_5 = ( sketch ) => {
             }
         } else {
             for (var i = 0; i <= interaction_6_cur_ray; i++) {
-                // sketch.push()
-                // sketch.stroke('green')
-                // sketch.strokeWeight(2)
-                // sketch.line(player.pos.x, 
-                //             player.pos.y, 
-                //             player.rays[i].dest_pos.x, 
-                //             player.rays[i].dest_pos.y)
-                    
-                // sketch.pop()
                     
                 // dist = player.rays[i].len * Math.cos(player.rays[i].angle - player.heading)
                 dist = player.rays[i].len
@@ -488,12 +485,12 @@ const theory_5 = ( sketch ) => {
                 sketch.noStroke();
         
                 sketch.fill(player.rays[i].color);
-                
-                sketch.rect((i*4), CANVAS_HEIGHT + drawStart, 4, CANVAS_HEIGHT + drawEnd - drawStart);
+
+                sketch.rect((i*draw_x_step), CANVAS_HEIGHT + drawStart, Math.ceil(draw_x_step) + 1, drawEnd - drawStart);
                 sketch.fill(60, 0, 0);
-                sketch.rect((i*4), CANVAS_HEIGHT, 4, drawStart);
+                sketch.rect((i*draw_x_step), CANVAS_HEIGHT, Math.ceil(draw_x_step) + 1, drawStart);
                 sketch.fill(0, 0, 23);
-                sketch.rect((i*4), CANVAS_HEIGHT + drawEnd, 4, .5*CANVAS_HEIGHT - drawEnd);
+                sketch.rect((i*draw_x_step), CANVAS_HEIGHT + drawEnd, Math.ceil(draw_x_step)+ 1, .5*CANVAS_HEIGHT - drawEnd);
         
                 sketch.strokeWeight(2);
                 sketch.pop()
@@ -536,6 +533,7 @@ const theory_5 = ( sketch ) => {
     
             interaction_7_len += .01
         } else {
+            interaction_7_perp_dist = player.rays[0].len * Math.cos(player.rays[0].angle - player.heading)
             sketch.line(CANVAS_WIDTH/2 - 90, CANVAS_HEIGHT/2, CANVAS_WIDTH/2 + 90, CANVAS_HEIGHT/2)
             sketch.push()
             sketch.stroke('green')
@@ -551,6 +549,7 @@ const theory_5 = ( sketch ) => {
     var interaction_8_start = false;
     var interaction_8_is_fisheye = true;
     function interact_8() {
+        var draw_x_step = CANVAS_WIDTH/NUM_RAYS
         for (var i = 0; i < FOV*2; i++) {
             var non_fisheye_dist = player.rays[i].len * Math.cos(player.rays[i].angle - player.heading)
             var fish_eye_dist = player.rays[i].len
@@ -570,11 +569,11 @@ const theory_5 = ( sketch ) => {
         
                 sketch.fill(player.rays[i].color);
                 
-                sketch.rect((i*4), CANVAS_HEIGHT + drawStart, 4, CANVAS_HEIGHT + drawEnd - drawStart);
+                sketch.rect((i*draw_x_step), CANVAS_HEIGHT + drawStart, Math.ceil(draw_x_step) + 1,  drawEnd - drawStart);
                 sketch.fill(60, 0, 0);
-                sketch.rect((i*4), CANVAS_HEIGHT, 4, drawStart);
+                sketch.rect((i*draw_x_step), CANVAS_HEIGHT, Math.ceil(draw_x_step) + 1, drawStart);
                 sketch.fill(0, 0, 23);
-                sketch.rect((i*4), CANVAS_HEIGHT + drawEnd, 4, .5*CANVAS_HEIGHT - drawEnd);
+                sketch.rect((i*draw_x_step), CANVAS_HEIGHT + drawEnd, Math.ceil(draw_x_step) + 1, .5*CANVAS_HEIGHT - drawEnd);
         
                 sketch.strokeWeight(2);
                 sketch.pop()
@@ -592,12 +591,11 @@ const theory_5 = ( sketch ) => {
                 sketch.noStroke();
         
                 sketch.fill(player.rays[i].color);
-                
-                sketch.rect((i*4), CANVAS_HEIGHT + drawStart, 4, CANVAS_HEIGHT + drawEnd - drawStart);
+                sketch.rect((i*draw_x_step), CANVAS_HEIGHT + drawStart, Math.ceil(draw_x_step) + 1,  drawEnd - drawStart);
                 sketch.fill(60, 0, 0);
-                sketch.rect((i*4), CANVAS_HEIGHT, 4, drawStart);
+                sketch.rect((i*draw_x_step), CANVAS_HEIGHT, Math.ceil(draw_x_step) + 1, drawStart);
                 sketch.fill(0, 0, 23);
-                sketch.rect((i*4), CANVAS_HEIGHT + drawEnd, 4, .5*CANVAS_HEIGHT - drawEnd);
+                sketch.rect((i*draw_x_step), CANVAS_HEIGHT + drawEnd, Math.ceil(draw_x_step) + 1, .5*CANVAS_HEIGHT - drawEnd);
         
                 sketch.strokeWeight(2);
                 sketch.pop()
@@ -608,36 +606,34 @@ const theory_5 = ( sketch ) => {
 
 
     sketch.setup = () => {
-        theory_5_canvas = sketch.createCanvas(TILE_SIZE * MAP_NUM_COLS, 1.5*TILE_SIZE*MAP_NUM_ROWS);
+        theory_5_canvas = sketch.createCanvas(TILE_SIZE * MAP_NUM_COLS, 3*TILE_SIZE*MAP_NUM_ROWS);
         theory_5_canvas.parent("theory_5");
 
-                // World Boundaries
-        walls.push(new Boundary_Color(TILE_SIZE,TILE_SIZE,sketch.width - TILE_SIZE,TILE_SIZE, 'rgb(0,255,0)', sketch));
-        walls.push(new Boundary_Color(sketch.width - TILE_SIZE, TILE_SIZE, sketch.width - TILE_SIZE, CANVAS_HEIGHT - TILE_SIZE, 'rgb(0,150,0)',sketch));
-        walls.push(new Boundary_Color(sketch.width - TILE_SIZE, CANVAS_HEIGHT - TILE_SIZE, TILE_SIZE, CANVAS_HEIGHT - TILE_SIZE, 'rgb(0,255,0)', sketch));
-        walls.push(new Boundary_Color(TILE_SIZE, CANVAS_HEIGHT - TILE_SIZE, TILE_SIZE, TILE_SIZE, 'rgb(0,150,0)', sketch));
-
+        walls.push(new Boundary_Color(1,1,MAP_NUM_COLS-1,1, 'rgb(0,255,0)', TILE_SIZE, sketch));
+        walls.push(new Boundary_Color(MAP_NUM_COLS - 1, 1, MAP_NUM_COLS - 1, MAP_NUM_ROWS-1, 'rgb(0,150,0)',TILE_SIZE, sketch));
+        walls.push(new Boundary_Color(MAP_NUM_COLS - 1, MAP_NUM_ROWS-1, 1, MAP_NUM_ROWS-1, 'rgb(0,255,0)', TILE_SIZE, sketch));
+        walls.push(new Boundary_Color(1,MAP_NUM_ROWS-1, 1, 1, 'rgb(0,150,0)', TILE_SIZE, sketch));
         // Walls added last section, colored now
-        walls.push(new Boundary_Color(4*TILE_SIZE,3*TILE_SIZE,7*TILE_SIZE,3*TILE_SIZE, 'rgb(255,0,0)', sketch))
-        walls.push(new Boundary_Color(4*TILE_SIZE,4*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE, 'rgb(255,0,0)', sketch))
-        walls.push(new Boundary_Color(4*TILE_SIZE,3*TILE_SIZE,4*TILE_SIZE,4*TILE_SIZE, 'rgb(100,0,0)', sketch))
-        walls.push(new Boundary_Color(7*TILE_SIZE,3*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE, 'rgb(100,0,0)', sketch))  
-        walls.push(new Boundary_Color(8*TILE_SIZE,1*TILE_SIZE,9*TILE_SIZE,1*TILE_SIZE, 'rgb(0,0,255)', sketch))
-        walls.push(new Boundary_Color(8*TILE_SIZE,2*TILE_SIZE,9*TILE_SIZE,2*TILE_SIZE, 'rgb(0,0,255)', sketch))
-        walls.push(new Boundary_Color(8*TILE_SIZE,1*TILE_SIZE,8*TILE_SIZE,2*TILE_SIZE, 'rgb(0,0,100)', sketch))
-        walls.push(new Boundary_Color(9*TILE_SIZE,1*TILE_SIZE,9*TILE_SIZE,2*TILE_SIZE, 'rgb(0,0,255)', sketch))    
-        walls.push(new Boundary_Color(3*TILE_SIZE,7*TILE_SIZE,3*TILE_SIZE,9*TILE_SIZE, 'rgb(0,150,0)', sketch))
-        walls.push(new Boundary_Color(3*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,7*TILE_SIZE, 'rgb(0,255,0)', sketch))
-        walls.push(new Boundary_Color(4*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, 'rgb(0,150,0)', sketch))
-        walls.push(new Boundary_Color(3*TILE_SIZE,9*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, 'rgb(0,150,0)', sketch))    
+        walls.push(new Boundary_Color(4,3,7,3, 'rgb(255,0,0)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(4,4,7,4, 'rgb(255,0,0)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(4,3,4,4, 'rgb(100,0,0)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(7,3,7,4, 'rgb(100,0,0)', TILE_SIZE, sketch))  
+        walls.push(new Boundary_Color(8,1,9,1, 'rgb(0,0,255)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(8,2,9,2, 'rgb(0,0,255)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(8,1,8,2, 'rgb(0,0,100)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(9,1,9,2, 'rgb(0,0,255)', TILE_SIZE, sketch))    
+        walls.push(new Boundary_Color(3,7,3,9, 'rgb(0,150,0)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(3,7,4,7, 'rgb(0,255,0)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(4,7,4,9, 'rgb(0,150,0)', TILE_SIZE, sketch))
+        walls.push(new Boundary_Color(3,9,4,9, 'rgb(0,150,0)', TILE_SIZE, sketch))    
 
-        player = new Particle(CANVAS_WIDTH/2, CANVAS_HEIGHT/2, FOV, .5, sketch)
+        player = new Particle(TILE_SIZE*MAP_NUM_COLS/2, TILE_SIZE*MAP_NUM_ROWS/2, FOV, .5, sketch)
 
         
         text_div_5 = sketch.createDiv(section_5_text[0])
             .attribute('class', 'section_text')
             .center('horizontal')
-            .position(0, sketch.height/4)
+            .position(0,0, "relative")
             .style('opacity', text_fade_5)
             // .attribute('width', 22)
             .hide()
@@ -649,58 +645,37 @@ const theory_5 = ( sketch ) => {
             .size(50, 20)
             .mousePressed(() => {
 
-                // interaction_3_start = true;
-                // sketch.select("#theory_5_interact_4").mouseClicked(
-                //     function() {
-                //         interaction_4_start = true;
-                //     })
-                // sketch.select("#theory_5_interact_5").mouseClicked(
-                //     function() {
-                //         interaction_5_start = true;
-                //     })
-                // sketch.select("#theory_5_interact_6").mouseClicked(
-                //     function() {
-                //         interaction_6_start = true;
-                //     })
-                // sketch.select("#theory_5_interact_7").mouseClicked(
-                //     function() {
-                //         if (!interaction_7_start) {
-                //             interaction_7_start = true;
-                //         } else {
-                //             interaction_7_len = 0
-                //             interaction_7_done = false;
-                //             interaction_7_camera_drawn = false
-                //             interaction_7_camera_len = 0
-                //         }
-                //     })
-                // sketch.select("#theory_5_interact_8").mouseClicked(
-                //         function() {
-                //             interaction_8_start = true
-                //             interaction_8_is_fisheye = !interaction_8_is_fisheye;
-                //         })
                 if (curr_screen_5 < section_5_text.length - 1) {
                     curr_screen_5++;
+
                     if (curr_screen_5 == 1) {
                         interaction_1_start = true;
                         lineLen = 0;
                     } else if (curr_screen_5 == 2) {
                         interaction_1_done = false;
                         interaction_1_start = false;
+
                         interaction_3_start = true;
                         interaction_3_len = 0
                     } else if (curr_screen_5 == 4) {
                         interaction_3_done = true;
                         interaction_3_start = false;
+
                         interaction_4_width = 0
                         interaction_4_start = true;
                         interaction_4_done = false;
+                        interaction_4_reset = false
                     } else if (curr_screen_5 == 5) {
                         interaction_4_done = false;
+
                         interaction_4_start = false;
                         interaction_5_start = true;
+                        interaction_5_pos = 0;
                     } else if (curr_screen_5 == 6) {
                         interaction_5_done = false;
                         interaction_5_start = false;
+
+                        interaction_6_cur_ray = 1;
                         interaction_6_start = true;
                     } else if (curr_screen_5 == 7) {
                         // interaction_6_done = false;
@@ -713,10 +688,14 @@ const theory_5 = ( sketch ) => {
                     } else {
                         toggle_button.hide()
                     }
+
                     updateDisplayText(text_div_5, curr_screen_5);
+
                 } else if (curr_screen_5 == section_5_text.length - 1) {
                     fullpage_api.moveTo('page6', 0);
                 }
+                console.log(curr_screen_5)
+
             })
             .position(TILE_SIZE*MAP_NUM_COLS/2 + 100, 880)
             .hide()
@@ -739,8 +718,14 @@ const theory_5 = ( sketch ) => {
             .style('border', '2px solid #5bc0de')
             .size(50, 20)
             .mousePressed(() => {
+
+                if (curr_screen_5 == 0) {
+                    fullpage_api.moveTo('page4', 0);
+                }
+
                 if (curr_screen_5 > 0) {
                     curr_screen_5--;
+                    console.log(curr_screen_5)
                     updateDisplayText(text_div_5, curr_screen_5);
                 }
                 if (curr_screen_5 == 0) {
@@ -751,6 +736,7 @@ const theory_5 = ( sketch ) => {
                     interaction_1_done = false;
                     interaction_1_start = true;
                     lineLen = 0;
+
                     interaction_3_done = false;
                     interaction_3_start = false;
                 } else if (curr_screen_5 == 2) {
@@ -758,18 +744,42 @@ const theory_5 = ( sketch ) => {
                     interaction_3_start = true;
                     interaction_3_len = 0;
 
-                    interaction_4_width = 0
                     interaction_4_start = false;
-                    interaction_4_done = true;
+                    interaction_4_done = false;
                 } else if (curr_screen_5 == 3) {
                     interaction_4_reset = true
-                } else if (curr_screen_5 == 4) {
-                    interaction_3_done = true;
                     interaction_3_start = false;
-                    interaction_3_len = 0;
-                    interaction_4_width = 0
+
+                } else if (curr_screen_5 == 4) {
                     interaction_4_start = true;
-                    interaction_4_done = false;
+                    interaction_4_done = true;
+                    interaction_5_pos = 0
+                    interaction_5_start = false;
+                    interaction_5_done = false;
+                } else if (curr_screen_5 == 5) {
+                    interaction_5_start = true;
+                    interaction_5_done = true;
+
+                    interaction_6_start = false;
+                    interaction_6_done = false;
+                } else if (curr_screen_5 = 6) {
+                    interaction_6_cur_ray = 1;
+                    interaction_6_start = true;
+                    interaction_6_done = false;
+
+
+                    interaction_7_len = 0
+                    interaction_7_start = false;
+                    interaction_7_done = false;
+                    interaction_7_camera_drawn = false
+                    interaction_7_camera_len = 0
+
+                    interaction_8_is_fisheye = true;
+                    interaction_8_start = false;
+                } else if (curr_screen_5 == 7) {
+
+                    interaction_8_is_fisheye = true;
+                    interaction_8_start = false;
                 }
 
                 if (curr_screen_5 != 7) {
@@ -833,9 +843,15 @@ const theory_5 = ( sketch ) => {
     }
 
     sketch.draw = () => {
+        TILE_SIZE = ($(window).width()/2.7)/MAP_NUM_COLS;
+        resize()
+
         interaction_1_ray = player.rays[0]
 
         draw_details()
+        // sketch.strokeWeight(19)
+        // // sketch.fill("red")
+        // sketch.rect(0,0,sketch.width, sketch.height)
 
         text_div_5.show()
         next_button_5.show()
@@ -863,17 +879,17 @@ const theory_5 = ( sketch ) => {
         }
 
         if (interaction_3_start) {
-            interaction_1_start = false
+            // interaction_1_start = false
             interact_3()
         }
 
         if (interaction_4_start) {
-            interaction_3_start = false;
+            // interaction_3_start = false;
             interact_4()
         }
 
         if (interaction_5_start) {
-            interaction_4_start = false;
+            // interaction_4_start = false;
             interact_5()
         }
 
@@ -895,9 +911,20 @@ const theory_5 = ( sketch ) => {
         // interact_2()
     }
 
-    // function windowResized() {
-    //     resizeCanvas(windowWidth/2, windowHeight/2);
-    // }
+    function resize() {
+        sketch.resizeCanvas(TILE_SIZE*MAP_NUM_COLS, 1.5*TILE_SIZE*MAP_NUM_ROWS);
+        player.updatePos(TILE_SIZE*MAP_NUM_COLS/2, TILE_SIZE*MAP_NUM_ROWS/2)
+        CANVAS_HEIGHT = TILE_SIZE * MAP_NUM_ROWS
+        CANVAS_WIDTH = TILE_SIZE * MAP_NUM_COLS
+        for (var wall of walls) {
+            wall.update_tile_size(TILE_SIZE)
+        }
+
+        next_button_5.position(TILE_SIZE*(MAP_NUM_COLS + 1)/2 + 50, $(window).height()/2  + 20 + 1.5*TILE_SIZE*MAP_NUM_ROWS/2)
+        prev_button_5.position(TILE_SIZE*(MAP_NUM_COLS + 1)/2 - 25, $(window).height()/2 + 20 + 1.5*TILE_SIZE*MAP_NUM_ROWS/2)
+        toggle_button.position(TILE_SIZE*(MAP_NUM_COLS + 1)/2 + 125, $(window).height()/2 + 20 + 1.5*TILE_SIZE*MAP_NUM_ROWS/2)
+
+    }
 }
 
 new p5(theory_5)

@@ -1,8 +1,9 @@
 const theory_3 = ( sketch ) => {
 
-    const TILE_SIZE = 48;
+    // const TILE_SIZE = 48;
     const MAP_NUM_ROWS = 11;
     const MAP_NUM_COLS = 15;
+    var TILE_SIZE = ($(window).width()/2.5)/MAP_NUM_COLS;
 
     var player;
     var walls = [];
@@ -65,34 +66,40 @@ const theory_3 = ( sketch ) => {
 
     sketch.setup = () => {
         var block_1 = [
-            new Boundary(4*TILE_SIZE,3*TILE_SIZE,7*TILE_SIZE,3*TILE_SIZE, sketch),
-            new Boundary(4*TILE_SIZE,4*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE, sketch),
-            new Boundary(4*TILE_SIZE,3*TILE_SIZE,4*TILE_SIZE,4*TILE_SIZE, sketch),
-            new Boundary(7*TILE_SIZE,3*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE, sketch)
+            new Boundary(4*1,3*1,7*1,3*1, TILE_SIZE, sketch),
+            new Boundary(4*1,4*1,7*1,4*1, TILE_SIZE, sketch),
+            new Boundary(4*1,3*1,4*1,4*1, TILE_SIZE, sketch),
+            new Boundary(7*1,3*1,7*1,4*1, TILE_SIZE, sketch)
         ]
         var block_2 = [
-            new Boundary(10*TILE_SIZE,8*TILE_SIZE,10*TILE_SIZE,9*TILE_SIZE, sketch),
-            new Boundary(10*TILE_SIZE,8*TILE_SIZE,11*TILE_SIZE,8*TILE_SIZE, sketch),
-            new Boundary(11*TILE_SIZE,8*TILE_SIZE,11*TILE_SIZE,9*TILE_SIZE, sketch),
-            new Boundary(10*TILE_SIZE,9*TILE_SIZE,11*TILE_SIZE,9*TILE_SIZE, sketch)
+            new Boundary(10,8,10,9, TILE_SIZE,sketch),
+            new Boundary(10,8,11,8, TILE_SIZE,sketch),
+            new Boundary(11,8,11,9, TILE_SIZE,sketch),
+            new Boundary(10,9,11,9, TILE_SIZE,sketch)
         ]
         var block_3 = [
-            new Boundary(11*TILE_SIZE,7*TILE_SIZE,11*TILE_SIZE,8*TILE_SIZE, sketch),
-            new Boundary(11*TILE_SIZE,7*TILE_SIZE,12*TILE_SIZE,7*TILE_SIZE, sketch),
-            new Boundary(12*TILE_SIZE,7*TILE_SIZE,12*TILE_SIZE,8*TILE_SIZE, sketch),
-            new Boundary(11*TILE_SIZE,8*TILE_SIZE,12*TILE_SIZE,8*TILE_SIZE, sketch)
+            new Boundary(11,7,11,8, TILE_SIZE,sketch),
+            new Boundary(11,7,12,7, TILE_SIZE,sketch),
+            new Boundary(12,7,12,8, TILE_SIZE,sketch),
+            new Boundary(11,8,12,8, TILE_SIZE,sketch)
         ]
         var block_4 = [
-            new Boundary(12*TILE_SIZE,6*TILE_SIZE,12*TILE_SIZE,7*TILE_SIZE, sketch),
-            new Boundary(12*TILE_SIZE,6*TILE_SIZE,13*TILE_SIZE,6*TILE_SIZE, sketch),
-            new Boundary(13*TILE_SIZE,6*TILE_SIZE,13*TILE_SIZE,7*TILE_SIZE, sketch),
-            new Boundary(12*TILE_SIZE,7*TILE_SIZE,13*TILE_SIZE,7*TILE_SIZE, sketch)
+            new Boundary(12,6,12,7, TILE_SIZE,sketch),
+            new Boundary(12,6,13,6, TILE_SIZE,sketch),
+            new Boundary(13,6,13,7, TILE_SIZE,sketch),
+            new Boundary(12,7,13,7, TILE_SIZE,sketch)
         ]
         var block_5 = [
-            new Boundary(3*TILE_SIZE,7*TILE_SIZE,3*TILE_SIZE,9*TILE_SIZE, sketch),
-            new Boundary(3*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,7*TILE_SIZE, sketch),
-            new Boundary(4*TILE_SIZE,7*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, sketch),
-            new Boundary(3*TILE_SIZE,9*TILE_SIZE,4*TILE_SIZE,9*TILE_SIZE, sketch)
+            new Boundary(3,7,3,9,TILE_SIZE, sketch),
+            new Boundary(3,7,4,7,TILE_SIZE, sketch),
+            new Boundary(4,7,4,9,TILE_SIZE, sketch),
+            new Boundary(3,9,4,9,TILE_SIZE, sketch)
+        ]
+        var block_6 = [
+            new Boundary(8,1,9,1, TILE_SIZE, sketch),
+            new Boundary(8,2,9,2, TILE_SIZE, sketch),
+            new Boundary(8,1,8,2, TILE_SIZE, sketch),
+            new Boundary(9,1,9,2, TILE_SIZE, sketch)
         ]
 
         blocks_drawn = 0
@@ -105,10 +112,10 @@ const theory_3 = ( sketch ) => {
         // })
         
 
-        walls.push(new Boundary(TILE_SIZE,TILE_SIZE,sketch.width - TILE_SIZE,TILE_SIZE, sketch));
-        walls.push(new Boundary(sketch.width - TILE_SIZE, TILE_SIZE, sketch.width - TILE_SIZE, sketch.height - TILE_SIZE, sketch));
-        walls.push(new Boundary(sketch.width - TILE_SIZE, sketch.height - TILE_SIZE, TILE_SIZE, sketch.height - TILE_SIZE, sketch));
-        walls.push(new Boundary(TILE_SIZE,sketch.height - TILE_SIZE, TILE_SIZE, TILE_SIZE, sketch));
+        walls.push(new Boundary(1,1,MAP_NUM_COLS-1,1, TILE_SIZE, sketch));
+        walls.push(new Boundary(MAP_NUM_COLS - 1, 1, MAP_NUM_COLS - 1, MAP_NUM_ROWS-1,TILE_SIZE, sketch));
+        walls.push(new Boundary(MAP_NUM_COLS - 1, MAP_NUM_ROWS-1, 1, MAP_NUM_ROWS-1, TILE_SIZE, sketch));
+        walls.push(new Boundary(1,MAP_NUM_ROWS-1, 1, 1, TILE_SIZE, sketch));
 
         player = new Particle(sketch.width/2, sketch.height/2, 360, 10, sketch)
 
@@ -129,7 +136,7 @@ const theory_3 = ( sketch ) => {
             .mousePressed(() => {
 
                 if (curr_screen_3 === 1) {
-                    if(blocks_drawn === 5) {
+                    if(blocks_drawn === 6) {
                         curr_screen_3++;
                         updateDisplayText(text_div_3, curr_screen_3);
                     } else {
@@ -159,6 +166,10 @@ const theory_3 = ( sketch ) => {
                                     walls.push(wall)
                                 }
                                 break;    
+                            case 5:
+                                for (var wall of block_6) {
+                                    walls.push(wall)
+                                }
                         }
                         blocks_drawn++
                     }
@@ -237,6 +248,9 @@ const theory_3 = ( sketch ) => {
     }
 
     sketch.draw = () => {
+        TILE_SIZE = ($(window).width()/2.5)/MAP_NUM_COLS;
+        resize()
+
         draw_details()
 
         text_div_3.show()
@@ -278,6 +292,12 @@ const theory_3 = ( sketch ) => {
             sketch.push()
             sketch.fill(0,200)
             sketch.rect(3*TILE_SIZE,7*TILE_SIZE, TILE_SIZE, 2*TILE_SIZE)
+            sketch.pop()
+        }
+        if (blocks_drawn > 5) {
+            sketch.push()
+            sketch.fill(0,200)
+            sketch.rect(8*TILE_SIZE,1*TILE_SIZE, TILE_SIZE, TILE_SIZE)
             sketch.pop()
         }
 
@@ -360,10 +380,17 @@ const theory_3 = ( sketch ) => {
             sketch.pop()
         }
     }
+    
+    function resize() {
+        sketch.resizeCanvas(TILE_SIZE*MAP_NUM_COLS, TILE_SIZE*MAP_NUM_ROWS);
+        player.updatePos(x=sketch.width/2, y=sketch.height/2)
+        for (var wall of walls) {
+            wall.update_tile_size(TILE_SIZE)
+        }
+        next_button_3.position(TILE_SIZE*MAP_NUM_COLS/2 + 50, $(window).height()/2 + 50 + TILE_SIZE*MAP_NUM_ROWS/2)
+        prev_button_3.position(TILE_SIZE*MAP_NUM_COLS/2 - 50, $(window).height()/2 + 50 + TILE_SIZE*MAP_NUM_ROWS/2)
+    }
 
-    // function windowResized() {
-    //     resizeCanvas(windowWidth/2, windowHeight/2);
-    // }
 }
 
 new p5(theory_3)
