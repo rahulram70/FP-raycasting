@@ -358,7 +358,7 @@ const raycast_test = ( sketch ) => {
     sketch.setup = () => {
       console.log("Setting up");
       var myCanvas = sketch.createCanvas(WINDOW_WIDTH, 1.5*WINDOW_HEIGHT);
-      myCanvas.parent("gameWindow")
+      myCanvas.parent("slide7")
       sketch.mouse = sketch.mouseX;
     }
 
@@ -372,10 +372,10 @@ const raycast_test = ( sketch ) => {
       var posTileX = Math.floor(player.x / TILE_SIZE);
       var posTileY = Math.floor(player.y / TILE_SIZE);
       var sameTile = posTileX == tileX && posTileY == tileY;
-      if (tileX >= 1 && tileX < (MAP_NUM_COLS - 1) 
+      if (tileX >= 1 && tileX < (MAP_NUM_COLS - 1)
           && tileY >= 1 && tileY < (MAP_NUM_ROWS - 1)
           && !sameTile) {
-        
+
         if (grid.grid[tileY][tileX] >= 1) {
             grid.grid[tileY][tileX] = 0;
         } else {
@@ -400,7 +400,7 @@ const raycast_test = ( sketch ) => {
       for (var i = 0; i < NUM_RAYS; i++) {
         var lineHeight = 32*(WINDOW_HEIGHT / 2) / rays[i].distance;
 
-        var drawStart = Math.floor(-lineHeight / 2) + Math.floor((WINDOW_HEIGHT / 2) / 2); 
+        var drawStart = Math.floor(-lineHeight / 2) + Math.floor((WINDOW_HEIGHT / 2) / 2);
         if (drawStart < 0)
             drawStart = TILE_SIZE;
         var drawEnd   = Math.floor(lineHeight / 2) + Math.floor(WINDOW_HEIGHT / (2*2));
@@ -412,7 +412,7 @@ const raycast_test = ( sketch ) => {
         if (rays[i].color == 160) {
             darknessCoefficient = 0.5;
         }
-        
+
         var blockColor = sketch.color(255, 255, 255);
         var hitTileX = Math.floor(rays[i].wallHitX / TILE_SIZE);
         var hitTileY = Math.floor(rays[i].wallHitY / TILE_SIZE);

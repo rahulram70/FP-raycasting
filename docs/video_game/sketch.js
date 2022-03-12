@@ -398,8 +398,8 @@ const game_sketch = function(p) {
   let bg;
   p.preload = () => {
     //img = p.loadImage("texture.png");
-    img = p.loadImage("../video_game/redbrick.png");
-    bg = p.loadImage("image.jpg", goodLoad, badLoad);
+    img = p.loadImage("../docs/video_game/redbrick.png");
+    bg = p.loadImage("../docs/video_game/image.jpg", goodLoad, badLoad);
   }
   //let slider2;
   p.setup = function() {
