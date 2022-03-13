@@ -33,13 +33,14 @@
 </head>
 <body>
     <div id="fullPage">
-        <div class="section">
+        <div class="section s1">
             <h1>
                 Ray Casters for Video Games
             </h1>
             <h2>
                 Creators: Andy Danforth, Andy Roland, Rahul Ram, Minh Hoang
             </h2>
+            <hr>
             <div class="overview">
                 <p>
                     Ray casting is a methodological basis for solid modeling and image rendering used in computer graphics and computational geometry. Similar to ray tracing, ray casting operates by
@@ -55,7 +56,7 @@
                     created very complex 3D renders and images in things like solid modeling, but for this project, we are going to be focusing on another
                     use of ray casting: the rendering of a 3D video game from a 2D playing field.
                 </p>
-                <img src = "./data/200.gif" width = "350"/>
+                <img src = "./data/200.gif" width = "350" class="floatRight"/>
                 <p>
                     To the left is an example of ray casting being used in the 1992 release "Wolfenstein 3D". The game actually runs in two dimensions,
                     but with the use of ray casting the game looks like a 3D first person game!
@@ -136,7 +137,7 @@
         </div>
         <div class="section">
             <div class="parent">
-                <div class="Header">
+                <div class="disp_text_holder" id = "theory_6_text"></div>
                     <p>
                         Go to the link below to interact with a 2D grid with raycasters.
                     </p>
@@ -236,7 +237,7 @@
         new fullpage('#fullPage', {
             anchors: ['page0', 'page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page7', 'page8'],
             navigation: true,
-            navigationTooltips: ['Title Page', 'Creating the World', 'Casting the First Ray', 'Casting More!', 'Field of View', 'Rendering of the Rays', 'Resolution Stuff', "FOV changes", "Final Game section 1", "wip game"],
+            navigationTooltips: ['Welcome!', 'Creating the World', 'Casting the First Ray', 'Casting More!', 'Field of View', 'Rendering of the Rays', 'Resolution Stuff', "FOV changes", "Final Game section 1", "wip game"],
             navigationPosition: 'right',
             showActiveTooltip: true,
             controlArrows: false,
