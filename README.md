@@ -1,7 +1,11 @@
 
 # FP-raycasting
-Team members:  [TODO: list team member names]
+Team members: Andy Danforth, Andy Roland, Rahul Ram, Minh Hoang
 
-Project page: https://cse442-22w.github.io/FP-raycasting/ 
+To view our project, please visit: https://cse442-22w.github.io/FP-raycasting/ 
 
-Modify or replace `index.html` in the `docs` folder to update your project page.
+To have a look at the data that was used to create this project, please visit `docs/data`.
+
+View our home page at `index.html` in the `docs` folder.
+
+Enjoy!
