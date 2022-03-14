@@ -199,7 +199,7 @@
         new fullpage('#fullPage', {
             anchors: ['page0', 'page1', 'page2', 'page3', 'page4', 'page5', 'page6', 'page7', 'page8'],
             navigation: true,
-            navigationTooltips: ['Welcome!', 'Creating the World', 'Casting the First Ray', 'Casting More!', 'Field of View', 'Rendering of the Rays', 'Resolution Stuff', "FOV changes", "Final Game section 1", "wip game"],
+            navigationTooltips: ['Welcome!', 'Creating the World', 'Casting the First Ray', 'Casting More!', 'Field of View', '3D Rendering', 'Other Variables', "Final Game section 1", "wip game"],
             navigationPosition: 'right',
             showActiveTooltip: true,
             controlArrows: false,
@@ -214,13 +214,52 @@
             onLeave: function(origin, destination, direction){
                 var leavingSection = this;
 
-                //after leaving section 2
                 if(origin.index == 1){
                     theory_1_page.noLoop()
                 }
 
                 if (destination.index == 1) {
                     theory_1_page.loop()
+                }
+
+                if(origin.index == 2){
+                    theory_2_page.noLoop()
+                }
+
+                if (destination.index == 2) {
+                    theory_2_page.loop()
+                }
+
+                if(origin.index == 3){
+                    theory_3_page.noLoop()
+                }
+
+                if (destination.index == 3) {
+                    theory_3_page.loop()
+                }
+
+                if(origin.index == 4){
+                    theory_4_page.noLoop()
+                }
+
+                if (destination.index == 4) {
+                    theory_4_page.loop()
+                }
+
+                if(origin.index == 5){
+                    theory_5_page.noLoop()
+                }
+
+                if (destination.index == 5) {
+                    theory_5_page.loop()
+                }
+
+                if(origin.index == 6){
+                    theory_6_page.noLoop()
+                }
+
+                if (destination.index == 6) {
+                    theory_6_page.loop()
                 }
             }
         })

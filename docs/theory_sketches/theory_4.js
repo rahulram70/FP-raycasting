@@ -85,7 +85,7 @@ const theory_4 = ( sketch ) => {
             .attribute('id', "text_div_4")
             .center('horizontal')
             // .position(0, sketch.height/3)
-            .position(0,0, "relative")
+            .position(0, 0, "relative")
             // .style('opacity', 1)
             // .attribute('width', 22)
             .hide()
@@ -225,4 +225,4 @@ const theory_4 = ( sketch ) => {
     }
 }
 
-new p5(theory_4)
+var theory_4_page = new p5(theory_4)

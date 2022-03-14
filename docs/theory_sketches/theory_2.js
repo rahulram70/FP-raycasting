@@ -73,7 +73,7 @@ const theory_2 = ( sketch ) => {
         text_div_2 = sketch.createDiv(section_2_text[0])
             .attribute('class', 'section_text')
             .center('horizontal')
-            .position(0, sketch.height/3)
+            .position(0, 0, "relative")
             .style('opacity', text_fade_2)
             // .attribute('width', 22)
             .hide()

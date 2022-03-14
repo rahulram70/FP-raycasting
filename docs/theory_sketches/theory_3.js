@@ -123,7 +123,7 @@ const theory_3 = ( sketch ) => {
         text_div_3 = sketch.createDiv(section_3_text[0])
             .attribute('class', 'section_text')
             .center('horizontal')
-            .position(0, sketch.height/3)
+            .position(0, 0, "relative")
             .style('opacity', text_fade_3)
             // .attribute('width', 22)
             .hide()
@@ -393,4 +393,4 @@ const theory_3 = ( sketch ) => {
 
 }
 
-new p5(theory_3)
+var theory_3_page = new p5(theory_3)
