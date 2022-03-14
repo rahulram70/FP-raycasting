@@ -360,6 +360,8 @@ const raycast_test = ( sketch ) => {
       var myCanvas = sketch.createCanvas(WINDOW_WIDTH, 1.5*WINDOW_HEIGHT);
       myCanvas.parent("slide7")
       sketch.mouse = sketch.mouseX;
+      sketch.noLoop()
+
     }
 
     function update() {

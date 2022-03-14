@@ -221,6 +221,8 @@ const theory_3 = ( sketch ) => {
         text_div_3.parent('#theory_3_text')
         next_button_3.parent('theory_3')
         prev_button_3.parent('theory_3')
+        sketch.noLoop()
+
     }
 
     function draw_details() {

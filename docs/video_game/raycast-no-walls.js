@@ -349,6 +349,7 @@ const raycast_no_walls = ( sketch ) => {
     myCanvas.parent("gameWindow")
     //bg = sketch.loadImage('image2.jpg');
     sketch.mouse = sketch.mouseX;
+    sketch.noLoop()
 
   }
 

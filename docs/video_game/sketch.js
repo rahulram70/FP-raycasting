@@ -406,6 +406,7 @@ const game_sketch = function(p) {
     p.myCanvas = p.createCanvas(p.WINDOW_WIDTH, 1.5 * p.WINDOW_HEIGHT);
     p.gameWindow = p.myCanvas.parent("gameWindow"); // gameWindow as a variable for manipulation of css
     p.mouse = p.mouseX;
+    p.noLoop()
 
     //slider2 = p.createSlider(1, p.NUM_RAYS, p.NUM_RAYS);
     //slider2.parent("#slider2");

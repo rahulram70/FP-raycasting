@@ -190,6 +190,7 @@ const theory_6 = ( sketch ) => {
         slider1.parent("#text_div_6")
         fov_div_6.parent("#text_div_6")
         slider2.parent("#text_div_6")
+        sketch.noLoop()
 
 
     }

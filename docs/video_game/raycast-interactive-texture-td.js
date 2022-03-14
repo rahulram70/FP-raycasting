@@ -397,7 +397,8 @@ const raycast_textures = ( sketch ) => {
       // load texture array
       //console.log("buff len: " + buffer.length);
       //sketch.loadPixels();
-  
+      sketch.noLoop()
+
   
     }
   

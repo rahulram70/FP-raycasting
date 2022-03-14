@@ -794,6 +794,8 @@ const theory_5 = ( sketch ) => {
         next_button_5.parent('theory_5')
         prev_button_5.parent('theory_5')
         toggle_button.parent('theory_5')
+        sketch.noLoop()
+
     }
 
     function draw_details() {
