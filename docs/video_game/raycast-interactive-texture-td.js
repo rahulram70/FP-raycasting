@@ -382,9 +382,9 @@ const raycast_textures = ( sketch ) => {
     let bg;
     sketch.preload = () => {
       //img = sketch.loadImage("texture.png");
-      tex1 = sketch.loadImage("./docs/data/images/redbrick.png");
-      tex2 = sketch.loadImage("./docs/data/images/texture.png")
-      bg = sketch.loadImage("./docs/data/images/image.jpg", goodLoad, badLoad);
+      tex1 = sketch.loadImage("./images/redbrick.png");
+      tex2 = sketch.loadImage("./images/texture.png")
+      bg = sketch.loadImage("./images/image.jpg", goodLoad, badLoad);
     }
     //let slider2;
     sketch.setup = () => {
