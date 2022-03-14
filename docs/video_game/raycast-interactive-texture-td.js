@@ -539,4 +539,4 @@ const raycast_textures = ( sketch ) => {
   
   }
   
-  new p5(raycast_textures)
+  var raycast_texture = new p5(raycast_textures)
