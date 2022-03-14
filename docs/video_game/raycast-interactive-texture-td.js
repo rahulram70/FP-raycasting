@@ -430,7 +430,6 @@ const raycast_textures = ( sketch ) => {
     sketch.draw = () => {
       update();
       sketch.background(bg);
-      grid.render();
       castAllRays(NUM_RAYS);
   
       for (rayLine of rays) {
@@ -506,6 +505,7 @@ const raycast_textures = ( sketch ) => {
         if (sampleX < 0.001 || sampleX > 0.999) {
           sampleX = Math.abs(hitY - Math.floor(hitY));
         }
+        
         var test = drawStart-TILE_SIZE + WINDOW_HEIGHT;
       
         for (var x = start; x < end; x++) {
@@ -514,21 +514,23 @@ const raycast_textures = ( sketch ) => {
             sx -= img.width
           }
           
-          if (rays[i].distance / TILE_SIZE > 0.5) {
-            sketch.image(img, x, test, 1, drawEnd - drawStart + TILE_SIZE,
-              Math.floor(sampleX * img.width), 0, img.width / NUM_RAYS, img.height);
-          } else {
-            var sx = x % img.width;
-            sketch.image(img, x, test, 1, drawEnd - drawStart + TILE_SIZE,
-              sx, img.height / 4, img.width / NUM_RAYS, img.height / 2);
-          }
-          if (rays[i].color == 160) {
-            sketch.stroke(0, 0, 0, 50);
-            sketch.fill(0, 0, 0, 50);
-            sketch.rect(x, test+2, 1, drawEnd - drawStart + TILE_SIZE-2);
-          }
+          sketch.push()
+          sketch.imageMode(sketch.CENTER)
+          sketch.image(img, 
+            x, 
+            WINDOW_HEIGHT * 1.25, 
+            1, 
+            TILE_SIZE * .5 * sketch.height / rays[i].distance,
+            Math.floor(sampleX * img.width), 
+            0, 
+            1, 
+            img.height);
+          sketch.pop()
+
         }
       }
+      grid.render();
+
     }
   
     window.addEventListener("keydown", function(e) {
