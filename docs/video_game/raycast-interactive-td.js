@@ -430,15 +430,23 @@ const raycast_test = ( sketch ) => {
         sketch.stroke(blockColor);
         sketch.strokeWeight(4);
         sketch.fill(255, 0 , 0);
+
         var actualDrawStart = (drawStart-TILE_SIZE) + WINDOW_HEIGHT;
         if (actualDrawStart < WINDOW_HEIGHT) {
             actualDrawStart = WINDOW_HEIGHT;
         }
-        sketch.rect((i*4), actualDrawStart, 0, (drawEnd-drawStart)+TILE_SIZE);
-        sketch.stroke(0);
-        sketch.rect((i*4), WINDOW_HEIGHT, 0, (drawStart));
-        sketch.rect((i*4), (drawEnd)+WINDOW_HEIGHT, 0, WINDOW_HEIGHT);
-        sketch.strokeWeight(2);
+        if (rays[i].distance / TILE_SIZE > 1) {
+          sketch.rect((i*4), actualDrawStart, 0, (drawEnd-drawStart)+TILE_SIZE);
+          sketch.stroke(0);
+          sketch.rect((i*4), WINDOW_HEIGHT, 0, (drawStart));
+          sketch.rect((i*4), (drawEnd)+WINDOW_HEIGHT, 0, WINDOW_HEIGHT);
+          sketch.strokeWeight(2);
+        } else {
+          sketch.stroke(blockColor);
+          sketch.strokeWeight(4);
+          sketch.fill(255, 0 , 0);
+          sketch.rect((i*4), actualDrawStart, 0, 0.5*WINDOW_HEIGHT);
+        }
       }
     }
 
@@ -450,4 +458,4 @@ const raycast_test = ( sketch ) => {
 
   }
 
-  new p5(raycast_test)
+var raycast_add_blocks =  new p5(raycast_test)
