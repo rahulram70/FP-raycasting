@@ -434,6 +434,8 @@ const game_sketch = function(p) {
       .position("50vw", 0, "relative")
       .hide()
 
+      p.noLoop();
+
 
     prev_button.parent('#game_3')
 
