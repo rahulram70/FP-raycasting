@@ -89,7 +89,7 @@ const raycast_textures = ( sketch ) => {
       this.radius = 3;
       this.turnDirection = 0;
       this.walkDirection = 0;
-      this.rotationAngle = Math.PI / 2;
+      this.rotationAngle = 3*Math.PI / 2;
       this.moveSpeed = 2.5;
       this.rotationSpeed = 2 * (Math.PI / 180);
     }

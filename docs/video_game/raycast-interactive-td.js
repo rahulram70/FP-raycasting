@@ -59,7 +59,6 @@ const raycast_test = ( sketch ) => {
       }
 
       render() {
-        //console.log("test tile 1 1: " + this.grid[1][1]);
         for (var i = 0; i < MAP_NUM_ROWS; i++) {
           for (var j = 0; j < MAP_NUM_COLS; j++) {
             let tileX = j * TILE_SIZE;
@@ -82,7 +81,7 @@ const raycast_test = ( sketch ) => {
         this.radius = 3;
         this.turnDirection = 0;
         this.walkDirection = 0;
-        this.rotationAngle = Math.PI / 2;
+        this.rotationAngle = 3*Math.PI / 2;
         this.moveSpeed = 2.5;
         this.rotationSpeed = 2 * (Math.PI / 180);
       }
@@ -357,21 +356,6 @@ const raycast_test = ( sketch ) => {
       return grid.hasWallAt(posX, posY);
     }
 
-    function goodLoad() {
-      console.log("Successfully loaded the image");
-    }
-
-    function badLoad() {
-      console.log("Failed to load the image");
-    }
-
-    let tex;
-    let buffer = [];
-    let texture = [];
-    let d = sketch.pixelDensity();
-    let img;
-    let bg;
-
     sketch.setup = () => {
       var myCanvas = sketch.createCanvas(WINDOW_WIDTH, 1.5*WINDOW_HEIGHT);
       myCanvas.parent("slide7")
@@ -381,7 +365,6 @@ const raycast_test = ( sketch ) => {
         .attribute('class', 'section_text')
         .center('horizontal')
         .position(0, 0, "relative")
-        // .attribute('width', 22)
         .hide()
 
       next_button = sketch.createButton("Next")
