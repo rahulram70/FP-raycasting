@@ -31,7 +31,7 @@ const theory_5 = ( sketch ) => {
             </p>`,
 
             `<p>
-                Let's first consider the very first ray cast out, the ray pointing furthest to the left. It is highlighted on the view on the right<br>
+                Let's first consider the very first ray cast out, the ray pointing furthest to the left. It is highlighted on the view on the right.<br>
             </p>
             <p>
                 We will take this rays distance from the player, and draw it below in our first person view, which we will place directly below the map. <br>
@@ -85,7 +85,7 @@ const theory_5 = ( sketch ) => {
             </p>
             <p>
                 This is called the fisheye effect. Because the distance we are using to calculate the size of the wall on our first person render 
-                is the true distance of the ray being cast, rays at an angle futher from the middle of the screen will be longer, which will in turn
+                is the true distance of the ray being cast, rays at an angle further from the middle of the screen will be longer, which will in turn
                 make the rendering of said rays look smaller!
             </p>
             <p>

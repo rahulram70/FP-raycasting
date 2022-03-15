@@ -32,7 +32,7 @@ const raycast_test = ( sketch ) => {
         <p>
             Without further ado, let’s create our own maze. We can simply click on any of the white tiles to add a wall and click
             a black wall within the grid to remove a wall. Collision detection is included, so you can’t simply go through the walls. 
-            When you’re done creating, use the arrow keys to explore your world
+            When you’re done creating, use the arrow keys to explore your world.
         </p>`
     ]
 

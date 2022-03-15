@@ -25,7 +25,7 @@ const theory_3 = ( sketch ) => {
                 Let's cast out more rays in more directions! Now we can get more information about the entire area surrounding us. <br>
             </p>
             <p>
-                It's also just fun to look at, try moving your mouse around the screen. and see how the rays react. <br>            
+                It's also just fun to look at, try moving your mouse around the screen and see how the rays react. <br>            
             </p>`,
 
             `<p>
@@ -36,7 +36,7 @@ const theory_3 = ( sketch ) => {
                 Notice how the rays hitting the newly made walls don't cast past the first intersection. <br>            
             </p>
             <p>
-                And like before, you can also rotate where the player is looking with the arrow keys,
+               Like before, you can also rotate where the player is looking with the arrow keys,
                 though since we're casting rays in all directions, this might not be very useful...
             </p>`,
 
@@ -47,6 +47,7 @@ const theory_3 = ( sketch ) => {
                 We're recording the information for every ray we cast, so if we cast more, we'll be
                 keeping track of more granular data. 
             </p>`,
+
         ]
 
     function updateDisplayText(text_div_3, curr_screen) {

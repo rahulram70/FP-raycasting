@@ -26,10 +26,10 @@ const theory_2 = ( sketch ) => {
             </p>`,
 
             `<p>
-                To do this, let's cast a ray out from ourself and stop it once it hits a wall. <br>
+                To do this, let's cast a ray out from ourselves and stop it once it hits a wall. <br>
             </p>
             <p>
-                For now let's keep track of this length, it will come in handly later.
+                For now let's keep track of this length, it will come in handy later.
             </p>`
             ,
 

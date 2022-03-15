@@ -22,7 +22,7 @@ const theory_4 = ( sketch ) => {
             </p>
             <p>
                 The rays we cast, we will eventually render into our first person view, but normally we don't 
-                see all of our surroundings at one time, we see a small subsection in front of us.
+                see all of our surroundings at one time. We see a small subsection in front of us.
                 We have to rotate our eyes or head to see things outside of our view.
             </p>
             <p>
@@ -30,11 +30,11 @@ const theory_4 = ( sketch ) => {
                 in terms of the degree around our current direction we can see.
             </p>
             <p>
-                Currently, our field of view is 360 degrees
+                Currently, our field of view is 360 degrees.
             </p>
             <p>
                 Try messing with the field of view with the slider below. Then try looking around with the arrow keys. <br>
-                Before, there was no need to look around because we could see everything around us, but with a smaller fov
+                Before, there was no need to look around because we could see everything around us, but with a smaller fov,
                 we can see how our view of the world changes.
             </p>`
         ]

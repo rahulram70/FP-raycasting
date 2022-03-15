@@ -38,7 +38,7 @@ const theory_1 = ( sketch ) => {
             `<p>That's us! We're right now we're just a little dot in the center of our world. <br>
             </p>
             <p>
-            Then, notice the little line sticking out from us, that will represent where our player is looking, right now we're looking towards the top of the screen<br>
+            Then, notice the little line sticking out from us. That will represent where our player is looking. Right now we're looking towards the top of the screen<br>
             </p>
             <p>
             Though as it stands, we're blind and motionless...</p>
