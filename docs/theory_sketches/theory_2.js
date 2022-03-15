@@ -97,7 +97,7 @@ const theory_2 = ( sketch ) => {
         prev_button_2 = sketch.createButton("Back")
             .attribute('class', 'button_prev')
             .center('horizontal')
-            .style('border', '2px solid #5bc0de')
+            .style('border', '2px solid #DC143C')
             .size(50, 20)
             .mousePressed(() => {
                 if (curr_screen_2 > 0) {

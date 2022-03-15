@@ -174,7 +174,7 @@ const theory_6 = ( sketch ) => {
     prev_button_6 = sketch.createButton("Back")
         .attribute('class', 'button_prev')
         .center('horizontal')
-        .style('border', '2px solid #5bc0de')
+        .style('border', '2px solid #DC143C')
         .size(50, 20)
         .mousePressed(() => {
             fullpage_api.moveTo('page5', 0);

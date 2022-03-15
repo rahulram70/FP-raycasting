@@ -392,18 +392,18 @@ const raycast_test = ( sketch ) => {
         .mousePressed(() => {
           fullpage_api.moveTo('page8', 0);
         })
-        .position(TILE_SIZE*MAP_NUM_COLS/2 + 175, 800)
+        .position(TILE_SIZE*MAP_NUM_COLS/2 + 175, $(window).height()/2 + 25 + 1.5*TILE_SIZE*MAP_NUM_ROWS/2)
         .hide()
 
       prev_button = sketch.createButton("Back")
           .attribute('class', 'button_prev')
           .center('horizontal')
-          .style('border', '2px solid #5bc0de')
+          .style('border', '2px solid #DC143C')
           .size(50, 20)
           .mousePressed(() => {
             fullpage_api.moveTo('page6', 0);
           })
-          .position(TILE_SIZE*MAP_NUM_COLS/2 + 100, 800)
+          .position(TILE_SIZE*MAP_NUM_COLS/2 + 100, $(window).height()/2 + 25 + 1.5*TILE_SIZE*MAP_NUM_ROWS/2)
           .hide()
 
       next_button.parent('slide7')
@@ -441,6 +441,8 @@ const raycast_test = ( sketch ) => {
     sketch.draw = () => {
       //resize();
       update();
+      next_button.position(TILE_SIZE*MAP_NUM_COLS/2 + 175, $(window).height()/2 + 25 + 1.5*TILE_SIZE*MAP_NUM_ROWS/2)
+      prev_button.position(TILE_SIZE*MAP_NUM_COLS/2 + 100, $(window).height()/2 + 25 + 1.5*TILE_SIZE*MAP_NUM_ROWS/2)
       next_button.show()
       prev_button.show()
       text_div_7.show()

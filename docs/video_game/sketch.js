@@ -27,6 +27,8 @@ const game_sketch = function(p) {
   p.img;
   p.bg;
 
+  var prev_button
+
   p.maps = [
 
     [
@@ -424,6 +426,20 @@ const game_sketch = function(p) {
     p.gameWindow = p.myCanvas.parent("gameWindow");
     // p.gameMessages = p.gameWindow.child("p.gameWindow"); // Message display
 
+    prev_button = p.createButton("Back")
+      .attribute('class', 'button_prev')
+      .center('horizontal')
+      .style('border', '2px solid #DC143C')
+      .size(50, 20)
+      .mousePressed(() => {
+              fullpage_api.moveTo('page8', 0);
+      })
+      .position("50vw", 0, "relative")
+      .hide()
+
+
+    prev_button.parent('#game_3')
+
     resetSketch(); // init objects
 
     //slider2 = p.createSlider(1, p.NUM_RAYS, p.NUM_RAYS);
@@ -439,6 +455,7 @@ const game_sketch = function(p) {
   }
 
   p.draw = function() {
+    prev_button.show()
     p.update();
     p.background(bg);
     p.grid.render();
