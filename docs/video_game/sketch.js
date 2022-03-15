@@ -35,9 +35,9 @@ const game_sketch = function(p) {
         [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],  // 2
         [1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],  // 3
         [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1],  // 4
-        [1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1],  // 5
+        [1, 0, 0, 0, 1, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1],  // 5
         [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1],  // 6
-        [1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1],  // 7
+        [1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1],  // 7
         [1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],  // 8
         [1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],  // 9
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]   // 10
@@ -413,7 +413,7 @@ const game_sketch = function(p) {
   p.preload = () => {
     img = [];
     imagePaths = ["./images/greybrick.png", "./images/door.png"];
-    bg = p.loadImage("./images/image.jpg", goodLoad, badLoad);
+    bg = p.loadImage("./images/sky2.jpg", goodLoad, badLoad);
     for (filename of imagePaths) { img.push(p.loadImage(filename)); }
   }
 
@@ -445,7 +445,6 @@ const game_sketch = function(p) {
     //load texture array
     //console.log("buff len: " + buffer.length);
     //p.loadPixels();
-    p.noLoop()
   }
 
   p.update = function() {
@@ -537,21 +536,21 @@ const game_sketch = function(p) {
 
         p.push();
         p.imageMode(p.CENTER)
-        p.image(wallTexture, 
-            x, 
-            p.TILE_SIZE * p.MAP_NUM_ROWS, 
-            1, 
-            p.TILE_SIZE * .5 * p.height / rays[i].distance,
-            Math.floor(sampleX * wallTexture.width), 
-            0, 
-            1, 
+        p.image(wallTexture,
+            x,
+            p.TILE_SIZE * p.MAP_NUM_ROWS,
+            1,
+            p.TILE_SIZE * 1 * p.height / rays[i].distance,
+            Math.floor(sampleX * wallTexture.width),
+            0,
+            1,
             wallTexture.height);
         if (rays[i].color == 160) {
           p.rectMode(p.CENTER);
           p.stroke(0, 0, 0, 50);
           p.fill(0, 0, 0, 50);
           p.rect(x, p.TILE_SIZE * p.MAP_NUM_ROWS, 1,
-            p.TILE_SIZE * .5 * p.height / rays[i].distance - 5);
+            p.TILE_SIZE * 1 * p.height / rays[i].distance - 5);
         }
         //sketch.fill(0, sketch.map(1 / rays[i].distance, 0, 1, 255, 0));
         //sketch.rect(x, 0, 4, sketch.height / rays[i].distance);
