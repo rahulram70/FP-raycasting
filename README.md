@@ -14,9 +14,11 @@ Some of the button positions might be off or incorrect if you're on a smaller sc
 And if you refresh directly onto a page, you may need to scroll away and back to enable the interactions.
 
 ### Credit:
-- Lode's tutorial: https://lodev.org/cgtutor/raycasting.html
+- Lodev's tutorial: https://lodev.org/cgtutor/raycasting.html
 - The Coding Train's raycaster coding challenge: https://thecodingtrain.com/CodingChallenges/145-2d-ray-casting.html
 - Special thanks to TA Reiden Chea's help and his work, The Off-By-One Exploit: https://observablehq.com/@thechincheachilla/the-off-by-one-exploit
+- Quillaja's raymaze https://github.com/quillaja/raymaze
+- Magoninho's raycaster example https://github.com/Magoninho/raycasting-js
 
 
 Enjoy!
