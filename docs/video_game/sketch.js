@@ -538,7 +538,7 @@ const game_sketch = function(p) {
         p.imageMode(p.CENTER)
         p.image(wallTexture, 
             x, 
-            p.TILE_SIZE * p.MAP_NUM_ROWS * 1.25, 
+            p.TILE_SIZE * p.MAP_NUM_ROWS, 
             1, 
             p.TILE_SIZE * .5 * p.height / rays[i].distance,
             Math.floor(sampleX * wallTexture.width), 
@@ -549,7 +549,7 @@ const game_sketch = function(p) {
           p.rectMode(p.CENTER);
           p.stroke(0, 0, 0, 50);
           p.fill(0, 0, 0, 50);
-          p.rect(x, p.TILE_SIZE * p.MAP_NUM_ROWS * 1.25, 1,
+          p.rect(x, p.TILE_SIZE * p.MAP_NUM_ROWS, 1,
             p.TILE_SIZE * .5 * p.height / rays[i].distance - 5);
         }
         //sketch.fill(0, sketch.map(1 / rays[i].distance, 0, 1, 255, 0));
