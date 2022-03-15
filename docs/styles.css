@@ -179,10 +179,21 @@ hr {
     /* top: 4em; */
     /* left: 1em;     */
   }
+
+  .container {
+    display: flex;
+  }
+  
+  .column-left,
+  .column-right {
+    width: 50%;
+    font-size: 20pt;
+  }
   
 img {
     float: left;
     margin: .5em;
     margin-right: 2em;
   }
+
 

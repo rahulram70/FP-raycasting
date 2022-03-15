@@ -1,55 +1,76 @@
 const game_sketch = function(p) {
 
-  p.TILE_SIZE = 36;
-  p.MAP_NUM_ROWS = 11;
-  p.MAP_NUM_COLS = 23;
+  p.gameWindow;
+  // p.gameMessages;
+  // p.gameMap;
+  p.showMessages = false;
+  p.showMinimap = false;
 
-  p.WINDOW_WIDTH = p.MAP_NUM_COLS * p.TILE_SIZE;
-  p.WINDOW_HEIGHT = p.MAP_NUM_ROWS * p.TILE_SIZE;
-  p.RAYWIDTH = Math.ceil((p.WINDOW_HEIGHT / p.WINDOW_WIDTH) * (p.WINDOW_WIDTH / 300));
+  p.TILE_SIZE;
+  p.MAP_NUM_ROWS;
+  p.MAP_NUM_COLS;
+  p.WINDOW_WIDTH;
+  p.WINDOW_HEIGHT;
+  p.RAYWIDTH;
   p.TEX_WIDTH = 64;
   p.TEX_HEIGHT = 64;
 
   p.FOV = 60 * (Math.PI / 180);
-  p.NUM_RAYS = Math.floor(p.WINDOW_WIDTH / 4);
+  p.NUM_RAYS;
 
-  p.magicWallCol = null; // noclip grid position X
-  p.magicWallRow = null; // noclip grid position Y
+  p.magicWallCol; // noclip grid position X
+  p.magicWallRow; // noclip grid position Y
 
-  p.mouse; // ???
+  p.tex;
+  p.buffer = [];
+  p.textures = [];
+  p.img;
+  p.bg;
 
   p.maps = [
-  [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  // 0
-    [1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1],  // 1
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],  // 2
-    [1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],  // 3
-    [1, 2, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1],  // 4
-    [1, 0, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1],  // 5
-    [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1],  // 6
-    [1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1],  // 7
-    [1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],  // 8
-    [1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],  // 9
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]   // 10
-],// 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22
-  [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  // 0
-    [1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1],  // 1
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],  // 2
-    [1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],  // 3
-    [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1],  // 4
-    [1, 0, 2, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1],  // 5
-    [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1],  // 6
-    [1, 0, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1],  // 7
-    [1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],  // 8
-    [1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],  // 9
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]   // 10
-]  //0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22
-];
+
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  // 0
+        [1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 2, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1],  // 1
+        [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],  // 2
+        [1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1],  // 3
+        [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1],  // 4
+        [1, 1, 0, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1],  // 5
+        [1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1],  // 6
+        [1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1],  // 7
+        [1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],  // 8
+        [1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],  // 9
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]   // 10
+    ],// 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22
+    [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],  // 0
+        [1, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1],  // 1
+        [1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],  // 2
+        [1, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1],  // 3
+        [1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0, 1],  // 4
+        [1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1],  // 5
+        [1, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1, 0, 1],  // 6
+        [1, 0, 1, 1, 1, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 2, 0, 1, 0, 1],  // 7
+        [1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1],  // 8
+        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],  // 9
+        [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]   // 10
+    ],// 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22
+  ];
 
   class Map {
     constructor() {
       this.grid = p.maps[Math.floor(Math.random() * p.maps.length)];
+      this.tileColor;
+      p.TILE_SIZE = 36;
+      p.MAP_NUM_ROWS = this.grid.length;
+      p.MAP_NUM_COLS = this.grid[0].length;
+      p.WINDOW_WIDTH = p.MAP_NUM_COLS * p.TILE_SIZE;
+      p.WINDOW_HEIGHT = p.MAP_NUM_ROWS * p.TILE_SIZE;
+      p.RAYWIDTH = Math.ceil((p.WINDOW_HEIGHT / p.WINDOW_WIDTH) * (p.WINDOW_WIDTH / 300));
+      p.NUM_RAYS = Math.floor(p.WINDOW_WIDTH / 4);
+      // console.log(this.grid);
+      // console.log("# of grid rows:", this.grid.length);
+      // console.log("# of grid cols:", this.grid[0].length);
     }
 
     // a very userful function for checking if there is a wall at a point
@@ -62,23 +83,27 @@ const game_sketch = function(p) {
         for (var j = 0; j < p.MAP_NUM_COLS; j++) {
           let tileX = j * p.TILE_SIZE;
           let tileY = i * p.TILE_SIZE;
-          let tileColor = this.grid[i][j] == 1 ? "#222" : "#fff";
+          this.tileColor = this.grid[i][j] == 1 ? "#222" : "#fff";
 
-        // paint magicwall's grid loc and store it's position into variables
-        if (this.grid[i][j] == 2) {
-          tileColor = "green";
-          p.magicWallRow = (this.grid.findIndex(arr => arr.includes(2)));
-          p.magicWallCol = (this.grid[p.magicWallRow].indexOf(2));
-          // console.log("magic wall row:", p.magicWallRow,
-                      // "magic wall col:", p.magicWallCol);
-        };
+          // paint magicwall's grid loc and store it's position into variables
 
-          p.fill(tileColor);
+          if (this.grid[i][j] == 2) {
+            this.tileColor = "green";
+            p.magicWallRow = (this.grid.findIndex(arr => arr.includes(2)));
+            p.magicWallCol = (this.grid[p.magicWallRow].indexOf(2));
+            // console.log("magic wall row:", p.magicWallRow,
+            // "magic wall col:", p.magicWallCol);
+          };
+
+          if (p.showMinimap) {
+          p.fill(this.tileColor);
           p.stroke("#222");
           p.rect(tileX, tileY, p.TILE_SIZE, p.TILE_SIZE);
+          }
         }
       }
     }
+
   }
 
   class Player {
@@ -96,11 +121,6 @@ const game_sketch = function(p) {
     update() {
       this.rotationAngle += this.turnDirection * this.rotationSpeed;
 
-      // no clip
-      if (Math.floor(this.x / p.TILE_SIZE) == p.magicWallCol && (Math.floor(this.y / p.TILE_SIZE)) == p.magicWallRow) {
-
-      }
-
       if (!isColliding()) {
         // only do that if the player is not colliding
         let moveStep = this.walkDirection * this.moveSpeed;
@@ -109,29 +129,30 @@ const game_sketch = function(p) {
       }
 
       // reseting angle
-      if (this.rotationAngle < 0)
-        this.rotationAngle += 2 * Math.PI;
-      if (this.rotationAngle > 2 * Math.PI)
-        this.rotationAngle -= 2 * Math.PI;
+      if (this.rotationAngle < 0) { this.rotationAngle += 2 * Math.PI; }
+      if (this.rotationAngle > 2 * Math.PI) {this.rotationAngle -= 2 * Math.PI; }
 
     }
 
-
     render() {
+      if (p.showMinimap) {
       p.noStroke();
       p.fill("red");
       p.circle(this.x, this.y, this.radius);
       p.stroke("red");
 
       // a line for showing the direction of the player
-      /*p.line(
-        this.x,
-        this.y,
-        this.x + Math.cos(this.rotationAngle) * 30,
-        this.y + Math.sin(this.rotationAngle) * 30
-      );*/
+      // p.line(
+      //   this.x,
+      //   this.y,
+      //   this.x + Math.cos(this.rotationAngle) * 30,
+      //   this.y + Math.sin(this.rotationAngle) * 30
+      // );
+
+      }
     }
   }
+
 
   class RayLine {
     constructor(rayAngle) {
@@ -140,7 +161,6 @@ const game_sketch = function(p) {
       this.wallHitY = 0;
       this.distance = 0;
       this.side = 0;
-
       this.color = 255;
 
       // booleans to check if the player is looking at the directions
@@ -272,17 +292,17 @@ const game_sketch = function(p) {
       if (verticalDistance < horizontalDistance) {
         this.color = 160;
         this.side = 0;
-
       }
       if (horizontalDistance < verticalDistance) {
         this.color = 255;
         this.side = 1;
       }
 
-
     }
 
+
     render() {
+      if (p.showMinimap) {
       p.stroke("red");
       p.line(
         p.player.x,
@@ -292,6 +312,7 @@ const game_sketch = function(p) {
       );
     }
   }
+}
 
 
   p.grid = new Map();
@@ -324,11 +345,11 @@ const game_sketch = function(p) {
   }
 
   function normalizeAngle(angle) {
-      angle = angle % (2 * Math.PI);
-      if (angle < 0) {
-          angle = (2 * Math.PI) + angle;
-      }
-      return angle;
+    angle = angle % (2 * Math.PI);
+    if (angle < 0) {
+      angle = (2 * Math.PI) + angle;
+    }
+    return angle;
   }
 
   function distanceBetween(x1, y1, x2, y2) {
@@ -337,23 +358,21 @@ const game_sketch = function(p) {
   }
 
   function castAllRays(sliderRays) {
-      var columnId = 0;
+    var columnId = 0;
 
-      // start first ray subtracting half of the FOV
+    // start first ray subtracting half of the FOV
+    rays = [];
 
-      rays = [];
+    // loop all columns casting the rays
+    for (var i = 0; i < sliderRays; i++) {
+      var rayAngle = (p.player.rotationAngle - p.FOV/2.0) + (i / p.NUM_RAYS) * p.FOV; // TODO: REVIEW AND TRY TO EXPLAIN THIS LINE OF CODE
+      var rayLine = new RayLine(rayAngle);
+      rayLine.cast();
+      rays.push(rayLine);
 
-      // loop all columns casting the rays
-      for (var i = 0; i < sliderRays; i++) {
-          var rayAngle = (p.player.rotationAngle - p.FOV/2.0) + (i / p.NUM_RAYS) * p.FOV; // TODO: REVIEW AND TRY TO EXPLAIN THIS LINE OF CODE
-          var rayLine = new RayLine(rayAngle);
-          rayLine.cast();
-          rays.push(rayLine);
-
-          // rayAngle += p.FOV / p.NUM_RAYS;
-
-          columnId++; //useless
-      }
+      // rayAngle += p.FOV / p.NUM_RAYS;
+      columnId++; //useless
+    }
   }
 
   function setFOV(angle) {
@@ -390,31 +409,29 @@ const game_sketch = function(p) {
     console.log("Failed to load the image");
   }
 
-  let tex;
-  let buffer = [];
-  let texture = [];
-  let d = p.pixelDensity();
-  let img;
-  let bg;
+
   p.preload = () => {
-    //img = p.loadImage("texture.png");
-    img = p.loadImage("./images/redbrick.png");
+    img = [];
+    imagePaths = ["./images/redbrick.png", "./images/bluestone.png"];
     bg = p.loadImage("./images/image.jpg", goodLoad, badLoad);
+    for (filename of imagePaths) { img.push(p.loadImage(filename)); }
   }
+
+
   //let slider2;
   p.setup = function() {
     p.myCanvas = p.createCanvas(p.WINDOW_WIDTH, 1.5 * p.WINDOW_HEIGHT);
-    p.gameWindow = p.myCanvas.parent("gameWindow"); // gameWindow as a variable for manipulation of css
-    p.mouse = p.mouseX;
-    p.noLoop()
+    p.gameWindow = p.myCanvas.parent("gameWindow");
+    // p.gameMessages = p.gameWindow.child("p.gameWindow"); // Message display
+
+    resetSketch(); // init objects
 
     //slider2 = p.createSlider(1, p.NUM_RAYS, p.NUM_RAYS);
     //slider2.parent("#slider2");
     //bg = p.loadImage('https://raw.githubusercontent.com/daviskauffmann/raycaster/master/assets/images/eagle.png');
-    // load texture array
+    //load texture array
     //console.log("buff len: " + buffer.length);
     //p.loadPixels();
-
   }
 
   p.update = function() {
@@ -427,27 +444,37 @@ const game_sketch = function(p) {
     p.grid.render();
     castAllRays(p.NUM_RAYS);
 
+    // Message display
+    if (p.showMessages) {
+      p.textSize(40);
+      p.fill(255, 255, 0);
+      p.text(magicMessage(), 200, 200);
+    }
+
     for (rayLine of rays) {
       rayLine.render();
     }
     p.player.render();
 
     for (var i = 0; i < p.NUM_RAYS; i++) {
+      var gridWallX = Math.floor(rays[i].wallHitX / p.TILE_SIZE);
+      var gridWallY = Math.floor(rays[i].wallHitY / p.TILE_SIZE);
+      var tileVal = p.grid.grid[gridWallY][gridWallX];
+      //console.log("Tile val" + tileVal);
+      var wallTexture = img[tileVal - 1];
+
       var lineHeight = 32 * (p.WINDOW_HEIGHT / 2) / rays[i].distance;
-
       var drawStart = Math.floor(-lineHeight / 2) + Math.floor((p.WINDOW_HEIGHT / 2) / 2);
-      if (drawStart < 0)
-      drawStart = 0;
-      var drawEnd   = Math.floor(lineHeight / 2) + Math.floor(p.WINDOW_HEIGHT / (2*2));
-      if (drawEnd >= p.WINDOW_HEIGHT / 2)
-        drawEnd = p.WINDOW_HEIGHT / 2 - 1;
+      if (drawStart < 0) { drawStart = 0; }
+      var drawEnd = Math.floor(lineHeight / 2) + Math.floor(p.WINDOW_HEIGHT / (2 * 2));
+      if (drawEnd >= p.WINDOW_HEIGHT / 2) { drawEnd = p.WINDOW_HEIGHT / 2 - 1; }
 
-
-        // where 3d stuff is being rendered
-        p.noStroke();
-        p.stroke(rays[i].color);
-        p.strokeWeight(4);
-      p.fill(255, 0, 0);
+      // where 3d stuff is being rendered
+      // NOTE: What do the following four lines do? They appear to do nothing, or if they do something, it is being overdrawn.
+      // p.noStroke();
+      // p.stroke(rays[i].color);
+      // p.strokeWeight(4);
+      // p.fill(255, 0, 0);
       let sampleX = Math.abs(rays[i].wallHitX - Math.floor(rays[i].wallHitX));
       if (sampleX < 0.001 || sampleX > 0.999) {
         sampleX = Math.abs(rays[i].wallHitY - Math.floor(rays[i].wallHitY));
@@ -466,10 +493,8 @@ const game_sketch = function(p) {
       }
       wallX -= Math.floor(wallX);
       var texX = Math.floor(wallX * p.TEX_WIDTH);
-      if (p.player.side == 0 && rayDirX > 0)
-      texX = p.TEX_WIDTH - texX - 1;
-      if (p.player.side == 1 && rayDirY < 0)
-      texX = p.TEX_WIDTH - texX - 1;
+      if (p.player.side == 0 && rayDirX > 0) { texX = p.TEX_WIDTH - texX - 1; }
+      if (p.player.side == 1 && rayDirY < 0) { texX = p.TEX_WIDTH - texX - 1; }
 
       var start = i*4;
       //console.log("start: " + start);
@@ -479,97 +504,74 @@ const game_sketch = function(p) {
       var green;
       var blue;
 
+      if (p.showMinimap) {
       p.stroke(255, 255, 0);
-      //p.rect((i*4) + p.WINDOW_WIDTH, (drawStart-p.TILE_SIZE), 0, (drawEnd-drawStart)+p.TILE_SIZE);
-      //p.stroke(0);
-      //p.strokeWeight(2);
+      p.rect((i*4) + p.WINDOW_WIDTH, (drawStart - p.TILE_SIZE), 0, (drawEnd - drawStart) + p.TILE_SIZE); // NOTE: this causes a small error on minimap (upper-right corner)
+      p.strokeWeight(2);
+      }
+
       var hitX =  rays[i].wallHitX / p.TILE_SIZE;
       var hitY =  rays[i].wallHitY / p.TILE_SIZE;
       sampleX = Math.abs(hitX - Math.floor(hitX));
-      if (sampleX < 0.001 || sampleX > 0.999) {
-        sampleX = Math.abs(hitY - Math.floor(hitY));
-      }
-      //p.tint(rays[i].color);
+      if (sampleX < 0.001 || sampleX > 0.999) { sampleX = Math.abs(hitY - Math.floor(hitY)); }
+      // p.tint(rays[i].color);
       for (var x = start; x < end; x++) {
         var sx = i;
-        if (sx > img.width) {
-          sx -= img.width
-        }
+        if (sx > wallTexture.width) { sx -= wallTexture.width }
         //p.tint(rays[i].color);
         if (rays[i].distance / p.TILE_SIZE > 1) {
-          p.image(img, x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE,
-            Math.floor(sampleX * img.width), 0, img.width / p.NUM_RAYS, img.height);
+          p.image(wallTexture, x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE,
+            Math.floor(sampleX * wallTexture.width), 0, wallTexture.width / p.NUM_RAYS, wallTexture.height);
           } else {
-          var sx = x % img.width;
-          /*if (sx > img.width) {
-            sx -= img.width;
-          }*/
-          p.image(img, x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE,
-            sx, 0, img.width / p.NUM_RAYS, img.height);
+            var sx = x % wallTexture.width;
+            /*if (sx > img[0].width) {
+              sx -= img[0].width;
+            }*/
+            p.image(wallTexture, x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE,
+              sx, 0, wallTexture.width / p.NUM_RAYS, wallTexture.height);
+            }
+            if (rays[i].color == 160) {
+              p.stroke(0, 0, 0, 50);
+              p.fill(0, 0, 0, 50);
+              p.rect(x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE);
+            }
+          }
         }
-        if (rays[i].color == 160) {
 
-          p.stroke(0, 0, 0, 50);
-          p.fill(0, 0, 0, 50);
-          p.rect(x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE);
-        }
       }
-    }
 
-  }
+  function resetSketch() {
+    p.grid = new Map();
+    p.player = new Player();
+    p.rays = [];
+  };
 
   // what happens when enter a magicwall grid
   function magicMethod() {
-    // console.log("YOU WIN");
-    // isVisible(1);
-    // player.walkDirection = -1; // send backwards
-    // player.moveSpeed = 5; // double speed
-    p.player.x = p.WINDOW_WIDTH / 16; // teleport to start of level
-    p.player.y = p.WINDOW_HEIGHT / 8; // teleport to start of level
+    // player.walkDirection = -1; // send the player backwards
+    // p.player.moveSpeed = 5; // double the player speed
+    // p.player.x = p.WINDOW_WIDTH / 16; // teleport player
+    // p.player.y = p.WINDOW_HEIGHT / 8; // teleport player
+
     magicMessage();
+    p.showMessages = true;
+    setTimeout(() => { p.showMessages = false; }, 2000); // message goes away after 1 second
+    resetSketch(); // loads a new map state
   }
 
   // message displayed on screen
   function magicMessage() {
-/////////////////////////////////////////////////////
-////////////////////////// to do ////////////////////
-/////////////////////////////////////////////////////
-// idk();
-}
+    return "You've found the secret exit.";
+  }
 
 
-window.addEventListener("keydown", function(e) {
-  if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
-        e.preventDefault();
-    }
-  }, false);
+// window.addEventListener("keydown", function(e) {
+//   if(["Space","ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].indexOf(e.code) > -1) {
+//     e.preventDefault();
+//   }
+// }, false);
 
 };
-
-
-// function idk() {
-// const game_messages = function(msg)  {
-//   let x = game_p5.WINDOW_WIDTH; // use the whole screen width
-//   let y = game_p5.WINDOW_HEIGHT; // use the whole screen height
-
-//   msg.setup = function() {
-//     var msgCanvas = msg.createCanvas(x, y);
-//     msgCanvas.parent("gameMessages");
-//     // msgCanvas.hide();
-//   };
-
-//   msg.draw = function() {
-//     msg.background(0);
-//     msg.fill(255);
-//     msg.rect(0, 0, x, y);
-//     msg.textSize(64);
-//     msg.fill(0);
-//     msg.text("hello world!", x / 2, y / 2);
-//   };
-// };
-// new p5(game_messages);
-
-// };
 
 
 var game_p5 = new p5(game_sketch);
