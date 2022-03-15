@@ -533,22 +533,45 @@ const game_sketch = function(p) {
         var sx = i;
         if (sx > wallTexture.width) { sx -= wallTexture.width }
         //p.tint(rays[i].color);
-        if (rays[i].distance / p.TILE_SIZE > 1) {
-          p.image(wallTexture, x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE,
-            Math.floor(sampleX * wallTexture.width), 0, wallTexture.width / p.NUM_RAYS, wallTexture.height);
-          } else {
-            var sx = x % wallTexture.width;
-            /*if (sx > img[0].width) {
-              sx -= img[0].width;
-            }*/
-            p.image(wallTexture, x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE,
-              sx, 0, wallTexture.width / p.NUM_RAYS, wallTexture.height);
-            }
-            if (rays[i].color == 160) {
-              p.stroke(0, 0, 0, 50);
-              p.fill(0, 0, 0, 50);
-              p.rect(x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE);
-            }
+
+        p.push();
+        p.imageMode(p.CENTER)
+        p.image(wallTexture, 
+            x, 
+            p.TILE_SIZE * p.MAP_NUM_ROWS * 1.25, 
+            1, 
+            p.TILE_SIZE * .5 * p.height / rays[i].distance,
+            Math.floor(sampleX * wallTexture.width), 
+            0, 
+            1, 
+            wallTexture.height);
+        if (rays[i].color == 160) {
+          p.rectMode(p.CENTER);
+          p.stroke(0, 0, 0, 50);
+          p.fill(0, 0, 0, 50);
+          p.rect(x, p.TILE_SIZE * p.MAP_NUM_ROWS * 1.25, 1,
+            p.TILE_SIZE * .5 * p.height / rays[i].distance - 5);
+        }
+        //sketch.fill(0, sketch.map(1 / rays[i].distance, 0, 1, 255, 0));
+        //sketch.rect(x, 0, 4, sketch.height / rays[i].distance);
+        p.pop();
+
+        // if (rays[i].distance / p.TILE_SIZE > 1) {
+        //   p.image(wallTexture, x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE,
+        //     Math.floor(sampleX * wallTexture.width), 0, wallTexture.width / p.NUM_RAYS, wallTexture.height);
+        //   } else {
+        //     var sx = x % wallTexture.width;
+        //     /*if (sx > img[0].width) {
+        //       sx -= img[0].width;
+        //     }*/
+        //     p.image(wallTexture, x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE,
+        //       sx, 0, wallTexture.width / p.NUM_RAYS, wallTexture.height);
+        //     }
+        //     if (rays[i].color == 160) {
+        //       p.stroke(0, 0, 0, 50);
+        //       p.fill(0, 0, 0, 50);
+        //       p.rect(x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE);
+        //     }
           }
         }
 
