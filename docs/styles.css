@@ -184,7 +184,10 @@ hr {
     display: flex;
   }
   
-  .column-left,
+  .column-left {
+    width: 50%;
+    font-size: 2.2em;
+  }
   .column-right {
     width: 50%;
     font-size: 20pt;
