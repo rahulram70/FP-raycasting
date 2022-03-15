@@ -1,8 +1,6 @@
 const game_sketch = function(p) {
 
   p.gameWindow;
-  // p.gameMessages;
-  // p.gameMap;
   p.showMessages = false;
   p.showMinimap = false;
 
@@ -414,7 +412,7 @@ const game_sketch = function(p) {
 
   p.preload = () => {
     img = [];
-    imagePaths = ["./images/redbrick.png", "./images/bluestone.png"];
+    imagePaths = ["./images/greybrick.png", "./images/door.png"];
     bg = p.loadImage("./images/image.jpg", goodLoad, badLoad);
     for (filename of imagePaths) { img.push(p.loadImage(filename)); }
   }
@@ -424,7 +422,6 @@ const game_sketch = function(p) {
   p.setup = function() {
     p.myCanvas = p.createCanvas(p.WINDOW_WIDTH, 1.5 * p.WINDOW_HEIGHT);
     p.gameWindow = p.myCanvas.parent("gameWindow");
-    // p.gameMessages = p.gameWindow.child("p.gameWindow"); // Message display
 
     prev_button = p.createButton("Back")
       .attribute('class', 'button_prev')
@@ -572,7 +569,7 @@ const game_sketch = function(p) {
 
     magicMessage();
     p.showMessages = true;
-    setTimeout(() => { p.showMessages = false; }, 2000); // message goes away after 1 second
+    setTimeout(() => { p.showMessages = false; }, 2000); // message goes away after 2 seconds
     resetSketch(); // loads a new map state
   }
 
