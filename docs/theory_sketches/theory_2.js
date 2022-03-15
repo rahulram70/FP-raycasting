@@ -144,7 +144,6 @@ const theory_2 = ( sketch ) => {
     }
 
     sketch.draw = () => {
-        // console.log("hi!")
         TILE_SIZE = ($(window).width()/2.5)/MAP_NUM_COLS;
         resize()
         draw_details()

@@ -694,7 +694,6 @@ const theory_5 = ( sketch ) => {
                 } else if (curr_screen_5 == section_5_text.length - 1) {
                     fullpage_api.moveTo('page6', 0);
                 }
-                console.log(curr_screen_5)
 
             })
             .position(TILE_SIZE*MAP_NUM_COLS/2 + 100, 880)
