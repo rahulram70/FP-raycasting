@@ -25,6 +25,8 @@ const game_sketch = function(p) {
   p.img;
   p.bg;
 
+  var prev_button
+
   p.maps = [
 
     [
@@ -421,6 +423,20 @@ const game_sketch = function(p) {
     p.myCanvas = p.createCanvas(p.WINDOW_WIDTH, 1.5 * p.WINDOW_HEIGHT);
     p.gameWindow = p.myCanvas.parent("gameWindow");
 
+    prev_button = p.createButton("Back")
+      .attribute('class', 'button_prev')
+      .center('horizontal')
+      .style('border', '2px solid #DC143C')
+      .size(50, 20)
+      .mousePressed(() => {
+              fullpage_api.moveTo('page8', 0);
+      })
+      .position("50vw", 0, "relative")
+      .hide()
+
+
+    prev_button.parent('#game_3')
+
     resetSketch(); // init objects
 
     //slider2 = p.createSlider(1, p.NUM_RAYS, p.NUM_RAYS);
@@ -429,6 +445,7 @@ const game_sketch = function(p) {
     //load texture array
     //console.log("buff len: " + buffer.length);
     //p.loadPixels();
+    p.noLoop()
   }
 
   p.update = function() {
@@ -436,6 +453,7 @@ const game_sketch = function(p) {
   }
 
   p.draw = function() {
+    prev_button.show()
     p.update();
     p.background(bg);
     p.grid.render();
@@ -516,22 +534,45 @@ const game_sketch = function(p) {
         var sx = i;
         if (sx > wallTexture.width) { sx -= wallTexture.width }
         //p.tint(rays[i].color);
-        if (rays[i].distance / p.TILE_SIZE > 1) {
-          p.image(wallTexture, x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE,
-            Math.floor(sampleX * wallTexture.width), 0, wallTexture.width / p.NUM_RAYS, wallTexture.height);
-          } else {
-            var sx = x % wallTexture.width;
-            /*if (sx > img[0].width) {
-              sx -= img[0].width;
-            }*/
-            p.image(wallTexture, x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE,
-              sx, 0, wallTexture.width / p.NUM_RAYS, wallTexture.height);
-            }
-            if (rays[i].color == 160) {
-              p.stroke(0, 0, 0, 50);
-              p.fill(0, 0, 0, 50);
-              p.rect(x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE);
-            }
+
+        p.push();
+        p.imageMode(p.CENTER)
+        p.image(wallTexture, 
+            x, 
+            p.TILE_SIZE * p.MAP_NUM_ROWS, 
+            1, 
+            p.TILE_SIZE * .5 * p.height / rays[i].distance,
+            Math.floor(sampleX * wallTexture.width), 
+            0, 
+            1, 
+            wallTexture.height);
+        if (rays[i].color == 160) {
+          p.rectMode(p.CENTER);
+          p.stroke(0, 0, 0, 50);
+          p.fill(0, 0, 0, 50);
+          p.rect(x, p.TILE_SIZE * p.MAP_NUM_ROWS, 1,
+            p.TILE_SIZE * .5 * p.height / rays[i].distance - 5);
+        }
+        //sketch.fill(0, sketch.map(1 / rays[i].distance, 0, 1, 255, 0));
+        //sketch.rect(x, 0, 4, sketch.height / rays[i].distance);
+        p.pop();
+
+        // if (rays[i].distance / p.TILE_SIZE > 1) {
+        //   p.image(wallTexture, x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE,
+        //     Math.floor(sampleX * wallTexture.width), 0, wallTexture.width / p.NUM_RAYS, wallTexture.height);
+        //   } else {
+        //     var sx = x % wallTexture.width;
+        //     /*if (sx > img[0].width) {
+        //       sx -= img[0].width;
+        //     }*/
+        //     p.image(wallTexture, x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE,
+        //       sx, 0, wallTexture.width / p.NUM_RAYS, wallTexture.height);
+        //     }
+        //     if (rays[i].color == 160) {
+        //       p.stroke(0, 0, 0, 50);
+        //       p.fill(0, 0, 0, 50);
+        //       p.rect(x, drawStart-p.TILE_SIZE + p.WINDOW_HEIGHT, 1, drawEnd - drawStart + p.TILE_SIZE);
+        //     }
           }
         }
 

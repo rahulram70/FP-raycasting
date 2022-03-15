@@ -91,10 +91,8 @@ const theory_1 = ( sketch ) => {
                     curr_screen_1++;
                     updateDisplayText(text_div_1, curr_screen_1);
                 } else if (curr_screen_1 == section_1_text.length - 1) {
-                    console.log($("fullPage"))
                     fullpage_api.moveTo('page2', 0);
                 }
-                console.log(curr_screen_1)
             })
             .position(TILE_SIZE*MAP_NUM_COLS/2 + 100, 750)
             .hide()
@@ -102,7 +100,7 @@ const theory_1 = ( sketch ) => {
         prev_button_1 = sketch.createButton("Back")
             .attribute('class', 'button_prev')
             .center('horizontal')
-            .style('border', '2px solid #5bc0de')
+            .style('border', '2px solid #DC143C')
             .size(50, 20)
             .mousePressed(() => {
                 if (curr_screen_1 == 0) {
@@ -112,7 +110,6 @@ const theory_1 = ( sketch ) => {
                     curr_screen_1--;
                     updateDisplayText(text_div_1, curr_screen_1);
                 }
-                console.log(curr_screen_1)
             })
             .position(TILE_SIZE*MAP_NUM_COLS/2, 750)
             .hide()
@@ -150,7 +147,6 @@ const theory_1 = ( sketch ) => {
     }
 
     sketch.draw = () => {
-        console.log("hi!")
         TILE_SIZE = ($(window).width()/2.5)/MAP_NUM_COLS;
         windowResized()
 

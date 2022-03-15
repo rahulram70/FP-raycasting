@@ -694,7 +694,6 @@ const theory_5 = ( sketch ) => {
                 } else if (curr_screen_5 == section_5_text.length - 1) {
                     fullpage_api.moveTo('page6', 0);
                 }
-                console.log(curr_screen_5)
 
             })
             .position(TILE_SIZE*MAP_NUM_COLS/2 + 100, 880)
@@ -703,7 +702,7 @@ const theory_5 = ( sketch ) => {
         toggle_button = sketch.createButton("Toggle Fisheye")
             .attribute('class', 'button_prev')
             .center('horizontal')
-            .style('border', '2px solid #5bc0de')
+            .style('border', '2px solid #DC143C')
             .size(150, 20)
             .mousePressed(() => {
                 interaction_8_start = true
@@ -715,7 +714,7 @@ const theory_5 = ( sketch ) => {
         prev_button_5 = sketch.createButton("Back")
             .attribute('class', 'button_prev')
             .center('horizontal')
-            .style('border', '2px solid #5bc0de')
+            .style('border', '2px solid #DC143C')
             .size(50, 20)
             .mousePressed(() => {
 

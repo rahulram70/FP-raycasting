@@ -10,20 +10,35 @@ const raycast_textures = ( sketch ) => {
   const TEX_WIDTH = 64;
   const TEX_HEIGHT = 64;
 
+  var next_button;
+  var prev_button;
+  var text_div_8;
+
   let magicWallX = null; // noclip grid position X
   let magicWallY = null; // noclip grid position Y
-
-  //console.log("raywidth: " + RAYWIDTH);
-
-
-  //console.log(WINDOW_WIDTH);
-  //console.log(WINDOW_HEIGHT);
 
   var FOV = 60 * (Math.PI / 180);
 
   const NUM_RAYS = Math.floor(WINDOW_WIDTH/4);
 
   var mouse;
+
+  const section_8_text = [
+    `<p>
+        It’s cool that we can add our walls, however the environment looks a little bland. Let’s spice it up with some textures and background. 
+        Raycasting allows us to project textures images onto our walls to make our game environment far more compelling.
+    </p>
+    <p>
+    Previously, each ray was being rendered as a solid color of some height depending on which wall it first intersected with and how far away the
+    player was from said wall. To add textures, we instead assign a texture/image to each wall of our map and now also keep track of where on a wall
+    our ray hits. The position on the wall is translated to the position on our texture so instead of rendering the ray as a solid color, we render it
+    as the corresponding column of our texture.
+    </p>
+    <p>
+        Just like before, click on the tiles to add or remove walls and use the arrows key to explore your creation!
+    </p>`
+  ]
+
 
   class Map {
     constructor() {
@@ -57,8 +72,6 @@ const raycast_textures = ( sketch ) => {
         // paint magicwall's grid loc and store it's position into variables
         if (this.grid[i][j] == 2) {
           tileColor = "black";
-          // console.log("magic wall row:", magicWallY,
-          //             "magic wall col:", magicWallX);
         };
 
           sketch.fill(tileColor);
@@ -346,12 +359,9 @@ const raycast_textures = ( sketch ) => {
   }
 
   function isColliding() {
-    //console.log(grid.grid);
     var posX = player.x;
     var posY = player.y;
 
-    //if (!grid.hasWallAt(this.x, this.y)) {
-    // only do that if the player is not colliding
     let moveStep = player.walkDirection * player.moveSpeed;
     posX += Math.cos(player.rotationAngle) * moveStep;
     posY += Math.sin(player.rotationAngle) * moveStep;
@@ -359,24 +369,13 @@ const raycast_textures = ( sketch ) => {
     if (Math.floor(posX / TILE_SIZE) == magicWallX && (Math.floor(posY / TILE_SIZE)) == magicWallY) {
       return false;
     }
-    //}
-    //console.log(posX);
-    //console.log(posY);
+
     return grid.hasWallAt(posX, posY);
   }
 
-  function goodLoad() {
-    console.log("Successfully loaded the image");
-  }
-
-  function badLoad() {
-    console.log("Failed to load the image");
-  }
-
+  
   let tex1;
   let tex2;
-  let buffer = [];
-  let texture = [];
   let d = sketch.pixelDensity();
   let img;
   let bg;
@@ -384,19 +383,48 @@ const raycast_textures = ( sketch ) => {
     //img = sketch.loadImage("texture.png");
     tex1 = sketch.loadImage("./images/redbrick.png");
     tex2 = sketch.loadImage("./images/texture.png")
-    bg = sketch.loadImage("./images/image.jpg", goodLoad, badLoad);
+    bg = sketch.loadImage("./images/image.jpg");
   }
   //let slider2;
   sketch.setup = () => {
     var myCanvas = sketch.createCanvas(WINDOW_WIDTH, 1.5*WINDOW_HEIGHT);
-    //slider2 = sketch.createSlider(1, NUM_RAYS, NUM_RAYS);
-    //slider2.parent("#slider2");
     myCanvas.parent("slide8")
-    //bg = sketch.loadImage('https://raw.githubusercontent.com/daviskauffmann/raycaster/master/assets/images/eagle.png');
     sketch.mouse = sketch.mouseX;
-    // load texture array
-    //console.log("buff len: " + buffer.length);
-    //sketch.loadPixels();
+  ;
+
+    text_div_8 = sketch.createDiv(section_8_text[0])
+      .attribute('class', 'section_text')
+      .center('horizontal')
+      .position(0, 0, "relative")
+      // .attribute('width', 22)
+      .hide()
+
+    next_button = sketch.createButton("Next")
+      .attribute('class', 'button_next')
+      .center('horizontal')
+      .style('border', '2px solid #5cb85c')
+      .size(50, 20)
+      .mousePressed(() => {
+        fullpage_api.moveTo('page9', 0);
+      })
+      .position(TILE_SIZE*MAP_NUM_COLS/2 + 175, $(window).height()/2 + 25 + 1.5*TILE_SIZE*MAP_NUM_ROWS/2)
+      .hide()
+
+    prev_button = sketch.createButton("Back")
+        .attribute('class', 'button_prev')
+        .center('horizontal')
+        .style('border', '2px solid #DC143C')
+        .size(50, 20)
+        .mousePressed(() => {
+          fullpage_api.moveTo('page7', 0);
+        })
+        .position(TILE_SIZE*MAP_NUM_COLS/2 + 100, $(window).height()/2 + 25 + 1.5*TILE_SIZE*MAP_NUM_ROWS/2)
+        .hide()
+
+    next_button.parent('slide8')
+    prev_button.parent('slide8')
+    text_div_8.parent('#game_2_text')
+    sketch.noLoop()
 
 
   }
@@ -406,10 +434,8 @@ const raycast_textures = ( sketch ) => {
   }
 
   sketch.mousePressed = () => {
-    console.log("This is a test!");
     var tileX = Math.floor(sketch.mouseX / TILE_SIZE);
     var tileY = Math.floor(sketch.mouseY / TILE_SIZE);
-    console.log("tileX: " + tileX + " tileY: " + tileY);
     var posTileX = Math.floor(player.x / TILE_SIZE);
     var posTileY = Math.floor(player.y / TILE_SIZE);
     var sameTile = posTileX == tileX && posTileY == tileY;
@@ -429,6 +455,11 @@ const raycast_textures = ( sketch ) => {
 
   sketch.draw = () => {
     update();
+    next_button.position(TILE_SIZE*MAP_NUM_COLS/2 + 175, $(window).height()/2 + 25 + 1.5*TILE_SIZE*MAP_NUM_ROWS/2)
+    prev_button.position(TILE_SIZE*MAP_NUM_COLS/2 + 100, $(window).height()/2 + 25 + 1.5*TILE_SIZE*MAP_NUM_ROWS/2)
+    next_button.show()
+    prev_button.show()
+    text_div_8.show()
     sketch.background(bg);
     //grid.render();
     castAllRays(NUM_RAYS);
@@ -486,17 +517,10 @@ const raycast_textures = ( sketch ) => {
         texX = TEX_WIDTH - texX - 1;
 
       var start = i*4;
-      //console.log("start: " + start);
 
       var end = start + 4;
-      var red;
-      var green;
-      var blue;
-
+  
       sketch.stroke(255, 255, 0);
-      //sketch.rect((i*4) + WINDOW_WIDTH, (drawStart-TILE_SIZE), 0, (drawEnd-drawStart)+TILE_SIZE);
-      //sketch.stroke(0);
-      //sketch.strokeWeight(2);
       var hitX =  rays[i].wallHitX / TILE_SIZE;
       var hitY =  rays[i].wallHitY / TILE_SIZE;
       sampleX = Math.abs(hitX - Math.floor(hitX));

@@ -77,8 +77,16 @@ const theory_4 = ( sketch ) => {
         walls.push(new Boundary(3,7,4,7,TILE_SIZE, sketch))
         walls.push(new Boundary(4,7,4,9,TILE_SIZE, sketch))
         walls.push(new Boundary(3,9,4,9,TILE_SIZE, sketch))
+        walls.push(new Boundary(3,7,3,9,TILE_SIZE, sketch))
+        walls.push(new Boundary(3,7,4,7,TILE_SIZE, sketch))
+        walls.push(new Boundary(4,7,4,9,TILE_SIZE, sketch))
+        walls.push(new Boundary(3,9,4,9,TILE_SIZE, sketch))
+        walls.push(new Boundary(8,1,9,1, TILE_SIZE, sketch))
+        walls.push(new Boundary(8,2,9,2, TILE_SIZE, sketch))
+        walls.push(new Boundary(8,1,8,2, TILE_SIZE, sketch))
+        walls.push(new Boundary(9,1,9,2, TILE_SIZE, sketch)) 
     
-        player = new Particle(sketch.width/2 + 3, sketch.height/2 - 3, 360, 1, sketch)
+        player = new Particle(sketch.width/2, sketch.height/2-10, 360, 1, sketch)
     
         text_div_4 = sketch.createDiv(section_4_text[0])
             .attribute('class', 'section_text')
@@ -111,7 +119,7 @@ const theory_4 = ( sketch ) => {
         prev_button_4 = sketch.createButton("Back")
             .attribute('class', 'button_prev')
             .center('horizontal')
-            .style('border', '2px solid #5bc0de')
+            .style('border', '2px solid #DC143C')
             .size(50, 20)
             .mousePressed(() => {
                 fullpage_api.moveTo('page3', 0);
@@ -168,6 +176,9 @@ const theory_4 = ( sketch ) => {
         
         sketch.fill(0,200)
         sketch.rect(3*TILE_SIZE,7*TILE_SIZE, TILE_SIZE, 2*TILE_SIZE)
+        
+        sketch.fill(0,200)
+        sketch.rect(8*TILE_SIZE,1*TILE_SIZE, TILE_SIZE, TILE_SIZE)
 
         sketch.pop()
     }
@@ -179,7 +190,6 @@ const theory_4 = ( sketch ) => {
         draw_details()
         text_div_4.show()
         fov_div.show()
-        // fov_div.position(30, sketch.height-25)
 
         next_button_4.show()
         prev_button_4.show()
@@ -194,28 +204,18 @@ const theory_4 = ( sketch ) => {
             player.rotate(.03)
         }
 
-        // if (keyIsDown(UP_ARROW)) {
-        //     player.move(-1)
-        // }
-
         for (var wall of walls) {
             wall.render();
         }
 
         player.updateFOV(slider.value(), .5)
-        // player.updatePos(mouseX, mouseY)
-
-        // player.rotate(.01)
         player.look(walls)
-
-
-        // console.log(mouseX)
         player.render(0)
     }
 
     function resize() {
         sketch.resizeCanvas(TILE_SIZE*MAP_NUM_COLS, TILE_SIZE*MAP_NUM_ROWS);
-        player.updatePos(x=sketch.width/2, y=sketch.height/2)
+        // player.updatePos(x=sketch.width/2, y=sketch.height/2)
         for (var wall of walls) {
             wall.update_tile_size(TILE_SIZE)
         }

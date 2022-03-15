@@ -189,10 +189,9 @@ const theory_3 = ( sketch ) => {
         prev_button_3 = sketch.createButton("Back")
             .attribute('class', 'button_prev')
             .center('horizontal')
-            .style('border', '2px solid #5bc0de')
+            .style('border', '2px solid #DC143C')
             .size(50, 20)
             .mousePressed(() => {
-                console.log(walls)
                 if (curr_screen_3 === 1) {
                     if (blocks_drawn > 0) {
                         blocks_drawn--;
