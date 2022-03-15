@@ -29,6 +29,12 @@ const raycast_textures = ( sketch ) => {
         Raycasting allows us to project textures images onto our walls to make our game environment far more compelling.
     </p>
     <p>
+    Previously, each ray was being rendered as a solid color of some height depending on which wall it first intersected with and how far away the
+    player was from said wall. To add textures, we instead assign a texture/image to each wall of our map and now also keep track of where on a wall
+    our ray hits. The position on the wall is translated to the position on our texture so instead of rendering the ray as a solid color, we render it
+    as the corresponding column of our texture.
+    </p>
+    <p>
         Just like before, click on the tiles to add or remove walls and use the arrows key to explore your creation!
     </p>`
   ]
