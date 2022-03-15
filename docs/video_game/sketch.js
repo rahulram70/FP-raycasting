@@ -445,6 +445,7 @@ const game_sketch = function(p) {
     //load texture array
     //console.log("buff len: " + buffer.length);
     //p.loadPixels();
+    p.noLoop()
   }
 
   p.update = function() {

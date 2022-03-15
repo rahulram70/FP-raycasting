@@ -424,6 +424,7 @@ const raycast_textures = ( sketch ) => {
     next_button.parent('slide8')
     prev_button.parent('slide8')
     text_div_8.parent('#game_2_text')
+    sketch.noLoop()
 
 
   }
