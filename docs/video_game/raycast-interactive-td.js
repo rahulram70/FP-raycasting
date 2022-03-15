@@ -460,7 +460,7 @@ const raycast_test = ( sketch ) => {
 
         var drawStart = Math.floor(-lineHeight / 2) + Math.floor((WINDOW_HEIGHT / 2) / 2);
         if (drawStart < 0)
-            drawStart = TILE_SIZE;
+            drawStart = 0;
         var drawEnd   = Math.floor(lineHeight / 2) + Math.floor(WINDOW_HEIGHT / (2*2));
         if (drawEnd >= WINDOW_HEIGHT / 2)
           drawEnd = WINDOW_HEIGHT / 2 - 1;

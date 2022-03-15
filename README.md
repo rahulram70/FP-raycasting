@@ -8,6 +8,11 @@ To have a look at the data that was used to create this project, please visit `d
 
 View our home page at `index.html` in the `docs` folder.
 
+### Note:
+Some of the button positions might be off or incorrect if you're on a smaller screen.
+
+And if you refresh directly onto a page, you may need to scroll away and back to enable the interactions.
+
 ### Credit:
 - Lode's tutorial: https://lodev.org/cgtutor/raycasting.html
 - The Coding Train's raycaster coding challenge: https://thecodingtrain.com/CodingChallenges/145-2d-ray-casting.html
