@@ -17,12 +17,6 @@ const raycast_textures = ( sketch ) => {
   let magicWallX = null; // noclip grid position X
   let magicWallY = null; // noclip grid position Y
 
-  //console.log("raywidth: " + RAYWIDTH);
-
-
-  //console.log(WINDOW_WIDTH);
-  //console.log(WINDOW_HEIGHT);
-
   var FOV = 60 * (Math.PI / 180);
 
   const NUM_RAYS = Math.floor(WINDOW_WIDTH/4);
@@ -72,8 +66,6 @@ const raycast_textures = ( sketch ) => {
         // paint magicwall's grid loc and store it's position into variables
         if (this.grid[i][j] == 2) {
           tileColor = "black";
-          // console.log("magic wall row:", magicWallY,
-          //             "magic wall col:", magicWallX);
         };
 
           sketch.fill(tileColor);
@@ -361,12 +353,9 @@ const raycast_textures = ( sketch ) => {
   }
 
   function isColliding() {
-    //console.log(grid.grid);
     var posX = player.x;
     var posY = player.y;
 
-    //if (!grid.hasWallAt(this.x, this.y)) {
-    // only do that if the player is not colliding
     let moveStep = player.walkDirection * player.moveSpeed;
     posX += Math.cos(player.rotationAngle) * moveStep;
     posY += Math.sin(player.rotationAngle) * moveStep;
@@ -374,24 +363,13 @@ const raycast_textures = ( sketch ) => {
     if (Math.floor(posX / TILE_SIZE) == magicWallX && (Math.floor(posY / TILE_SIZE)) == magicWallY) {
       return false;
     }
-    //}
-    //console.log(posX);
-    //console.log(posY);
+
     return grid.hasWallAt(posX, posY);
   }
 
-  function goodLoad() {
-    console.log("Successfully loaded the image");
-  }
-
-  function badLoad() {
-    console.log("Failed to load the image");
-  }
-
+  
   let tex1;
   let tex2;
-  let buffer = [];
-  let texture = [];
   let d = sketch.pixelDensity();
   let img;
   let bg;
@@ -399,19 +377,14 @@ const raycast_textures = ( sketch ) => {
     //img = sketch.loadImage("texture.png");
     tex1 = sketch.loadImage("./images/redbrick.png");
     tex2 = sketch.loadImage("./images/texture.png")
-    bg = sketch.loadImage("./images/image.jpg", goodLoad, badLoad);
+    bg = sketch.loadImage("./images/image.jpg");
   }
   //let slider2;
   sketch.setup = () => {
     var myCanvas = sketch.createCanvas(WINDOW_WIDTH, 1.5*WINDOW_HEIGHT);
-    //slider2 = sketch.createSlider(1, NUM_RAYS, NUM_RAYS);
-    //slider2.parent("#slider2");
     myCanvas.parent("slide8")
-    //bg = sketch.loadImage('https://raw.githubusercontent.com/daviskauffmann/raycaster/master/assets/images/eagle.png');
     sketch.mouse = sketch.mouseX;
-    // load texture array
-    //console.log("buff len: " + buffer.length);
-    //sketch.loadPixels();
+  ;
 
     text_div_8 = sketch.createDiv(section_8_text[0])
       .attribute('class', 'section_text')
@@ -454,10 +427,8 @@ const raycast_textures = ( sketch ) => {
   }
 
   sketch.mousePressed = () => {
-    console.log("This is a test!");
     var tileX = Math.floor(sketch.mouseX / TILE_SIZE);
     var tileY = Math.floor(sketch.mouseY / TILE_SIZE);
-    console.log("tileX: " + tileX + " tileY: " + tileY);
     var posTileX = Math.floor(player.x / TILE_SIZE);
     var posTileY = Math.floor(player.y / TILE_SIZE);
     var sameTile = posTileX == tileX && posTileY == tileY;
@@ -539,17 +510,10 @@ const raycast_textures = ( sketch ) => {
         texX = TEX_WIDTH - texX - 1;
 
       var start = i*4;
-      //console.log("start: " + start);
 
       var end = start + 4;
-      var red;
-      var green;
-      var blue;
-
+  
       sketch.stroke(255, 255, 0);
-      //sketch.rect((i*4) + WINDOW_WIDTH, (drawStart-TILE_SIZE), 0, (drawEnd-drawStart)+TILE_SIZE);
-      //sketch.stroke(0);
-      //sketch.strokeWeight(2);
       var hitX =  rays[i].wallHitX / TILE_SIZE;
       var hitY =  rays[i].wallHitY / TILE_SIZE;
       sampleX = Math.abs(hitX - Math.floor(hitX));
