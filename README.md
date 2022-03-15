@@ -6,8 +6,8 @@ To view our project, please visit: https://cse442-22w.github.io/FP-raycasting/
 
 To have a look at the textures and pictures that were used to create this project, please visit `docs/data` and `docs/images`.
 
-### Note:
-Some of the button positions might be off or incorrect if you're on a smaller screen.
+### DISCLAIMER:
+The website is not optimized for all devices. Some of the button positions or canvas placements might be off or incorrect if you're on a smaller screen.
 
 And if you refresh directly onto a page, you may need to scroll away and back to enable the interactions.
 
