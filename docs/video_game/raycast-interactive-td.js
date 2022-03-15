@@ -10,6 +10,10 @@ const raycast_test = ( sketch ) => {
     const TEX_WIDTH = 64;
     const TEX_HEIGHT = 64;
 
+    var next_button;
+    var prev_button;
+    var text_div_7;
+
     let magicWallX = null; // noclip grid position X
     let magicWallY = null; // noclip grid position Y
 
@@ -18,6 +22,19 @@ const raycast_test = ( sketch ) => {
     var NUM_RAYS = Math.floor(WINDOW_WIDTH/4);
 
     var mouse;
+
+    const section_7_text = 
+    [
+      `<p>
+          Now that you understand raycasting, let’s build our own maze! Any maze worth its salt has walls. 
+          Fortunately, raycasters makes creating 3D walls from a 2D grid no sweat.
+        </p>
+        <p>
+            Without further ado, let’s create our own maze. We can simply click on any of the white tiles to add a wall and click
+            a black wall within the grid to remove a wall. Collision detection is included, so you can’t simply go through the walls. 
+            When you’re done creating, use the arrow keys to explore your world
+        </p>`
+    ]
 
     class Map {
       constructor() {
@@ -359,8 +376,42 @@ const raycast_test = ( sketch ) => {
       var myCanvas = sketch.createCanvas(WINDOW_WIDTH, 1.5*WINDOW_HEIGHT);
       myCanvas.parent("slide7")
       sketch.mouse = sketch.mouseX;
+
+      text_div_7 = sketch.createDiv(section_7_text[0])
+        .attribute('class', 'section_text')
+        .center('horizontal')
+        .position(0, 0, "relative")
+        // .attribute('width', 22)
+        .hide()
+
+      next_button = sketch.createButton("Next")
+        .attribute('class', 'button_next')
+        .center('horizontal')
+        .style('border', '2px solid #5cb85c')
+        .size(50, 20)
+        .mousePressed(() => {
+          fullpage_api.moveTo('page8', 0);
+        })
+        .position(TILE_SIZE*MAP_NUM_COLS/2 + 175, 800)
+        .hide()
+
+      prev_button = sketch.createButton("Back")
+          .attribute('class', 'button_prev')
+          .center('horizontal')
+          .style('border', '2px solid #5bc0de')
+          .size(50, 20)
+          .mousePressed(() => {
+            fullpage_api.moveTo('page6', 0);
+          })
+          .position(TILE_SIZE*MAP_NUM_COLS/2 + 100, 800)
+          .hide()
+
+      next_button.parent('slide7')
+      text_div_7.parent('#game_1_text')
+      prev_button.parent('slide7')
       sketch.noLoop()
 
+    
     }
 
     function update() {
@@ -390,6 +441,9 @@ const raycast_test = ( sketch ) => {
     sketch.draw = () => {
       //resize();
       update();
+      next_button.show()
+      prev_button.show()
+      text_div_7.show()
       //sketch.background(bg);
       grid.render();
       castAllRays(NUM_RAYS);

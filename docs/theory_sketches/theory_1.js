@@ -122,7 +122,6 @@ const theory_1 = ( sketch ) => {
         next_button_1.parent('theory_1')
         prev_button_1.parent('theory_1')
         sketch.noLoop()
-
     }
 
     function draw_details(opacity) {
